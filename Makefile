@@ -10,6 +10,7 @@
 LIBFT_PATH = ./libft
 LIBFT = $(LIBFT_PATH)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
+READLINE = -lreadline
 CC = cc
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
@@ -19,9 +20,11 @@ NAME = minishell
 #      SOURCES       #
 ######################
 
-SRCS_MINISHELL		=	main.c 
+SRCS_MINISHELL		=	main.c
+SRCS_TOKEN			= 	token_main.c token_dll.c
 DIR_MINISHELL		=	$(addprefix ./src/, $(SRCS_MINISHELL)) 
-OBJS				= 	$(DIR_MINISHELL:.c=.o)
+DIR_TOKEN			=	$(addprefix ./src/token/, $(SRCS_TOKEN))
+OBJS				= 	$(DIR_MINISHELL:.c=.o) $(DIR_TOKEN:.c=.o)
 
 ######################
 #       COLORS       #
@@ -40,13 +43,13 @@ all: $(LIBFT) $(NAME)
  
 $(NAME): $(OBJS) 
 	@echo "$(YELLOW)[COMPILING MINISHELL]$(NO_COLOR)"
-	@ $(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT_FLAGS)
+	 $(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT_FLAGS) $(READLINE)
 	@echo "$(GREEN)[COMPILED MINISHELL]$(NO_COLOR)"
  
 
 $(LIBFT):
 	@echo "$(YELLOW)[COMPILING LIBFT]$(NO_COLOR)"
-	@make -s -C $(LIBFT_PATH) all
+	make -s -C $(LIBFT_PATH) all
 	@echo "$(GREEN)[COMPILED LIBFT]$(NO_COLOR)"
 
 
