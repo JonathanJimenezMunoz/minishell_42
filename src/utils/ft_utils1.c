@@ -6,22 +6,16 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:29:47 by david             #+#    #+#             */
-/*   Updated: 2024/06/26 17:37:10 by david            ###   ########.fr       */
+/*   Updated: 2024/06/26 18:10:51 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void clear_spaces(char *line)
+void clear_spaces(char **line)
 {
-    int i;
-
-    i = ft_strlen(line);
-    while (i > 0)
-    {
-        if (line[i] == ||)
-        i--;
-    }
+    while (*line && ft_isspace(*line))
+        (*line)++;
 }
 
 int ft_isspace(char c)
