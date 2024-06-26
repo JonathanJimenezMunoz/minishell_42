@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:23:25 by david             #+#    #+#             */
-/*   Updated: 2024/06/25 22:39:34 by david            ###   ########.fr       */
+/*   Updated: 2024/06/26 23:51:02 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,28 @@ void	token_print(t_token *tokens)
 		printf("type: %d\n", tokens->type);
 		tokens = tokens->next;
 	}
+}
+
+int	ft_add_token(t_token_type type, char **line, t_token *tokens, int size)
+{
+	t_token	*token;
+	char	*content;
+	int 	i;
+
+	content = (char *)malloc(sizeof(char) * (size + 1));
+	i = 0;
+	while (size > i)
+	{
+		content[i] = **line;
+		(*line)++;
+		i++;
+	}
+	content[i] = '\0';
+	token = token_new(content, type);
+	free(content);
+	if (!token)
+		return (-1);
+	token_add_back(&tokens, token);
+	return (0);
 }
 
