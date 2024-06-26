@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:24:01 by david             #+#    #+#             */
-/*   Updated: 2024/06/25 23:53:22 by david            ###   ########.fr       */
+/*   Updated: 2024/06/26 18:00:14 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,24 @@
 #include <readline/history.h>
 #include "../libft/libft.h"
 
+
+typedef enum e_token_type
+{
+	TOKEN_WORD,// char, number ...
+	TOKEN_PIPE,// |
+	TOKEN_REDIR_IN,// <
+	TOKEN_REDIR_OUT,// >
+	TOKEN_REDIR_APPEND,// >>
+	TOKEN_REDIR_DELIMITER,// <<
+	// Podria faltar "" '' () $ $?
+} t_token_type;
+
 typedef struct s_token
 {
-	char	*content;
-	int		type;
-	struct s_token	*next;
-	struct s_token	*prev;
+	char				*content;
+	t_token_type		type;
+	struct s_token		*next;
+	struct s_token		*prev;
 } t_token;
 
 typedef struct s_envp
@@ -48,8 +60,20 @@ typedef struct s_envp
 typedef struct s_mini
 {
 	t_token	*tokens;
+	int 	error;
 } t_mini;
 
 // TOKEN_MAIN.C
 int tokenize_line(char **line, t_mini **mini);
+
+// TOKEN_DLL.C
+t_token	*token_new(char *content, int type);
+void	token_add_back(t_token **tokens, t_token *new);
+void	token_clear(t_token **tokens);
+void	token_print(t_token *tokens);
+
+
+// FT_UTILS1.C
+void 	clear_spaces(char *line);
+int 	ft_isspace(char c);
 #endif
