@@ -6,11 +6,10 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 20:04:34 by david             #+#    #+#             */
-/*   Updated: 2024/06/26 23:46:44 by david            ###   ########.fr       */
+/*   Updated: 2024/06/27 17:38:46 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../headers/minishell.h"
 
 void init_mini(t_mini *mini)
@@ -24,6 +23,7 @@ int main(int argc, char **argv, char **envp)
 	t_mini	mini; // Falta init mini 
 	char	*line;
 
+	//Comrprobar numero de args??
 	(void)argc;
 	(void)argv;
 	(void)envp;
@@ -33,10 +33,14 @@ int main(int argc, char **argv, char **envp)
 		line = readline("msh>> ");
 		if (!line)
 			break; // frees y toda la movida para acabar
-		printf("esta es mi linea: %s\n", line);
+		if (line)
+			add_history(line);
 		tokenize_line(line, &mini);
 		free(line);
-		token_print(mini.tokens);
+		//token_print(mini.tokens);
+		
+		free_token_list(mini.tokens);
+		init_mini(&mini);
 	}
 	return (0);
 	

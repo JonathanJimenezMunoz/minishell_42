@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:29:47 by david             #+#    #+#             */
-/*   Updated: 2024/06/26 23:53:45 by david            ###   ########.fr       */
+/*   Updated: 2024/06/27 17:18:19 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,18 @@ int ft_is_good_quote(char *line)
 
     if (!line)
         return (-1);
-
     i = 0;
     if (line[i] == '\'' || line[i] == '\"')
         quote_type = line[i];
     else
-        return (0);
+        return (-2);
     i++;
     while (line[i])
     {
         if (line[i] == quote_type)
-            return (i);
+            return (i - 1);
         i++;
+		
     }
     return (-1);
 }

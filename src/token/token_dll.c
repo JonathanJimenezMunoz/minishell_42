@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:23:25 by david             #+#    #+#             */
-/*   Updated: 2024/06/26 23:51:02 by david            ###   ########.fr       */
+/*   Updated: 2024/06/27 17:01:53 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,14 @@ void	token_print(t_token *tokens)
 {
 	while (tokens)
 	{
+		printf("Token:\n");
 		printf("content: %s\n", tokens->content);
 		printf("type: %d\n", tokens->type);
 		tokens = tokens->next;
 	}
 }
 
-int	ft_add_token(t_token_type type, char **line, t_token *tokens, int size)
+int	ft_add_token(t_token_type type, char **line, t_mini*mini, int size)
 {
 	t_token	*token;
 	char	*content;
@@ -89,7 +90,7 @@ int	ft_add_token(t_token_type type, char **line, t_token *tokens, int size)
 	free(content);
 	if (!token)
 		return (-1);
-	token_add_back(&tokens, token);
+	
+	token_add_back(&(mini->tokens), token);
 	return (0);
 }
-

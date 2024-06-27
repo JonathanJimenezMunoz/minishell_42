@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:24:01 by david             #+#    #+#             */
-/*   Updated: 2024/06/26 23:45:29 by david            ###   ########.fr       */
+/*   Updated: 2024/06/27 17:22:26 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,14 @@ t_token	*token_new(char *content, int type);
 void	token_add_back(t_token **tokens, t_token *new);
 void	token_clear(t_token **tokens);
 void	token_print(t_token *tokens);
-int		ft_add_token(t_token_type type, char **line, t_token *tokens, int size);
+int		ft_add_token(t_token_type type, char **line, t_mini *mini, int size);
 
 
 // FT_UTILS1.C
 void 	ft_clear_spaces(char **line);
 int 	ft_isspace(char c);
 int 	ft_is_good_quote(char *line);
+
+// FREE_HANDLER.C
+void free_token_list(t_token *token);
 #endif
