@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:23:25 by david             #+#    #+#             */
-/*   Updated: 2024/06/27 17:01:53 by david            ###   ########.fr       */
+/*   Updated: 2024/06/28 22:49:44 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,7 @@ void	token_add_back(t_token **tokens, t_token *new)
 	new->prev = last;
 }
 
-void	token_clear(t_token **tokens)
-{
-	t_token	*tmp;
 
-	if (!tokens || !*tokens)
-		return ;
-	while (*tokens)
-	{
-		tmp = (*tokens)->next;
-		free((*tokens)->content);
-		free(*tokens);
-		*tokens = tmp;
-	}
-	*tokens = NULL;
-}
 
 void	token_print(t_token *tokens)
 {

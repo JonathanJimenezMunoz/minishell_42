@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:24:01 by david             #+#    #+#             */
-/*   Updated: 2024/06/27 17:22:26 by david            ###   ########.fr       */
+/*   Updated: 2024/06/28 23:44:21 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,31 @@ typedef struct s_envp
 	struct s_envp	*next;
 } t_envp;
 
+typedef struct s_table
+{
+	char	*cmd;
+	char	*args;
+	char	*in_redir;
+	char	*out_redir;
+	char	*in_heredoc;
+	char 	*out_append;	
+	struct s_table	*next;
+} t_table;
+
+typedef struct s_table_aux
+{
+	char	*cmd;
+	char	*args;
+	char	*in_redir;
+	char	*out_redir;
+	char	*in_heredoc;
+	char 	*out_append;
+} t_table_aux;
+
 typedef struct s_mini
 {
 	t_token	*tokens;
+	t_table	*table;
 	int 	error;
 } t_mini;
 
@@ -69,7 +91,6 @@ int tokenize_line(char *line, t_mini *mini);
 // TOKEN_DLL.C
 t_token	*token_new(char *content, int type);
 void	token_add_back(t_token **tokens, t_token *new);
-void	token_clear(t_token **tokens);
 void	token_print(t_token *tokens);
 int		ft_add_token(t_token_type type, char **line, t_mini *mini, int size);
 
@@ -78,7 +99,18 @@ int		ft_add_token(t_token_type type, char **line, t_mini *mini, int size);
 void 	ft_clear_spaces(char **line);
 int 	ft_isspace(char c);
 int 	ft_is_good_quote(char *line);
+void	ft_error(t_mini *mini, char *error);
+void ft_error_aux(t_mini *mini, t_table_aux *aux, char *error);
 
 // FREE_HANDLER.C
-void free_token_list(t_token *token);
+void free_token_list(t_token **token);
+void free_table(t_table **table);
+void free_table_aux(t_table_aux *aux);
+
+// PARSER_MAIN.C
+int parser_token(t_mini *mini);
+
+// PARSER_SLL.C
+t_table *create_node(t_table_aux *aux);
+int add_node(t_mini **head, t_table_aux *aux);
 #endif

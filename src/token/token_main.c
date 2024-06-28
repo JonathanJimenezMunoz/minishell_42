@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:24:28 by david             #+#    #+#             */
-/*   Updated: 2024/06/27 17:20:11 by david            ###   ########.fr       */
+/*   Updated: 2024/06/28 22:32:31 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ static int ft_redir_type(char **line, t_mini *mini)
 		return (ft_add_token(TOKEN_REDIR_IN, line, mini, 1));
 	else if (!ft_strncmp(*line, ">", 1))
 		return (ft_add_token(TOKEN_REDIR_OUT, line, mini, 1));
-	else
+	else if (!ft_strncmp(*line, "|", 1))
 		return (ft_add_token(TOKEN_PIPE, line, mini, 1));
+	else
+		return (-1);
 }
 
 static void tokenize_quote(char **line, t_mini *mini)

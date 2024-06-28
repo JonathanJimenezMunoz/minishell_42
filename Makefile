@@ -22,11 +22,13 @@ NAME = minishell
 
 SRCS_MINISHELL		=	main.c free_handler.c
 SRCS_TOKEN			= 	token_main.c token_dll.c
+SRCS_PARSER			=	parser_main.c
 SRCS_UTILS			=	ft_utils1.c
 DIR_MINISHELL		=	$(addprefix ./src/, $(SRCS_MINISHELL)) 
 DIR_TOKEN			=	$(addprefix ./src/token/, $(SRCS_TOKEN))
 DIR_UTILS			=	$(addprefix ./src/utils/, $(SRCS_UTILS))
-OBJS				= 	$(DIR_MINISHELL:.c=.o) $(DIR_TOKEN:.c=.o) $(DIR_UTILS:.c=.o)
+DIR_PARSER			=	$(addprefix ./src/parser/, $(SRCS_PARSER))
+OBJS				= 	$(DIR_MINISHELL:.c=.o) $(DIR_TOKEN:.c=.o) $(DIR_UTILS:.c=.o) $(DIR_PARSER:.c=.o)
 
 ######################
 #       COLORS       #

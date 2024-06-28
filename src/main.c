@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 20:04:34 by david             #+#    #+#             */
-/*   Updated: 2024/06/27 17:38:46 by david            ###   ########.fr       */
+/*   Updated: 2024/06/28 22:57:37 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void init_mini(t_mini *mini)
 {
     mini->tokens = NULL;
+	mini->table = NULL;
     mini->error = 0;
 }
 
