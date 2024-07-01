@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:29:47 by david             #+#    #+#             */
-/*   Updated: 2024/06/28 23:31:29 by david            ###   ########.fr       */
+/*   Updated: 2024/07/01 18:29:29 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,23 @@ int ft_is_good_quote(char *line)
     return (-1);
 }
 
-void ft_error(t_mini *mini, char *error)
+void ft_error(t_mini *mini, char *error, char *type)
 {
-	printf("msh>> %s\n", error);
+	printf("msh>> %s %s\n", error, type);
 	if (mini->tokens)
 		free_token_list(&(mini->tokens));
 	if (mini->table)
 		free_table(&(mini->table));
-    free(mini);
 	exit (1);
 }
 
-void ft_error_aux(t_mini *mini, t_table_aux *aux, char *error)
+void ft_error_aux(t_mini *mini, t_table_aux *aux, char *error, char *type)
 {
-	printf("msh>> %s\n", error);
+	printf("msh>> %s %s\n", error, type);
     free_table_aux(aux);
 	if (mini->tokens)
 		free_token_list(&(mini->tokens));
 	if (mini->table)
 		free_table(&(mini->table));
-    free(mini);
 	exit (1);
 }

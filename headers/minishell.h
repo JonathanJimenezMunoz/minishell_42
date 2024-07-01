@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:24:01 by david             #+#    #+#             */
-/*   Updated: 2024/06/28 23:44:21 by david            ###   ########.fr       */
+/*   Updated: 2024/07/01 19:25:19 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct s_token
 	char				*content;
 	t_token_type		type;
 	struct s_token		*next;
-	struct s_token		*prev;
 } t_token;
 
 typedef struct s_envp
@@ -88,8 +87,8 @@ typedef struct s_mini
 // TOKEN_MAIN.C
 int tokenize_line(char *line, t_mini *mini);
 
-// TOKEN_DLL.C
-t_token	*token_new(char *content, int type);
+// TOKEN_LIST.C
+t_token	*token_new(char *content, t_token_type type);
 void	token_add_back(t_token **tokens, t_token *new);
 void	token_print(t_token *tokens);
 int		ft_add_token(t_token_type type, char **line, t_mini *mini, int size);
@@ -99,8 +98,8 @@ int		ft_add_token(t_token_type type, char **line, t_mini *mini, int size);
 void 	ft_clear_spaces(char **line);
 int 	ft_isspace(char c);
 int 	ft_is_good_quote(char *line);
-void	ft_error(t_mini *mini, char *error);
-void ft_error_aux(t_mini *mini, t_table_aux *aux, char *error);
+void ft_error(t_mini *mini, char *error, char *type);
+void ft_error_aux(t_mini *mini, t_table_aux *aux, char *error, char *type);
 
 // FREE_HANDLER.C
 void free_token_list(t_token **token);
@@ -110,7 +109,15 @@ void free_table_aux(t_table_aux *aux);
 // PARSER_MAIN.C
 int parser_token(t_mini *mini);
 
-// PARSER_SLL.C
+// PARSER_LIST.C
 t_table *create_node(t_table_aux *aux);
 int add_node(t_mini **head, t_table_aux *aux);
+void print_table(t_table *table);
+
+// PARSER_HANDLER.C
+void parse_cmd_args(t_table_aux *aux, int *first_word, t_token **current);
+void parse_redir_in(t_mini *mini, t_table_aux *aux, t_token **current);
+void parser_redir_out(t_mini *mini, t_table_aux *aux, t_token **current);
+void parse_redir_append(t_mini *mini, t_table_aux *aux, t_token **current);
+void parse_redir_heredoc(t_mini *mini, t_table_aux *aux, t_token **current);
 #endif

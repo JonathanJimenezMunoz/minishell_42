@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 22:32:54 by david             #+#    #+#             */
-/*   Updated: 2024/06/28 23:37:59 by david            ###   ########.fr       */
+/*   Updated: 2024/07/01 19:31:13 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,93 +18,46 @@ void	init_aux(t_table_aux *aux)
 	aux->args = NULL;
 	aux->in_redir = NULL;
 	aux->out_redir = NULL;
+	aux->out_append = NULL;
+	aux->in_heredoc = NULL;
 }
+
+static void parse_while(t_mini *mini, t_table_aux *aux, int *first_word, t_token **current)
+{
+	if ((*current)->type == TOKEN_PIPE)
+	{
+		if ((*current)->next && (*current)->next->type == TOKEN_PIPE)
+			ft_error_aux(mini, aux, 
+				"syntax error near unexpected token", (*current)->next->content);
+		*first_word = 1;
+		add_node(&mini, aux);
+		free_table_aux(aux);
+		init_aux(aux);
+	}
+	parse_cmd_args(aux, first_word, current);
+	parse_redir_in(mini, aux, current);
+	parser_redir_out(mini, aux, current);
+	parse_redir_append(mini, aux, current);
+	parse_redir_heredoc(mini, aux, current);
+}
+
 int parser_token(t_mini *mini)
 {
 	t_token     *current;
-	t_table     *new_node;
 	int         first_word;
 	t_table_aux aux;
 
 	first_word = 1;
 	current = mini->tokens;
-    new_node = mini->table;
-	init_cataux(&aux);
-    if (current->content == "|")
-        ft_error(mini, "syntax error near unexpected token '|'");
+	init_aux(&aux);
+	if (current->type == TOKEN_PIPE)
+		ft_error(mini, "syntax error near unexpected token", current->content);
 	while (current)
 	{
-		if (current->type == TOKEN_PIPE)
-		{
-			if (!aux.cmd)
-                aux.cmd = NULL;
-			if (!aux.in_redir)
-                aux.in_redir = NULL;
-			if (!aux.out_redir)
-                aux.out_redir = NULL;
-			if (!aux.args)
-                aux.args = NULL;
-            add_node(&mini, &aux);
-		}
-		else if ((first_word == 1) && (current->type == TOKEN_WORD))
-		{
-			aux.cmd = ft_strdup(current->content);
-			first_word = 0;
-		}
-		else if (current->type == TOKEN_WORD)
-		{
-			aux.args = ft_strjoin(aux.args, current->content);
-		}
-		else if (current->type == TOKEN_REDIR_IN)
-		{
-			if (current->next)
-			current = current->next;
-			aux.in_redir = current->content;
-		}
-		else if (current->type == TOKEN_REDIR_OUT)
-		{
-            if (!current->next)
-                ft_error_aux(mini, &aux, 
-                    "syntax error near unexpected token `newline'");
-			current = current->next;
-			aux.out_redir = current->content;
-		}
+		parse_while(mini, &aux, &first_word, &current);
 		current = current->next;
 	}
+	add_node(&mini, &aux);
+	free_table_aux(&aux);
 	return (0);
 }
-
-in_redir, out_redir, cdm, args
-first_word = 1
-pipe
-cat < "Makefile" | grep libft > outfile | wc -l < outfile
-while tokens
-	if pipe 
-		if !in redir 
-			in_redir = NULL
-		if !out redir
-			out_redir = NULL
-		if !args
-			args = NULL
-		create_node (cdm, args, in_redir, out_redir)
-		first_word = 1
-	if first_word
-		cdm = token
-		first_word = 0
-	else
-		args = token + args
-	if < or <<
-		token->next
-		in_redir = token
-	else if > or >>
-		token->next
-		out_redir = token
-
-
-if !in redir 
-	in_redir = NULL
-if !out redir
-	out_redir = NULL
-if !args
-	args = NULL
-create_node (cdm, args, in_redir, out_redir)

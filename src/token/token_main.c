@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:24:28 by david             #+#    #+#             */
-/*   Updated: 2024/06/28 22:32:31 by david            ###   ########.fr       */
+/*   Updated: 2024/07/01 18:08:12 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void tokenize_word(char **line, t_mini *mini)
 	int i;
 
 	i = 0;
-	while ((*line)[i] != '<' && (*line)[i] != '>' && (*line)[i] != '|' 
+	while ((*line)[i] != '<' && (*line)[i] != '>' && (*line)[i] != '|'
 		&& (*line)[i] != '\'' && (*line)[i] != '\"' && ft_isspace((*line)[i])
 		&& (*line)[i] != '\0')
 	{
@@ -84,6 +84,7 @@ int tokenize_line(char *line, t_mini *mini)
 {
 	while (line != NULL && *line != 0)
 	{
+
 		ft_clear_spaces(&line);
 		// TENER EN CUENTA $ Y $?
 		tokenize_quote(&line, mini);

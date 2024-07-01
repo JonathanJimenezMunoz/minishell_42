@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 23:15:10 by david             #+#    #+#             */
-/*   Updated: 2024/06/28 23:36:30 by david            ###   ########.fr       */
+/*   Updated: 2024/07/01 19:32:30 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ void free_table(t_table **head)
 			free(current->in_redir);
         if (current->out_redir)
 			free(current->out_redir);
+        if (current->in_heredoc)
+			free(current->in_heredoc);
+        if (current->out_append)
+			free(current->out_append);
         free(current);
         current = next;
     }

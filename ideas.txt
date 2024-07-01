@@ -16,3 +16,5 @@ cat < "Makefile" | | | grep libft > outfile | wc -l < outfile
 <p1 cat >p3 > > >  | echo hola >p3
 
 <p1 cat >p3 | // Esto hace una cosa rara
+
+find . -type f -name "*.txt" | wc -l

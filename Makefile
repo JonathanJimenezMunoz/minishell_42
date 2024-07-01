@@ -21,8 +21,8 @@ NAME = minishell
 ######################
 
 SRCS_MINISHELL		=	main.c free_handler.c
-SRCS_TOKEN			= 	token_main.c token_dll.c
-SRCS_PARSER			=	parser_main.c
+SRCS_TOKEN			= 	token_main.c token_list.c
+SRCS_PARSER			=	parser_main.c parser_list.c parser_handler.c
 SRCS_UTILS			=	ft_utils1.c
 DIR_MINISHELL		=	$(addprefix ./src/, $(SRCS_MINISHELL)) 
 DIR_TOKEN			=	$(addprefix ./src/token/, $(SRCS_TOKEN))
