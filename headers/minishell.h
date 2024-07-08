@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:24:01 by david             #+#    #+#             */
-/*   Updated: 2024/07/01 19:25:19 by david            ###   ########.fr       */
+/*   Updated: 2024/07/08 23:22:15 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_mini
 	t_token	*tokens;
 	t_table	*table;
 	int 	error;
+	t_envp	*envp;
 } t_mini;
 
 // TOKEN_MAIN.C
@@ -105,6 +106,7 @@ void ft_error_aux(t_mini *mini, t_table_aux *aux, char *error, char *type);
 void free_token_list(t_token **token);
 void free_table(t_table **table);
 void free_table_aux(t_table_aux *aux);
+void free_envp(t_envp **envp);
 
 // PARSER_MAIN.C
 int parser_token(t_mini *mini);
@@ -120,4 +122,11 @@ void parse_redir_in(t_mini *mini, t_table_aux *aux, t_token **current);
 void parser_redir_out(t_mini *mini, t_table_aux *aux, t_token **current);
 void parse_redir_append(t_mini *mini, t_table_aux *aux, t_token **current);
 void parse_redir_heredoc(t_mini *mini, t_table_aux *aux, t_token **current);
+
+
+// ENVP_LIST.C
+void envp_init(t_envp **envp, char **envp_list);
+void envp_print(t_envp *envp);
+
+
 #endif

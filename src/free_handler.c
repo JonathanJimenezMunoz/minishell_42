@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 23:15:10 by david             #+#    #+#             */
-/*   Updated: 2024/07/01 19:32:30 by david            ###   ########.fr       */
+/*   Updated: 2024/07/08 23:08:51 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,23 @@ void free_table_aux(t_table_aux *aux)
 		free(aux->in_heredoc);
 	if (aux->out_append)
 		free(aux->out_append);
+}
+
+void free_envp(t_envp **envp)
+{
+	t_envp *current;
+	t_envp *next;
+
+	current = *envp;
+	while (current != NULL)
+	{
+		next = current->next;
+		if (current->key)
+			free(current->key);
+		if (current->value)
+			free(current->value);
+		free(current);
+		current = next;
+	}
+	*envp = NULL;
 }
