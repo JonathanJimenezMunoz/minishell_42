@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:24:01 by david             #+#    #+#             */
-/*   Updated: 2024/07/08 23:22:15 by david            ###   ########.fr       */
+/*   Updated: 2024/07/12 23:07:30 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,8 @@ int tokenize_line(char *line, t_mini *mini);
 
 // TOKEN_LIST.C
 t_token	*token_new(char *content, t_token_type type);
-void	token_add_back(t_token **tokens, t_token *new);
 void	token_print(t_token *tokens);
 int		ft_add_token(t_token_type type, char **line, t_mini *mini, int size);
-
 
 // FT_UTILS1.C
 void 	ft_clear_spaces(char **line);
@@ -107,6 +105,7 @@ void free_token_list(t_token **token);
 void free_table(t_table **table);
 void free_table_aux(t_table_aux *aux);
 void free_envp(t_envp **envp);
+void	ft_free_all(t_mini *mini);
 
 // PARSER_MAIN.C
 int parser_token(t_mini *mini);
@@ -126,7 +125,18 @@ void parse_redir_heredoc(t_mini *mini, t_table_aux *aux, t_token **current);
 
 // ENVP_LIST.C
 void envp_init(t_envp **envp, char **envp_list);
+void	add_node_to_envp(t_envp **envp, t_envp *new_node);
+char	*envp_get_value(t_envp *envp, char *key);
 void envp_print(t_envp *envp);
+
+// BUILTINS
+int ft_pwd(void);
+int ft_echo(char *args);
+void ft_envp(t_envp *envp);
+int ft_export(char *args, t_envp **envp);
+void	ft_exit(char *str_arg, t_mini *mini);
+int		ft_cd(char *args, t_envp *envp);
+void	ft_unset(char *key, t_mini *mini);
 
 
 #endif

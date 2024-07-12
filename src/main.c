@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 20:04:34 by david             #+#    #+#             */
-/*   Updated: 2024/07/08 23:24:26 by david            ###   ########.fr       */
+/*   Updated: 2024/07/12 00:41:27 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int main(int argc, char **argv, char **envp)
 			parser_token(&mini);
 			// print_table(mini.table);
 			free_token_list(&mini.tokens);
-			free_table(&mini.table);
+			//free_table(&mini.table);
 			init_mini(&mini);
 			rl_clear_history();
 		}

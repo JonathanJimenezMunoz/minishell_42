@@ -6,13 +6,13 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 23:15:10 by david             #+#    #+#             */
-/*   Updated: 2024/07/08 23:08:51 by david            ###   ########.fr       */
+/*   Updated: 2024/07/12 00:47:35 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-void free_token_list(t_token **token)
+void	free_token_list(t_token **token)
 {
     t_token *current = *token;
     t_token *next;
@@ -26,7 +26,7 @@ void free_token_list(t_token **token)
     }	
 }
 
-void free_table(t_table **head)
+void	free_table(t_table **head)
 {
     t_table *current;
     t_table *next;
@@ -53,7 +53,7 @@ void free_table(t_table **head)
     *head = NULL;
 }
 
-void free_table_aux(t_table_aux *aux)
+void	free_table_aux(t_table_aux *aux)
 {
 	if (aux->cmd)
 		free(aux->cmd);
@@ -69,7 +69,7 @@ void free_table_aux(t_table_aux *aux)
 		free(aux->out_append);
 }
 
-void free_envp(t_envp **envp)
+void	free_envp(t_envp **envp)
 {
 	t_envp *current;
 	t_envp *next;
@@ -86,4 +86,10 @@ void free_envp(t_envp **envp)
 		current = next;
 	}
 	*envp = NULL;
+}
+
+void	ft_free_all(t_mini *mini)
+{
+	free_table(&(mini->table));
+	free_envp(&(mini->envp));
 }

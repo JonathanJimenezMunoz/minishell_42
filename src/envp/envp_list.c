@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 22:41:34 by david             #+#    #+#             */
-/*   Updated: 2024/07/08 23:21:49 by david            ###   ########.fr       */
+/*   Updated: 2024/07/12 22:51:22 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_envp	*create_new_node(char *env_str)
 	return (new_node);
 }
 
-static void	add_node_to_envp(t_envp **envp, t_envp *new_node)
+void	add_node_to_envp(t_envp **envp, t_envp *new_node)
 {
 	t_envp	*current;
 
@@ -68,6 +68,22 @@ void	envp_init(t_envp **envp, char **envp_list)
 		}
 		i++;
 	}
+}
+
+char	*envp_get_value(t_envp *envp, char *key)
+{
+	t_envp	*current;
+
+	current = envp;
+	while (current)
+	{
+		if (!ft_strcmp(current->key, key))
+		{
+			return (current->value);
+		}
+		current = current->next;
+	}
+	return (NULL);
 }
 
 void	envp_print(t_envp *envp)
