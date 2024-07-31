@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 22:32:54 by david             #+#    #+#             */
-/*   Updated: 2024/07/01 19:31:13 by david            ###   ########.fr       */
+/*   Updated: 2024/07/31 18:50:14 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int parser_token(t_mini *mini)
 
 	first_word = 1;
 	current = mini->tokens;
+	if (!current)
+		return (0);
 	init_aux(&aux);
 	if (current->type == TOKEN_PIPE)
 		ft_error(mini, "syntax error near unexpected token", current->content);

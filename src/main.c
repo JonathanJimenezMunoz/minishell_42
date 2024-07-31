@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 20:04:34 by david             #+#    #+#             */
-/*   Updated: 2024/07/12 00:41:27 by david            ###   ########.fr       */
+/*   Updated: 2024/07/31 18:50:34 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int main(int argc, char **argv, char **envp)
 	(void)envp;
 	init_mini(&mini);
 	envp_init(&mini.envp, envp);
+
 	//envp_print(mini.envp);
-	//Faltaria meter el envp en la estructura mini
 	while(1) // Falta por saber la flag de parada
 	{
 		line = readline("msh>> ");
@@ -44,6 +44,7 @@ int main(int argc, char **argv, char **envp)
 			//token_print(mini.tokens);
 			parser_token(&mini);
 			// print_table(mini.table);
+			execute(&mini, envp);
 			free_token_list(&mini.tokens);
 			//free_table(&mini.table);
 			init_mini(&mini);

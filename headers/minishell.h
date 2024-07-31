@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:24:01 by david             #+#    #+#             */
-/*   Updated: 2024/07/12 23:07:30 by david            ###   ########.fr       */
+/*   Updated: 2024/07/31 18:36:17 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,5 +138,15 @@ void	ft_exit(char *str_arg, t_mini *mini);
 int		ft_cd(char *args, t_envp *envp);
 void	ft_unset(char *key, t_mini *mini);
 
+// COMMAND_HANDLER.C
+void execute_command(t_table *table_aux, char **envp);
 
+// EXECUTE_MAIN.C
+int execute(t_mini *mini, char **envp);
+
+// REDIRECTION_HANDLER.C
+void	handle_redirection(t_table *table_aux);
+
+// HERE_DOC
+void	here_doc_case(t_table *table_aux);
 #endif

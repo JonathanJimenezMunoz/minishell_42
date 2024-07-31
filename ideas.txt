@@ -18,3 +18,24 @@ cat < "Makefile" | | | grep libft > outfile | wc -l < outfile
 <p1 cat >p3 | // Esto hace una cosa rara
 
 find . -type f -name "*.txt" | wc -l
+
+
+Probamos a meterle a la terminal solo un enter "\n"
+
+
+david@David:~/minishell_42$ ./minishell 
+msh>> cat << hola
+> asdasd
+> asdasdas
+> hola
+asdasd
+asdasdas
+msh>> echo hola >>p4
+msh>> echo hosto >>p4
+msh>> cat <p4 | head -2
+dup2: Bad file descriptor
+msh>> <p4 cat | head -2
+dup2: Bad file descriptor
+msh>> < p4 cat | head -2
+dup2: Bad file descriptor
+msh>> ^C
