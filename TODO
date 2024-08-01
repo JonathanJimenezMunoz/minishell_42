@@ -1,6 +1,6 @@
-Execute
 Señales
-Variables de entorno
 Tener en cuenta el $
 Tener en cuenta el $?
-Shell level al principio maybe
+REVISAR MEMORIA
+NORMINETTE
+¿Separar variables de entorno por = para .env?, que pasa con export david=d====asds====, o david=

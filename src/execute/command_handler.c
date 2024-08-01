@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/07/31 18:42:20 by david            ###   ########.fr       */
+/*   Updated: 2024/08/01 17:26:46 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,20 @@ static char	*path_handler(char *param, char **envp)
 
 void execute_command(t_table *table_aux, char **envp)
 {
-	char	*argv[3];
+	char	**argv;
 	char	*cmd_path;
+	char	*total_arg;
+	char 	*cmd;
 
-	argv[0] = table_aux->cmd;
-	argv[1] = table_aux->args;
-	argv[2] = NULL;
-
+	cmd = ft_strjoin(table_aux->cmd, " ");
+	if (table_aux->args)
+		total_arg = ft_strjoin2(cmd, table_aux->args);
+	else
+		total_arg = cmd;
+	argv = ft_split(total_arg, ' ');
+	free(total_arg);
 	if (argv[0] == NULL)
-	{
 		exit(0);
-	}
 	cmd_path = path_handler(argv[0], envp);
 	if (cmd_path == NULL)
 	{
@@ -74,8 +77,6 @@ void execute_command(t_table *table_aux, char **envp)
 		exit(EXIT_FAILURE);
 	}
 	execve(cmd_path, argv, envp);
-	perror("pipex: command not found: params");
-	perror(argv[0]);
-	perror("\n");
+	perror("pipex: command not found");
 	exit(127);
 }

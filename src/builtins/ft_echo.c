@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 23:18:15 by david             #+#    #+#             */
-/*   Updated: 2024/07/08 23:23:25 by david            ###   ########.fr       */
+/*   Updated: 2024/08/01 18:11:18 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,20 @@ int	ft_echo(char *args)
 	int	opt;
 
 	opt = 0;
-	if (args[0] != '-' || args[1] != 'n')
+	if (!args)
+	{
+		ft_putstr_fd("\n", 1);
+		return (0);
+	}
+	
+	if (ft_strlen(args) >= 2 && args[0] == '-' && args[1] == 'n')
 	{
 		opt = 1;
-		ft_putstr_fd(args + 3, 1);
+		if (ft_strlen(args) >= 3 && args[2] == ' ')
+			args += 3;
+		else
+			args += 2;
+		ft_putstr_fd(args, 1);
 	}
 	else
         ft_putstr_fd(args, 1);

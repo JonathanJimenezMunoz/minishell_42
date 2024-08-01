@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_envp.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 23:18:15 by david             #+#    #+#             */
-/*   Updated: 2024/07/11 23:44:19 by david            ###   ########.fr       */
+/*   Updated: 2024/08/01 17:57:13 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_envp(t_envp *envp)
 	current = envp;
 	while (current)
 	{
-		printf("%s=%s\n", current->key, current->value);
+		printf("\033[91m%s\033[0m=\033[93m%s\033[0m\n", current->key, current->value);
 		current = current->next;
 	}
 }

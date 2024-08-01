@@ -6,13 +6,13 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 00:47:48 by david             #+#    #+#             */
-/*   Updated: 2024/07/12 00:52:21 by david            ###   ########.fr       */
+/*   Updated: 2024/08/01 17:50:19 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-static void	ft_err(int op, char *arg)
+static void	ft_err(int op, char *arg, t_mini *mini)
 {
     char    *err;
     char    *err_aux;
@@ -22,11 +22,11 @@ static void	ft_err(int op, char *arg)
         ft_putstr_fd("bash: exit: too many arguments\n", 2);
     else if (op == 2)
     {
-        err_aux = ft_strjoin2("bash: exit:", arg);
+        err_aux = ft_strjoin("bash: exit:", arg);
         err = ft_strjoin2(err_aux, ": numeric argument requiered\n");
         ft_putstr_fd(err, 2);
     }
-
+	ft_free_all(mini);
 }
 
 static int	ft_isnumber(char *s)
@@ -66,8 +66,7 @@ static int	ft_exittoi(char *s, t_mini *mini)
 	ft_skip_spaces_and_get_sign(s, &i, &sign);
 	if (!ft_isnumber(s + i))
 	{
-		ft_err(2, s);
-		ft_free_all(mini);
+		ft_err(2, s, mini);
         exit(255);
 	}
 	result = 0;
@@ -76,8 +75,7 @@ static int	ft_exittoi(char *s, t_mini *mini)
 		result = (result * 10) + (s[i] - '0');
 		if (result > 2147483647) //Tener en cuenta el signo? 2147483648 si signo = -?
 		{
-			ft_err(2, s);
-			ft_free_all(mini);
+			ft_err(2, s, mini);
             exit(255);
 		}
 		i++;
@@ -92,16 +90,15 @@ void	ft_exit(char *str_arg, t_mini *mini)
 
     exit_num = 0;
 	args = ft_split(str_arg, ' ');
-	if (args[1])
+	if (args && args[0])
 	{
-		if (args[2] && ft_isnumber(args[1]))
+		if (args[1] && ft_isnumber(args[0]))
 		{
-			ft_err(1, "error");
-			ft_free_all(mini);
+			ft_err(1, "error", mini);
             exit(1);
 		}
 		else
-			exit_num = ft_exittoi(args[1], mini);
+			exit_num = ft_exittoi(args[0], mini);
 	}
 	ft_free_all(mini);
     exit(exit_num);

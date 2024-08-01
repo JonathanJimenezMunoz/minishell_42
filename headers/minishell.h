@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:24:01 by david             #+#    #+#             */
-/*   Updated: 2024/07/31 18:36:17 by david            ###   ########.fr       */
+/*   Updated: 2024/08/01 18:16:10 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,12 @@ typedef struct s_mini
 	t_table	*table;
 	int 	error;
 	t_envp	*envp;
+	pid_t	pid;
+	int		pipe_fd[2];
+	int		in_fd;
+	int		out_fd;
+	int		i;
+	int		p10;
 } t_mini;
 
 // TOKEN_MAIN.C
@@ -122,21 +128,28 @@ void parser_redir_out(t_mini *mini, t_table_aux *aux, t_token **current);
 void parse_redir_append(t_mini *mini, t_table_aux *aux, t_token **current);
 void parse_redir_heredoc(t_mini *mini, t_table_aux *aux, t_token **current);
 
-
 // ENVP_LIST.C
 void envp_init(t_envp **envp, char **envp_list);
 void	add_node_to_envp(t_envp **envp, t_envp *new_node);
 char	*envp_get_value(t_envp *envp, char *key);
 void envp_print(t_envp *envp);
 
+// ENVP_UTILS.C
+void	print_envp_declare(t_envp *envp);
+void	free_envp_list(t_envp *envp);
+t_envp	*copy_envp_list(t_envp *envp);
+void	sort_envp(t_envp *envp);
+void	swap(t_envp *a, t_envp *b);
+
 // BUILTINS
-int ft_pwd(void);
-int ft_echo(char *args);
-void ft_envp(t_envp *envp);
-int ft_export(char *args, t_envp **envp);
+int 	ft_pwd(void);
+int 	ft_echo(char *args);
+void 	ft_envp(t_envp *envp);
+int 	ft_export(char *args, t_envp **envp);
 void	ft_exit(char *str_arg, t_mini *mini);
 int		ft_cd(char *args, t_envp *envp);
 void	ft_unset(char *key, t_mini *mini);
+int 	is_builtin(t_table *table_aux, t_mini *mini);
 
 // COMMAND_HANDLER.C
 void execute_command(t_table *table_aux, char **envp);
@@ -146,7 +159,6 @@ int execute(t_mini *mini, char **envp);
 
 // REDIRECTION_HANDLER.C
 void	handle_redirection(t_table *table_aux);
-
 // HERE_DOC
 void	here_doc_case(t_table *table_aux);
 #endif

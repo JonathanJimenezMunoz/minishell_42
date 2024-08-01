@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:18:23 by david             #+#    #+#             */
-/*   Updated: 2024/07/31 18:21:34 by david            ###   ########.fr       */
+/*   Updated: 2024/08/01 16:58:19 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,4 @@ void	handle_redirection(t_table *table_aux)
 		handle_output_redirection(table_aux->out_redir);
 	if (table_aux->out_append)
 		handle_output_append_redirection(table_aux->out_append);
-
 }

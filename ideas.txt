@@ -18,10 +18,12 @@ cat < "Makefile" | | | grep libft > outfile | wc -l < outfile
 <p1 cat >p3 | // Esto hace una cosa rara
 
 find . -type f -name "*.txt" | wc -l
-
+cat p*
 
 Probamos a meterle a la terminal solo un enter "\n"
 
+export AGUA=p4
+david@David:~/minishell_42$ cat <$AGU
 
 david@David:~/minishell_42$ ./minishell 
 msh>> cat << hola
