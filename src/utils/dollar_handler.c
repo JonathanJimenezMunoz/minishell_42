@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 23:52:39 by david             #+#    #+#             */
-/*   Updated: 2024/08/02 15:57:37 by david            ###   ########.fr       */
+/*   Updated: 2024/08/02 16:58:54 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ static char  *ft_envp_key(char *line)
 	i = 0;
 	while (line[i] != '\0' && line[i] != ' ' && line[i] != '$')
 	{
-		key[i] = line [i];
+		key[i] = line[i];
 		i++;
 	}
+	key[i] = '\0';
 	return (key);
 }
 
@@ -46,15 +47,16 @@ static int  ft_counter(char *line, int size, t_mini *mini)
 	{
 		if (line[i] == '$')
 		{
-			if (line[i + 1] == '?')
+			i++;
+			if (line[i] == '?')
 			{
 				counter += ft_strlen(mini->error);
 				i++;
 			}
-			else if (line[i + 1] != ' ')
+			else if (line[i] != ' ')
 			{
 				counter += ft_strlen(envp_get_value(mini->envp,
-								ft_envp_key(&(line[i]))));
+								ft_envp_key(&(line[i])))) + 1;
 				i += ft_strlen(ft_envp_key(&(line[i])));
 			}
 			else
@@ -77,7 +79,7 @@ char	*ft_new_line(char *line, int size, t_mini *mini)
 	char    *value;
 
 	real_size = ft_counter(line, size, mini);
-	new_line = malloc(sizeof(char) * (real_size + 1));
+	new_line = malloc(sizeof(char) * (real_size + 10));
 	if (!new_line)
 		return (NULL);
 	i = 0;
@@ -86,10 +88,11 @@ char	*ft_new_line(char *line, int size, t_mini *mini)
 	{
 		if (line[i] == '$')
 		{
-			if (line[i + 1] == '?')
+			i++;
+			if (line[i] == '?')
 			{
 				counter = 0;
-				while (ft_strlen(mini->error) > counter)
+				while (ft_strlen(mini->error) - 1 > counter)
 				{
 					new_line[j] = mini->error[counter];
 					counter++;
@@ -97,7 +100,7 @@ char	*ft_new_line(char *line, int size, t_mini *mini)
 				}
 				i++;
 			}
-			else if (line[i + 1] != ' ')
+			else if (line[i] != ' ')
 			{
 				counter = 0;
 				value = envp_get_value(mini->envp,
@@ -112,8 +115,7 @@ char	*ft_new_line(char *line, int size, t_mini *mini)
 			}
 			else
 			{
-				new_line[j] = line[i];
-				i++;
+				new_line[j] = line[i - 1];
 				j++;
 			}
 		}

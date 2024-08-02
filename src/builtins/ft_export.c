@@ -6,11 +6,19 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 23:43:24 by david             #+#    #+#             */
-/*   Updated: 2024/08/01 17:56:52 by david            ###   ########.fr       */
+/*   Updated: 2024/08/02 17:34:11 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+static int len_until_space(const char *str)
+{
+	int len = 0;
+	while (str[len] && str[len] != ' ')
+		len++;
+	return len;
+}
 
 static void	parse_args(char *args, char **key, char **value)
 {
@@ -21,8 +29,8 @@ static void	parse_args(char *args, char **key, char **value)
 	{
 		*separator = '\0';
 		*key = ft_strdup(args);
-		*value = ft_strdup(separator + 1);
-	}
+		*value = ft_strndup(separator + 1, len_until_space(separator + 1));
+    }
 }
 
 static t_envp *add_new_env_node(char *key, char *value)

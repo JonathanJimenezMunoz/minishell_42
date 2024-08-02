@@ -41,3 +41,7 @@ dup2: Bad file descriptor
 msh>> < p4 cat | head -2
 dup2: Bad file descriptor
 msh>> ^C
+
+
+msh>>export david = aaa
+Segmentation fault

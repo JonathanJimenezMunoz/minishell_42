@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:24:28 by david             #+#    #+#             */
-/*   Updated: 2024/08/02 15:59:04 by david            ###   ########.fr       */
+/*   Updated: 2024/08/02 17:17:46 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void tokenize_quote(char **line, t_mini *mini)
 	{
 		*line += 1;
 		tmp = ft_new_line(*line, size, mini);
-		ft_add_token(TOKEN_WORD, &tmp, mini, size);
+		ft_add_token(TOKEN_WORD, &tmp, mini,  ft_strlen(tmp));
 		//free(tmp);
 		*line += size;
 		*line += 1;
@@ -83,7 +83,7 @@ static void tokenize_word(char **line, t_mini *mini)
 	if (i > 0)
 	{
 		tmp = ft_new_line(*line, i, mini);
-		ft_add_token(TOKEN_WORD, &tmp, mini, i);
+		ft_add_token(TOKEN_WORD, &tmp, mini, ft_strlen(tmp));
 		//free(tmp);
 		*line += i;
 	}
