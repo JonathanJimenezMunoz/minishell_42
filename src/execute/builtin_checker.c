@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 22:51:40 by david             #+#    #+#             */
-/*   Updated: 2024/08/01 18:17:18 by david            ###   ########.fr       */
+/*   Updated: 2024/08/02 00:41:39 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,24 @@ static int	is_builtin_aux(t_table *table_aux, t_mini *mini)
 	if (ft_strncmp(table_aux->cmd, "unset", 6) == 0)
 	{
 		ft_unset(table_aux->args, mini);
+		write_file(".err", 0);
 		return (0);
 	}
 	else if (ft_strncmp(table_aux->cmd, "env", 4) == 0)
 	{
 		ft_envp(mini->envp);
+		write_file(".err", 0);
 		return (0);
 	}
 	else if (ft_strncmp(table_aux->cmd, "exit", 5) == 0)
 	{
 		ft_exit(table_aux->args, mini);
+		return (0);
+	}
+	else if (ft_strncmp(table_aux->cmd, "export", 7) == 0)
+	{
+		ft_export(table_aux->args, &(mini->envp));	
+		write_file(".err", 0);	
 		return (0);
 	}
 	return (1);
@@ -37,6 +45,7 @@ int	is_builtin(t_table *table_aux, t_mini *mini)
 	if (ft_strncmp(table_aux->cmd, "echo", 5) == 0)
 	{
 		ft_echo(table_aux->args);
+		write_file(".err", 0);
 		return (0);
 	}
 	else if (ft_strncmp(table_aux->cmd, "cd", 3) == 0)
@@ -47,11 +56,7 @@ int	is_builtin(t_table *table_aux, t_mini *mini)
 	else if (ft_strncmp(table_aux->cmd, "pwd", 4) == 0)
 	{
 		ft_pwd();
-		return (0);
-	}
-	else if (ft_strncmp(table_aux->cmd, "export", 7) == 0)
-	{
-		ft_export(table_aux->args, &(mini->envp));		
+		write_file(".err", 0);
 		return (0);
 	}
 	else

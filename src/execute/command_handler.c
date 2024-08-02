@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/08/01 17:26:46 by david            ###   ########.fr       */
+/*   Updated: 2024/08/02 00:55:36 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,18 @@ static char	*path_handler(char *param, char **envp)
 	return (param);
 }
 
+static void error_handler(char *cmd_path, char **argv)
+{
+	if (ft_strchr(cmd_path, '/') == NULL)
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(argv[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		write_file(".err", 127);
+		exit(127);
+	}
+}
+
 void execute_command(t_table *table_aux, char **envp)
 {
 	char	**argv;
@@ -71,12 +83,9 @@ void execute_command(t_table *table_aux, char **envp)
 	if (argv[0] == NULL)
 		exit(0);
 	cmd_path = path_handler(argv[0], envp);
-	if (cmd_path == NULL)
-	{
-		perror("getenv");
-		exit(EXIT_FAILURE);
-	}
+	error_handler(cmd_path, argv);
+	write_file(".err", 0);
 	execve(cmd_path, argv, envp);
-	perror("pipex: command not found");
+	perror(argv[0]);
 	exit(127);
 }

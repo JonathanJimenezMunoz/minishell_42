@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:18:23 by david             #+#    #+#             */
-/*   Updated: 2024/08/01 16:58:19 by david            ###   ########.fr       */
+/*   Updated: 2024/08/02 01:00:36 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ static void	handle_input_redirection(const char *in_redir)
 	fd = open(in_redir, O_RDONLY);
 	if (fd < 0)
 	{
-		perror("open");
+		ft_putstr_fd("bash: ", 2);
+		perror(in_redir);
+		write_file(".err", 1);
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDIN_FILENO) < 0)
@@ -37,7 +39,9 @@ static void	handle_output_redirection(const char *out_redir)
 	fd = open(out_redir, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 	{
-		perror("open");
+		ft_putstr_fd("bash: ", 2);
+		perror(out_redir);
+		write_file(".err", 1);
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
@@ -55,7 +59,9 @@ static void	handle_output_append_redirection(const char *out_append)
 	fd = open(out_append, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
 	{
-		perror("open");
+		ft_putstr_fd("bash: ", 2);
+		perror(out_append);
+		write_file(".err", 1);
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)

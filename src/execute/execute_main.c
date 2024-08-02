@@ -6,13 +6,13 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:48:47 by david             #+#    #+#             */
-/*   Updated: 2024/08/01 18:18:18 by david            ###   ########.fr       */
+/*   Updated: 2024/08/02 00:55:43 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-static void	handle_child_process(char **envp_lst, 
+static void	handle_child_process(char **envp_lst,
 	t_table *table_aux, t_mini *mini)
 {
 	if (mini->i != 0)
@@ -37,7 +37,6 @@ static void	handle_child_process(char **envp_lst,
 	if (table_aux->in_heredoc)
 		here_doc_case(table_aux);
 	execute_command(table_aux, envp_lst);
-	exit(0);
 }
 
 static void	handle_parent_process(t_mini *mini, t_table *table_aux)	

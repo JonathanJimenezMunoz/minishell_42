@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:24:01 by david             #+#    #+#             */
-/*   Updated: 2024/08/01 18:16:10 by david            ###   ########.fr       */
+/*   Updated: 2024/08/02 15:49:20 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_mini
 {
 	t_token	*tokens;
 	t_table	*table;
-	int 	error;
+	char 	*error;
 	t_envp	*envp;
 	pid_t	pid;
 	int		pipe_fd[2];
@@ -161,4 +161,12 @@ int execute(t_mini *mini, char **envp);
 void	handle_redirection(t_table *table_aux);
 // HERE_DOC
 void	here_doc_case(t_table *table_aux);
+
+// FILE_HANDLER.C
+int	read_file(char *file_name, t_mini *mini);
+void	write_file(char *file_name, int content);
+
+// DOLLAR_HANDLER.C
+char	*ft_new_line(char *line, int size, t_mini *mini);
+
 #endif
