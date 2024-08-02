@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_handler.c                                   :+:      :+:    :+:   */
+/*   parser_handler2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 19:14:05 by david             #+#    #+#             */
-/*   Updated: 2024/07/01 19:35:47 by david            ###   ########.fr       */
+/*   Updated: 2024/08/02 23:18:09 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 void parse_cmd_args(t_table_aux *aux, int *first_word, t_token **current)
 {
+	int	i;
+
+	i = 0;
 	if (*first_word == 1 && (*current)->type == TOKEN_WORD)
 	{
 		aux->cmd = ft_strdup((*current)->content);
@@ -22,12 +25,11 @@ void parse_cmd_args(t_table_aux *aux, int *first_word, t_token **current)
 	}
 	else if ((*current)->type == TOKEN_WORD)
 	{
-		if (aux->args)
-			aux->args = ft_strjoin2(aux->args, " ");
-		if (!aux->args)
-			aux->args = ft_strdup((*current)->content);
-		else
-			aux->args = ft_strjoin2(aux->args, (*current)->content);
+		while (aux->args && aux->args[i])
+			i++;
+		aux->args = ft_realloc_args(aux->args, i + 2);
+		aux->args[i] = ft_strdup((*current)->content);
+		aux->args[i + 1] = NULL; 
 	}
 }
 

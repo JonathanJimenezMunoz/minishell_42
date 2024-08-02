@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:24:28 by david             #+#    #+#             */
-/*   Updated: 2024/08/02 17:17:46 by david            ###   ########.fr       */
+/*   Updated: 2024/08/02 22:43:49 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,19 @@ static void tokenize_quote(char **line, t_mini *mini)
 {
 	int size;
 	char *tmp;
+	int	recover;
 
 	size = ft_is_good_quote(*line);
 	if (size > 0)
 	{
 		*line += 1;
 		tmp = ft_new_line(*line, size, mini);
-		ft_add_token(TOKEN_WORD, &tmp, mini,  ft_strlen(tmp));
-		//free(tmp);
+		recover = ft_strlen(tmp);
+		printf("tmp: %s\n", tmp);			
+		printf("line: %s\n", *line);		
+		ft_add_token(TOKEN_WORD, &tmp, mini, ft_strlen(tmp));
+		tmp -= recover;
+		free(tmp);
 		*line += size;
 		*line += 1;
 	}
@@ -70,8 +75,9 @@ static void tokenize_redir(char **line, t_mini *mini)
 
 static void tokenize_word(char **line, t_mini *mini)
 {
-	int i;
-	char *tmp;
+	int		i;
+	char	*tmp;
+	int		recover;
 
 	i = 0;
 	while ((*line)[i] != '<' && (*line)[i] != '>' && (*line)[i] != '|'
@@ -83,8 +89,10 @@ static void tokenize_word(char **line, t_mini *mini)
 	if (i > 0)
 	{
 		tmp = ft_new_line(*line, i, mini);
+		recover = ft_strlen(tmp);
 		ft_add_token(TOKEN_WORD, &tmp, mini, ft_strlen(tmp));
-		//free(tmp);
+		tmp -= recover;
+		free(tmp);
 		*line += i;
 	}
 }

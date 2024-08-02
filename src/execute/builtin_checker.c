@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 22:51:40 by david             #+#    #+#             */
-/*   Updated: 2024/08/02 00:41:39 by david            ###   ########.fr       */
+/*   Updated: 2024/08/03 00:01:05 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	is_builtin_aux(t_table *table_aux, t_mini *mini)
 {
 	if (ft_strncmp(table_aux->cmd, "unset", 6) == 0)
 	{
-		ft_unset(table_aux->args, mini);
+		ft_unset(table_aux->args[0], mini);
 		write_file(".err", 0);
 		return (0);
 	}
@@ -33,7 +33,7 @@ static int	is_builtin_aux(t_table *table_aux, t_mini *mini)
 	}
 	else if (ft_strncmp(table_aux->cmd, "export", 7) == 0)
 	{
-		ft_export(table_aux->args, &(mini->envp));	
+		ft_export(table_aux->args[0], &(mini->envp));	
 		write_file(".err", 0);	
 		return (0);
 	}

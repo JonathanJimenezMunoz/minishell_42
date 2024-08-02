@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 23:43:24 by david             #+#    #+#             */
-/*   Updated: 2024/08/02 17:34:11 by david            ###   ########.fr       */
+/*   Updated: 2024/08/03 00:00:55 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int len_until_space(const char *str)
 static void	parse_args(char *args, char **key, char **value)
 {
 	char	*separator;
-
+	
 	separator = ft_strchr(args, '=');
 	if (separator)
 	{
@@ -69,7 +69,7 @@ static int	update_or_add_env(t_envp **envp, char *key, char *value)
 	return (0);
 }
 
-int ft_export(char *args, t_envp **envp)
+int ft_export(char *args, t_envp **envp) //FALTAN FREES KEY VALUE
 {
 	char	*key;
 	char	*value;
@@ -91,5 +91,6 @@ int ft_export(char *args, t_envp **envp)
 		print_envp_declare(envp_copy);
 		free_envp_list(envp_copy);
 	}
+	free(args);
 	return (0);
 }

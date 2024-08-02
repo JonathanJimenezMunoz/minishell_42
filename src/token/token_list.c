@@ -44,7 +44,7 @@ int ft_add_token(t_token_type type, char **line, t_mini *mini, int size)
 		i++;
 	}
 	content[i] = '\0';
-	if (type == TOKEN_WORD)
+	if (TOKEN_WORD == type)
 	{
 		printf("content: %s\n", content);
 	}

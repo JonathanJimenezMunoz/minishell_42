@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 22:46:27 by david             #+#    #+#             */
-/*   Updated: 2024/08/02 00:41:32 by david            ###   ########.fr       */
+/*   Updated: 2024/08/02 23:45:18 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,13 @@ static int	ft_home_path(t_envp *envp)
 	return (0);
 }
 
-int	ft_cd(char *args, t_envp *envp)
+int	ft_cd(char **paths, t_envp *envp)
 {
-	char	**paths;
 
-	if (!args)
+	if (!paths[0])
 		return (ft_home_path(envp));
 	else
 	{
-		paths = ft_split(args, ' ');
 		if (paths[1])
 		{
 			ft_putstr_fd("bash: cd: too many arguments\n", 2);

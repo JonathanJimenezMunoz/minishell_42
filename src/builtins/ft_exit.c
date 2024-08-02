@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 00:47:48 by david             #+#    #+#             */
-/*   Updated: 2024/08/01 17:50:19 by david            ###   ########.fr       */
+/*   Updated: 2024/08/03 00:48:10 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 static void	ft_err(int op, char *arg, t_mini *mini)
 {
-    char    *err;
-    char    *err_aux;
+	char	*err;
+	char	*err_aux;
 
-    ft_putstr_fd("exit\n", 2);
+	ft_putstr_fd("exit\n", 2);
 	if (op == 1)
-        ft_putstr_fd("bash: exit: too many arguments\n", 2);
-    else if (op == 2)
-    {
-        err_aux = ft_strjoin("bash: exit:", arg);
-        err = ft_strjoin2(err_aux, ": numeric argument requiered\n");
-        ft_putstr_fd(err, 2);
-    }
+		ft_putstr_fd("bash: exit: too many arguments\n", 2);
+	else if (op == 2)
+	{
+		err_aux = ft_strjoin("bash: exit:", arg);
+		err = ft_strjoin2(err_aux, ": numeric argument requiered\n");
+		ft_putstr_fd(err, 2);
+	}
 	ft_free_all(mini);
 }
 
@@ -43,7 +43,7 @@ static int	ft_isnumber(char *s)
 	return (1);
 }
 
-static void	ft_skip_spaces_and_get_sign(char *s, int *i, int *sign)
+static void	ft_skip_spaces_and_get_sign(char *s, int *i, int *sign, t_mini *mini)
 {
 	while (s[*i] && s[*i] == ' ')
 		(*i)++;
@@ -52,6 +52,12 @@ static void	ft_skip_spaces_and_get_sign(char *s, int *i, int *sign)
 		if (s[*i] == '-')
 			*sign *= -1;
 		(*i)++;
+	}
+	if (!ft_isnumber(s + (*i)))
+	{
+		ft_err(2, s, mini);
+		write_file(".err", 255);
+        exit(255);
 	}
 }
 
@@ -63,12 +69,7 @@ static int	ft_exittoi(char *s, t_mini *mini)
 
 	i = 0;
 	sign = 1;
-	ft_skip_spaces_and_get_sign(s, &i, &sign);
-	if (!ft_isnumber(s + i))
-	{
-		ft_err(2, s, mini);
-        exit(255);
-	}
+	ft_skip_spaces_and_get_sign(s, &i, &sign, mini);
 	result = 0;
 	while (s[i])
 	{
@@ -76,6 +77,7 @@ static int	ft_exittoi(char *s, t_mini *mini)
 		if (result > 2147483647) //Tener en cuenta el signo? 2147483648 si signo = -?
 		{
 			ft_err(2, s, mini);
+			write_file(".err", 255);
             exit(255);
 		}
 		i++;
@@ -83,23 +85,23 @@ static int	ft_exittoi(char *s, t_mini *mini)
 	return ((result * sign) % 256);
 }
 
-void	ft_exit(char *str_arg, t_mini *mini)
+void	ft_exit(char **args, t_mini *mini)
 {
     int     exit_num;
-    char    **args;
 
     exit_num = 0;
-	args = ft_split(str_arg, ' ');
 	if (args && args[0])
 	{
 		if (args[1] && ft_isnumber(args[0]))
 		{
 			ft_err(1, "error", mini);
+			write_file(".err", 1);
             exit(1);
 		}
 		else
 			exit_num = ft_exittoi(args[0], mini);
 	}
 	ft_free_all(mini);
+	write_file(".err", exit_num);
     exit(exit_num);
 }
