@@ -6,17 +6,16 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 23:18:15 by david             #+#    #+#             */
-/*   Updated: 2024/08/02 23:55:19 by david            ###   ########.fr       */
+/*   Updated: 2024/08/12 18:53:05 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-
-int ft_echo(char **args)
+int	ft_echo(char **args)
 {
-	int opt;
-	char *joined_args;
+	int		opt;
+	char	*joined_args;
 
 	opt = 0;
 	if (!args || !args[0])

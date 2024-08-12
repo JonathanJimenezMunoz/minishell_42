@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 17:47:13 by david             #+#    #+#             */
-/*   Updated: 2024/08/01 17:56:43 by david            ###   ########.fr       */
+/*   Updated: 2024/08/12 18:57:01 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	print_envp_declare(t_envp *envp)
 {
 	while (envp)
 	{
-		printf("declare -x \033[91m%s\033[0m=\"\033[93m%s\033[0m\"\n", 
+		printf("declare -x \033[91m%s\033[0m=\"\033[93m%s\033[0m\"\n",
 			envp->key, envp->value);
 		envp = envp->next;
 	}

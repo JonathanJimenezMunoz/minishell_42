@@ -45,3 +45,16 @@ msh>> ^C
 
 msh>>export david = aaa
 Segmentation fault
+
+
+ ""cat" < "p3""
+//NO SE QUE DEBERIA HACER
+
+
+//EL INFAME AWK
+ awk 'END {print NR}' p4
+
+
+
+echo $AGUA | echo $AGUA | export AGUA=p7 | env
+echo $AGUA | echo $AGUA | export AGUA=p7 | env | exit

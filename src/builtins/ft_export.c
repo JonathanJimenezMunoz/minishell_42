@@ -6,34 +6,36 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 23:43:24 by david             #+#    #+#             */
-/*   Updated: 2024/08/03 00:00:55 by david            ###   ########.fr       */
+/*   Updated: 2024/08/12 18:56:13 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-static int len_until_space(const char *str)
+static int	len_until_space(const char *str)
 {
-	int len = 0;
+	int	len;
+
+	len = 0;
 	while (str[len] && str[len] != ' ')
 		len++;
-	return len;
+	return (len);
 }
 
 static void	parse_args(char *args, char **key, char **value)
 {
 	char	*separator;
-	
+
 	separator = ft_strchr(args, '=');
 	if (separator)
 	{
 		*separator = '\0';
 		*key = ft_strdup(args);
 		*value = ft_strndup(separator + 1, len_until_space(separator + 1));
-    }
+	}
 }
 
-static t_envp *add_new_env_node(char *key, char *value)
+static t_envp	*add_new_env_node(char *key, char *value)
 {
 	t_envp	*new_node;
 
@@ -69,11 +71,12 @@ static int	update_or_add_env(t_envp **envp, char *key, char *value)
 	return (0);
 }
 
-int ft_export(char *args, t_envp **envp) //FALTAN FREES KEY VALUE
+//FALTAN FREES KEY VALUE
+int	ft_export(char *args, t_envp **envp)
 {
 	char	*key;
 	char	*value;
-	t_envp *envp_copy;
+	t_envp	*envp_copy;
 
 	key = NULL;
 	value = NULL;

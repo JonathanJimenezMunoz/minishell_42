@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 22:41:34 by david             #+#    #+#             */
-/*   Updated: 2024/07/12 22:51:22 by david            ###   ########.fr       */
+/*   Updated: 2024/08/12 18:56:49 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static t_envp	*create_new_node(char *env_str)
 	{
 		return (NULL);
 	}
-
 	new_node = (t_envp *)malloc(sizeof(t_envp));
 	if (!new_node)
 	{

@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 23:15:10 by david             #+#    #+#             */
-/*   Updated: 2024/08/03 01:10:25 by david            ###   ########.fr       */
+/*   Updated: 2024/08/12 18:30:37 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,23 @@ void	free_token_list(t_token **token)
     }	
 }
 
-void	free_table(t_table **head)
+void	free_envp(t_envp **envp)
 {
-    t_table *current;
-    t_table *next;
+	t_envp *current;
+	t_envp *next;
 
-	current = *head;
-    while (current != NULL)
+	current = *envp;
+	while (current != NULL)
 	{
-        next = current->next;
-		if (current->cmd)
-            free(current->cmd);
-		if (current->args)
-        	free(current->args);
-        if (current->in_redir)
-			free(current->in_redir);
-        if (current->out_redir)
-			free(current->out_redir);
-        if (current->in_heredoc)
-			free(current->in_heredoc);
-        if (current->out_append)
-			free(current->out_append);
-        free(current);
-        current = next;
-    }
-    *head = NULL;
+		next = current->next;
+		if (current->key)
+			free(current->key);
+		if (current->value)
+			free(current->value);
+		free(current);
+		current = next;
+	}
+	*envp = NULL;
 }
 
 void	free_table(t_table **head)

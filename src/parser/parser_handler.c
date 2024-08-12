@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_handler2.c                                  :+:      :+:    :+:   */
+/*   parser_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 19:14:05 by david             #+#    #+#             */
-/*   Updated: 2024/08/02 23:18:09 by david            ###   ########.fr       */
+/*   Updated: 2024/08/12 20:14:09 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../headers/minishell.h"
+#include "../../headers/minishell.h"
 
-
-void parse_cmd_args(t_table_aux *aux, int *first_word, t_token **current)
+void	parse_cmd_args(t_table_aux *aux, int *first_word, t_token **current)
 {
 	int	i;
 
@@ -29,18 +28,18 @@ void parse_cmd_args(t_table_aux *aux, int *first_word, t_token **current)
 			i++;
 		aux->args = ft_realloc_args(aux->args, i + 2);
 		aux->args[i] = ft_strdup((*current)->content);
-		aux->args[i + 1] = NULL; 
+		aux->args[i + 1] = NULL;
 	}
 }
 
-void parse_redir_in(t_mini *mini, t_table_aux *aux, t_token **current)
+void	parse_redir_in(t_mini *mini, t_table_aux *aux, t_token **current)
 {
 	if ((*current)->type == TOKEN_REDIR_IN)
 	{
 		if ((*current)->next)
 			*current = (*current)->next;
 		if ((*current)->type != TOKEN_WORD)
-			ft_error_aux(mini, aux, 
+			ft_error_aux(mini, aux,
 				"syntax error near unexpected token", (*current)->content);
 		if (aux->in_heredoc)
 		{
@@ -49,6 +48,7 @@ void parse_redir_in(t_mini *mini, t_table_aux *aux, t_token **current)
 		}
 		if (aux->in_redir)
 		{
+			open_file(aux->in_redir, O_RDONLY, 0644, mini);
 			free(aux->in_redir);
 			aux->in_redir = NULL;
 		}
@@ -56,24 +56,27 @@ void parse_redir_in(t_mini *mini, t_table_aux *aux, t_token **current)
 	}
 }
 
-void parser_redir_out(t_mini *mini, t_table_aux *aux, t_token **current)
+void	parser_redir_out(t_mini *mini, t_table_aux *aux, t_token **current)
 {
 	if ((*current)->type == TOKEN_REDIR_OUT)
 	{
 		if (!(*current)->next)
-			ft_error_aux(mini, aux, 
+			ft_error_aux(mini, aux,
 				"syntax error near unexpected token", "newline");
 		*current = (*current)->next;
 		if ((*current)->type != TOKEN_WORD)
-			ft_error_aux(mini, aux, 
+			ft_error_aux(mini, aux,
 				"syntax error near unexpected token", (*current)->content);
 		if (aux->out_append)
 		{
+			open_file(aux->out_append, O_WRONLY | O_CREAT | O_APPEND,
+				0644, mini);
 			free(aux->out_append);
 			aux->out_append = NULL;
 		}
 		if (aux->out_redir)
 		{
+			open_file(aux->out_redir, O_WRONLY | O_CREAT | O_TRUNC, 0644, mini);
 			free(aux->out_redir);
 			aux->out_redir = NULL;
 		}
@@ -81,24 +84,27 @@ void parser_redir_out(t_mini *mini, t_table_aux *aux, t_token **current)
 	}
 }
 
-void parse_redir_append(t_mini *mini, t_table_aux *aux, t_token **current)
+void	parse_redir_append(t_mini *mini, t_table_aux *aux, t_token **current)
 {
 	if ((*current)->type == TOKEN_REDIR_APPEND)
 	{
 		if (!(*current)->next)
-			ft_error_aux(mini, aux, 
+			ft_error_aux(mini, aux,
 				"syntax error near unexpected token", "newline");
 		*current = (*current)->next;
 		if ((*current)->type != TOKEN_WORD)
-			ft_error_aux(mini, aux, 
+			ft_error_aux(mini, aux,
 				"syntax error near unexpected token", (*current)->content);
 		if (aux->out_redir)
 		{
+			open_file(aux->out_redir, O_WRONLY | O_CREAT | O_TRUNC, 0644, mini);
 			free(aux->out_redir);
 			aux->out_redir = NULL;
 		}
 		if (aux->out_append)
 		{
+			open_file(aux->out_append, O_WRONLY | O_CREAT | O_APPEND,
+				0644, mini);
 			free(aux->out_append);
 			aux->out_append = NULL;
 		}
@@ -106,19 +112,20 @@ void parse_redir_append(t_mini *mini, t_table_aux *aux, t_token **current)
 	}
 }
 
-void parse_redir_heredoc(t_mini *mini, t_table_aux *aux, t_token **current)
+void	parse_redir_heredoc(t_mini *mini, t_table_aux *aux, t_token **current)
 {
 	if ((*current)->type == TOKEN_REDIR_DELIMITER)
 	{
 		if (!(*current)->next)
-			ft_error_aux(mini, aux, 
+			ft_error_aux(mini, aux,
 				"syntax error near unexpected token", "newline");
 		*current = (*current)->next;
 		if ((*current)->type != TOKEN_WORD)
-			ft_error_aux(mini, aux, 
+			ft_error_aux(mini, aux,
 				"syntax error near unexpected token", (*current)->content);
 		if (aux->in_redir)
 		{
+			open_file(aux->in_redir, O_RDONLY, 0644, mini);
 			free(aux->in_redir);
 			aux->in_redir = NULL;
 		}

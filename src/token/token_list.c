@@ -1,11 +1,20 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_list.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/12 20:27:38 by david             #+#    #+#             */
+/*   Updated: 2024/08/12 20:29:03 by david            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-
-t_token *token_new(char *content, t_token_type type)
+t_token	*token_new(char *content, t_token_type type)
 {
-	t_token *new;
+	t_token	*new;
 
 	new = (t_token *)malloc(sizeof(t_token));
 	if (!new)
@@ -16,24 +25,26 @@ t_token *token_new(char *content, t_token_type type)
 	return (new);
 }
 
-void append_node(t_token **head, t_token *new_token)
+void	append_node(t_token **head, t_token *new_token)
 {
-	if (*head == NULL) {
+	t_token	*temp;
+
+	if (*head == NULL)
 		*head = new_token;
-	} else {
-		t_token *temp = *head;
-		while (temp->next != NULL) {
+	else
+	{
+		temp = *head;
+		while (temp->next != NULL)
 			temp = temp->next;
-		}
 		temp->next = new_token;
 	}
 }
 
-int ft_add_token(t_token_type type, char **line, t_mini *mini, int size)
+int	ft_add_token(t_token_type type, char **line, t_mini *mini, int size)
 {
-	t_token *token;
-	char *content;
-	int i;
+	t_token	*token;
+	char	*content;
+	int		i;
 
 	content = (char *)malloc(sizeof(char) * (size + 1));
 	i = 0;
@@ -44,10 +55,6 @@ int ft_add_token(t_token_type type, char **line, t_mini *mini, int size)
 		i++;
 	}
 	content[i] = '\0';
-	if (TOKEN_WORD == type)
-	{
-		printf("content: %s\n", content);
-	}
 	token = token_new(content, type);
 	free(content);
 	if (!token)
@@ -56,7 +63,7 @@ int ft_add_token(t_token_type type, char **line, t_mini *mini, int size)
 	return (0);
 }
 
-void token_print(t_token *tokens)
+void	token_print(t_token *tokens)
 {
 	while (tokens)
 	{

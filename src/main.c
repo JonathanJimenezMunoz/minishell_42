@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 20:04:34 by david             #+#    #+#             */
-/*   Updated: 2024/08/03 01:10:39 by david            ###   ########.fr       */
+/*   Updated: 2024/08/12 20:18:14 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static void	init_mini(t_mini *mini)
 {
 	mini->tokens = NULL;
 	mini->table = NULL;
-	mini->error = 0;
+	mini->error = NULL;
+	mini->status = 0;
 	mini->pipe_fd[0] = -1;
 	mini->pipe_fd[1] = -1;
 	mini->in_fd = STDIN_FILENO;
@@ -63,11 +64,19 @@ int main(int argc, char **argv, char **envp)
 		}
 		add_history(line);
 		tokenize_line(line, &mini);
+		//printf("tokenize pasa\n");
 		free(line);
 		//token_print(mini.tokens);
 		parser_token(&mini);
+		//printf("parser pasa\n");
 		// print_table(mini.table);
-		execute(&mini, envp);
+		if (mini.status == 0)
+		{
+
+			execute(&mini, envp);
+			//printf("execute pasa\n");
+		}
+		
 		free_token_list(&mini.tokens);
 		free_table(&mini.table);
 		init_mini(&mini);

@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 00:47:48 by david             #+#    #+#             */
-/*   Updated: 2024/08/03 00:48:10 by david            ###   ########.fr       */
+/*   Updated: 2024/08/12 18:52:43 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static int	ft_isnumber(char *s)
 	return (1);
 }
 
-static void	ft_skip_spaces_and_get_sign(char *s, int *i, int *sign, t_mini *mini)
+static void	ft_skip_spaces_and_get_sign(char *s, int *i,
+	int *sign, t_mini *mini)
 {
 	while (s[*i] && s[*i] == ' ')
 		(*i)++;
@@ -57,7 +58,7 @@ static void	ft_skip_spaces_and_get_sign(char *s, int *i, int *sign, t_mini *mini
 	{
 		ft_err(2, s, mini);
 		write_file(".err", 255);
-        exit(255);
+		exit(255);
 	}
 }
 
@@ -65,7 +66,7 @@ static int	ft_exittoi(char *s, t_mini *mini)
 {
 	int					i;
 	int					sign;
-	unsigned long	    result;
+	unsigned long		result;
 
 	i = 0;
 	sign = 1;
@@ -74,11 +75,11 @@ static int	ft_exittoi(char *s, t_mini *mini)
 	while (s[i])
 	{
 		result = (result * 10) + (s[i] - '0');
-		if (result > 2147483647) //Tener en cuenta el signo? 2147483648 si signo = -?
+		if (result > 2147483647)
 		{
 			ft_err(2, s, mini);
 			write_file(".err", 255);
-            exit(255);
+			exit(255);
 		}
 		i++;
 	}
@@ -87,21 +88,21 @@ static int	ft_exittoi(char *s, t_mini *mini)
 
 void	ft_exit(char **args, t_mini *mini)
 {
-    int     exit_num;
+	int	exit_num;
 
-    exit_num = 0;
+	exit_num = 0;
 	if (args && args[0])
 	{
 		if (args[1] && ft_isnumber(args[0]))
 		{
 			ft_err(1, "error", mini);
 			write_file(".err", 1);
-            exit(1);
+			exit(1);
 		}
 		else
 			exit_num = ft_exittoi(args[0], mini);
 	}
 	ft_free_all(mini);
 	write_file(".err", exit_num);
-    exit(exit_num);
+	exit(exit_num);
 }

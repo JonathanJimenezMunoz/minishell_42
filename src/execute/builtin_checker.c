@@ -6,13 +6,13 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 22:51:40 by david             #+#    #+#             */
-/*   Updated: 2024/08/03 00:01:05 by david            ###   ########.fr       */
+/*   Updated: 2024/08/12 21:39:34 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-static int	is_builtin_aux(t_table *table_aux, t_mini *mini)
+static int	ft_built_aux(t_table *table_aux, t_mini *mini)
 {
 	if (ft_strncmp(table_aux->cmd, "unset", 6) == 0)
 	{
@@ -40,7 +40,7 @@ static int	is_builtin_aux(t_table *table_aux, t_mini *mini)
 	return (1);
 }
 
-int	is_builtin(t_table *table_aux, t_mini *mini)
+int	ft_built(t_table *table_aux, t_mini *mini)
 {
 	if (ft_strncmp(table_aux->cmd, "echo", 5) == 0)
 	{
@@ -60,5 +60,39 @@ int	is_builtin(t_table *table_aux, t_mini *mini)
 		return (0);
 	}
 	else
-		return (is_builtin_aux(table_aux, mini));
+		return (ft_built_aux(table_aux, mini));
+}
+
+int	is_builtin(t_table *table_aux)
+{
+	if (ft_strncmp(table_aux->cmd, "unset", 6) == 0)
+		return (0);
+	else if (ft_strncmp(table_aux->cmd, "env", 4) == 0)
+		return (0);
+	else if (ft_strncmp(table_aux->cmd, "exit", 5) == 0)
+		return (0);
+	else if (ft_strncmp(table_aux->cmd, "export", 7) == 0)
+		return (0);
+	else if (ft_strncmp(table_aux->cmd, "echo", 5) == 0)
+		return (0);
+	else if (ft_strncmp(table_aux->cmd, "cd", 3) == 0)
+		return (0);
+	else if (ft_strncmp(table_aux->cmd, "pwd", 4) == 0)
+		return (0);
+	else
+		return (1);
+}
+
+int is_builtin_tech(t_table *table_aux)
+{
+	if (ft_strncmp(table_aux->cmd, "unset", 6) == 0)
+		return (1);
+	else if (ft_strncmp(table_aux->cmd, "exit", 5) == 0)
+		return (1);
+	else if (ft_strncmp(table_aux->cmd, "export", 7) == 0)
+		return (1);
+	else if (ft_strncmp(table_aux->cmd, "cd", 3) == 0)
+		return (1);
+	else
+		return (0);
 }

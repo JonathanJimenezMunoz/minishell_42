@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 23:52:39 by david             #+#    #+#             */
-/*   Updated: 2024/08/03 00:52:32 by david            ###   ########.fr       */
+/*   Updated: 2024/08/12 20:31:25 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,8 +205,6 @@ static int	handle_env_variable(char **new_line, int *j,
 	char	*value;
 
 	i = 0;
-	printf("line: %s\n", line);
-	printf("key: %s\n", ft_envp_key(line));
 	value = envp_get_value(mini->envp, ft_envp_key(line));
 	counter = 0;
 	while (ft_strlen(value) > counter)

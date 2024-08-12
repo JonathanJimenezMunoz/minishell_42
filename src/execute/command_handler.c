@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/08/02 23:58:41 by david            ###   ########.fr       */
+/*   Updated: 2024/08/12 20:51:21 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ static char	*path_handler(char *param, char **envp)
 	perror(argv[0]);
 	exit(127);
 }*/
-static void execve_handler(char **argv, char **envp)
+static void	execve_handler(char **argv, char **envp)
 {
 	char	*cmd_path;
-	
+
 	cmd_path = path_handler(argv[0], envp);
 	if (ft_strchr(cmd_path, '/') == NULL)
 	{
@@ -82,8 +82,8 @@ static void execve_handler(char **argv, char **envp)
 
 static int	count_args(char **args)
 {
-	int count;
-	
+	int	count;
+
 	count = 0;
 	while (args && args[count] != NULL)
 		count++;
@@ -92,8 +92,8 @@ static int	count_args(char **args)
 
 static char	**duplicate_args(char *cmd, char **args, int args_count)
 {
-	char **argv;
-	int	i;
+	char	**argv;
+	int		i;
 
 	i = 0;
 	argv = (char **)malloc((args_count + 2) * sizeof(char *));
@@ -118,8 +118,11 @@ static char	**duplicate_args(char *cmd, char **args, int args_count)
 
 void	execute_command(t_table *table_aux, char **envp)
 {
-	int args_count = count_args(table_aux->args);
-	char **argv = duplicate_args(table_aux->cmd, table_aux->args, args_count);
+	int		args_count;
+	char	**argv;
+
+	args_count = count_args(table_aux->args);
+	argv = duplicate_args(table_aux->cmd, table_aux->args, args_count);
 	if (!argv || argv[0] == NULL)
 		exit(1);
 	execve_handler(argv, envp);
