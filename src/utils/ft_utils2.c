@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 23:43:01 by david             #+#    #+#             */
-/*   Updated: 2024/08/12 20:32:57 by david            ###   ########.fr       */
+/*   Updated: 2024/08/13 16:06:05 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	open_file(char *file, int flags, int mode, t_mini *mini)
 		mini->status = 1;
 	}
 }
+
 char	*get_path(char **envp)
 {
 	int	i;
@@ -63,7 +64,7 @@ char	*join_args(char **args)
 	result = ft_strdup(args[0]);
 	if (!result)
 		return (NULL);
-	while(args[i])
+	while (args[i])
 	{
 		temp = ft_strjoin(result, " ");
 		free(result);

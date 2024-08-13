@@ -22,7 +22,7 @@ NAME = minishell
 
 SRCS_MINISHELL		=	main.c free_handler.c
 SRCS_TOKEN			= 	token_main.c token_list.c
-SRCS_PARSER			=	parser_main.c parser_list.c parser_handler.c
+SRCS_PARSER			=	parser_main.c parser_list.c parser_handler_in.c parser_handler_out.c
 SRCS_ENVP			=	envp_list.c envp_utils.c
 SRCS_BUILTIN		=	ft_echo.c ft_pwd.c ft_envp.c ft_export.c ft_exit.c  ft_cd.c ft_unset.c
 SRCS_UTILS			=	ft_utils1.c file_handler.c dollar_handler.c ft_utils2.c

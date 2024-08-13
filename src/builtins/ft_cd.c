@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 22:46:27 by david             #+#    #+#             */
-/*   Updated: 2024/08/12 18:45:29 by david            ###   ########.fr       */
+/*   Updated: 2024/08/13 17:59:05 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,20 @@ static int	ft_home_path(t_envp *envp)
 		write_file(".err", 1);
 		return (-1);
 	}
+	if (chdir(path) == -1)
+	{
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		write_file(".err", 1);
+		return (-1);
+	}
 	return (0);
 }
 
 int	ft_cd(char **paths, t_envp *envp)
 {
-	if (!paths[0])
+	if (!paths || !paths[0])
 		return (ft_home_path(envp));
 	else
 	{

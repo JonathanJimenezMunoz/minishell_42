@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 20:04:34 by david             #+#    #+#             */
-/*   Updated: 2024/08/12 20:18:14 by david            ###   ########.fr       */
+/*   Updated: 2024/08/13 17:02:44 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,46 +41,43 @@ static void	init_mini(t_mini *mini)
 	mini->out_fd = STDOUT_FILENO;
 }
 
-int main(int argc, char **argv, char **envp)
+static void	ft_loop(t_mini *mini, char **envp)
 {
-	t_mini	mini;
 	char	*line;
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	init_mini(&mini);
-	mini.envp = NULL;
-	envp_init(&mini.envp, envp);
-	setup_signal_handlers();
-	//envp_print(mini.envp);
-	while(1)
+	while (1)
 	{
 		line = readline("\033[92mmsh>>\033[0m");
-		if (line == NULL) // ctrl-D (EOF) termina el shell
+		if (line == NULL)
 		{
 			printf("exit\n");
 			exit(1);
 		}
 		add_history(line);
-		tokenize_line(line, &mini);
-		//printf("tokenize pasa\n");
+		tokenize_line(line, mini);
 		free(line);
-		//token_print(mini.tokens);
-		parser_token(&mini);
-		//printf("parser pasa\n");
-		// print_table(mini.table);
-		if (mini.status == 0)
+		parser_token(mini);
+		if (mini->status == 0)
 		{
-
-			execute(&mini, envp);
-			//printf("execute pasa\n");
+			execute(mini, envp);
 		}
-		
-		free_token_list(&mini.tokens);
-		free_table(&mini.table);
-		init_mini(&mini);
-		//rl_clear_history();
+		free_token_list(&mini->tokens);
+		free_table(&mini->table);
+		init_mini(mini);
 	}
+}
+
+//rl_clear_history(); cuando deberiamos usar esta funcion pendiente de frees
+int	main(int argc, char **argv, char **envp)
+{
+	t_mini	mini;
+
+	(void)argc;
+	(void)argv;
+	init_mini(&mini);
+	mini.envp = NULL;
+	envp_init(&mini.envp, envp);
+	setup_signal_handlers();
+	ft_loop(&mini, envp);
 	return (0);
 }

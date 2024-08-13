@@ -5,15 +5,11 @@ HACERLE BATERIA DE PRUEBAS
 -------------------
 ERRORES A VALORAR
 
-1 TEMA BULTING
-	que pasa cuando hay varios builting seguidos en el pipe,
-	se toma el ultimo?, se toma solo si es uno y esta en el primero?
-
-2 TEMA ORDEN DE SALIDA
+1. TEMA ORDEN DE SALIDA
 	bash cuando ve un error en la priemra pipe y en el segundo esta bien. Imprime el error 
 	al final y lo bueno al principio. Nosotros al reves.
 
-3. EL export
+2. EL export
 	TRATAR la posibilidad de que haya un error en el paso de argumentos del export. E.G: 
 	export ASDAS= 21213
 	bash: export: `21213': not a valid identifier

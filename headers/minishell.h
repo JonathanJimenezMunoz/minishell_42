@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:24:01 by david             #+#    #+#             */
-/*   Updated: 2024/08/12 21:38:21 by david            ###   ########.fr       */
+/*   Updated: 2024/08/13 17:31:30 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,14 @@ char	**ft_realloc_args(char **args, int new_size);
 t_table	*create_node(t_table_aux *aux);
 int		add_node(t_mini **head, t_table_aux *aux);
 
-// PARSER_HANDLER.C
-void	parse_cmd_args(t_table_aux *aux, int *first_word, t_token **current);
+// PARSER_HANDLER_IN.C
 void	parse_redir_in(t_mini *mini, t_table_aux *aux, t_token **current);
+void	parse_redir_heredoc(t_mini *mini, t_table_aux *aux, t_token **current);
+
+// PARSER_HANDLER_OUT.C
+void	parse_cmd_args(t_table_aux *aux, int *first_word, t_token **current);
 void	parser_redir_out(t_mini *mini, t_table_aux *aux, t_token **current);
 void	parse_redir_append(t_mini *mini, t_table_aux *aux, t_token **current);
-void	parse_redir_heredoc(t_mini *mini, t_table_aux *aux, t_token **current);
 
 // ENVP_LIST.C
 void	envp_init(t_envp **envp, char **envp_list);

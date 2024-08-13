@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 21:40:15 by dyanez-m          #+#    #+#             */
-/*   Updated: 2024/07/12 00:03:10 by david            ###   ########.fr       */
+/*   Updated: 2024/08/13 17:32:54 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stddef.h>
 # include "get_next_line/get_next_line.h"
 
-int	ft_strrncmp(const char *s1, const char *s2, size_t n);
+int		ft_strrncmp(const char *s1, const char *s2, size_t n);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);

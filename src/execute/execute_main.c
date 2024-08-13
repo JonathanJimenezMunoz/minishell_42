@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:48:47 by david             #+#    #+#             */
-/*   Updated: 2024/08/12 21:39:37 by david            ###   ########.fr       */
+/*   Updated: 2024/08/13 17:51:13 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,18 @@ static void	create_pipe(int pipe_fd[2], t_table *table_aux)
 	}
 }
 
+static void	execute_aux(t_mini *mini, char **envp, t_table *table_aux)
+{
+	create_pipe(mini->pipe_fd, table_aux);
+	mini->pid = fork();
+	if (mini->pid == 0)
+		handle_child_process(envp, table_aux, mini);
+	else if (mini->pid > 0)
+		handle_parent_process(mini, table_aux);
+	else
+		ft_error(mini, "fork", "error");
+}
+
 int	execute(t_mini *mini, char **envp)
 {
 	t_table	*table_aux;
@@ -74,20 +86,14 @@ int	execute(t_mini *mini, char **envp)
 	it_was = 1;
 	table_aux = mini->table;
 	mini->i = 0;
-	if (table_aux && table_aux->next == NULL && is_builtin(table_aux))
+	if (table_aux && table_aux->next == NULL && is_builtin(table_aux) == 0)
 		it_was = ft_built(table_aux, mini);
 	while (table_aux && it_was)
 	{
-		while (table_aux && is_builtin(table_aux) == 0 && table_aux->next)
+		while (table_aux && is_builtin_tech(table_aux) == 1 && table_aux->next)
 			table_aux = table_aux->next;
-		create_pipe(mini->pipe_fd, table_aux);
-		mini->pid = fork();
-		if (mini->pid == 0)
-			handle_child_process(envp, table_aux, mini);
-		else if (mini->pid > 0)
-			handle_parent_process(mini, table_aux);
-		else
-			ft_error(mini, "fork", "error");
+		if (is_builtin_tech(table_aux) == 0)
+			execute_aux(mini, envp, table_aux);
 		table_aux = table_aux->next;
 		mini->i++;
 	}
