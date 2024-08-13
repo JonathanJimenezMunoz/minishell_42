@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 23:43:24 by david             #+#    #+#             */
-/*   Updated: 2024/08/13 18:06:02 by david            ###   ########.fr       */
+/*   Updated: 2024/08/14 00:12:37 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,27 +72,36 @@ static int	update_or_add_env(t_envp **envp, char *key, char *value)
 	return (0);
 }
 
-//FALTAN FREES KEY VALUE
-int	ft_export(char *args, t_envp **envp)
+static int	ft_export_aux(char *args, t_envp **envp)
 {
 	char	*key;
 	char	*value;
-	t_envp	*envp_copy;
+	int		result;
 
 	key = NULL;
 	value = NULL;
-	if (args)
+	parse_args(args, &key, &value);
+	if (!key || !value)
+		return (-1);
+	if (key[0] < 'A' || key[0] > 'z')
 	{
-		parse_args(args, &key, &value);
-		if (!key || !value)
-			return (-1);
-		if (key[0] < 'A' || key[0] > 'z')
-		{
-			printf("bash: export: `%s': not a valid identifier\n", args);
-			return (-1);
-		}
-		return (update_or_add_env(envp, key, value));
+		printf("bash: export: `%s': not a valid identifier\n", args);
+		free(key);
+		free(value);
+		return (-1);
 	}
+	result = update_or_add_env(envp, key, value);
+	free(key);
+	free(value);
+	return (result);
+}
+
+int	ft_export(char *args, t_envp **envp)
+{
+	t_envp	*envp_copy;
+
+	if (args)
+		return (ft_export_aux(args, envp));
 	else
 	{
 		envp_copy = copy_envp_list(*envp);

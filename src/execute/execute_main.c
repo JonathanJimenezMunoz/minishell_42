@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 16:48:47 by david             #+#    #+#             */
-/*   Updated: 2024/08/13 17:51:13 by david            ###   ########.fr       */
+/*   Updated: 2024/08/13 23:47:48 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static void	handle_parent_process(t_mini *mini, t_table *table_aux)
 	}
 	else
 	{
-		close(mini->pipe_fd[0]);
+		if (mini->pipe_fd[0] != -1)
+			close(mini->pipe_fd[0]);
 	}
 	waitpid(mini->pid, NULL, 0);
 }

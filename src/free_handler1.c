@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_handler.c                                     :+:      :+:    :+:   */
+/*   free_handler1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 23:15:10 by david             #+#    #+#             */
-/*   Updated: 2024/08/13 16:44:12 by david            ###   ########.fr       */
+/*   Updated: 2024/08/14 00:21:21 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	free_token_list(t_token **token)
 		free(current);
 		current = next;
 	}
+	*token = NULL;
 }
 
 void	free_envp(t_envp **envp)
@@ -94,6 +95,12 @@ void	free_table_aux(t_table_aux *aux)
 
 void	ft_free_all(t_mini *mini)
 {
-	free_table(&(mini->table));
-	free_envp(&(mini->envp));
+	free_token_list(&mini->tokens);
+	free_table(&mini->table);
+	free_envp(&mini->envp);
+	if (mini->error)
+	{
+		free(mini->error);
+		mini->error = NULL;
+	}
 }

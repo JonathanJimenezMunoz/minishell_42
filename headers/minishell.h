@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:24:01 by david             #+#    #+#             */
-/*   Updated: 2024/08/13 17:31:30 by david            ###   ########.fr       */
+/*   Updated: 2024/08/14 00:23:30 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ void	free_table(t_table **head);
 void	free_table_aux(t_table_aux *aux);
 void	free_envp(t_envp **envp);
 void	ft_free_all(t_mini *mini);
+void	free_argv(char **argv);
+void	ft_free_iteration(t_mini *mini);
 
 // PARSER_MAIN.C
 int		parser_token(t_mini *mini);

@@ -6,11 +6,12 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 20:04:34 by david             #+#    #+#             */
-/*   Updated: 2024/08/13 17:02:44 by david            ###   ########.fr       */
+/*   Updated: 2024/08/14 00:24:35 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+#include <valgrind/memcheck.h>
 
 static void	signal_handler(int sig)
 {
@@ -50,7 +51,8 @@ static void	ft_loop(t_mini *mini, char **envp)
 		line = readline("\033[92mmsh>>\033[0m");
 		if (line == NULL)
 		{
-			printf("exit\n");
+			printf("\033[92mmsh>>\033[0mexit\n");
+			ft_free_all(mini);
 			exit(1);
 		}
 		add_history(line);
@@ -61,9 +63,9 @@ static void	ft_loop(t_mini *mini, char **envp)
 		{
 			execute(mini, envp);
 		}
-		free_token_list(&mini->tokens);
-		free_table(&mini->table);
+		ft_free_iteration(mini);
 		init_mini(mini);
+		VALGRIND_DO_LEAK_CHECK;
 	}
 }
 

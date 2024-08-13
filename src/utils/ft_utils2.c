@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 23:43:01 by david             #+#    #+#             */
-/*   Updated: 2024/08/13 16:06:05 by david            ###   ########.fr       */
+/*   Updated: 2024/08/13 23:36:39 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	open_file(char *file, int flags, int mode, t_mini *mini)
 		write_file(".err", 1);
 		mini->status = 1;
 	}
+	close(fd);
 }
 
 char	*get_path(char **envp)

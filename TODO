@@ -13,3 +13,8 @@ ERRORES A VALORAR
 	TRATAR la posibilidad de que haya un error en el paso de argumentos del export. E.G: 
 	export ASDAS= 21213
 	bash: export: `21213': not a valid identifier
+
+
+
+Revisar las pruebas con valgrind
+Norminette

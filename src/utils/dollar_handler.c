@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 23:52:39 by david             #+#    #+#             */
-/*   Updated: 2024/08/13 16:08:05 by david            ###   ########.fr       */
+/*   Updated: 2024/08/14 00:29:14 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ static char	*ft_envp_key(char *line)
 
 static int	ft_counter(char *line, int size, t_mini *mini)
 {
-	int	i;
-	int	counter;
+	int		i;
+	int		counter;
+	char	*key;
 
 	i = 0;
 	counter = 0;
@@ -49,9 +50,10 @@ static int	ft_counter(char *line, int size, t_mini *mini)
 		}
 		else if (line[i] == '$' && line[i + 1] != ' ')
 		{
-			counter += ft_strlen(envp_get_value(mini->envp,
-						ft_envp_key(&(line[i])))) + 1;
-			i += ft_strlen(ft_envp_key(&(line[i])));
+			key = ft_envp_key(&(line[i]));
+			counter += ft_strlen(envp_get_value(mini->envp, key)) + 1;
+			i += ft_strlen(key);
+			free(key);
 		}
 		else
 			counter++;
@@ -66,13 +68,21 @@ static int	handle_env_variable(char **new_line, int *j,
 	int		i;
 	size_t	counter;
 	char	*value;
+	char	*key;
+	size_t	len_value;
 
 	i = 0;
-	value = envp_get_value(mini->envp, ft_envp_key(line));
+	key = ft_envp_key(line);
+	value = envp_get_value(mini->envp, key);
 	counter = 0;
-	while (ft_strlen(value) > counter)
+	if (value)
+		len_value = ft_strlen(value);
+	else 
+		len_value = 0;
+	while (len_value > counter)
 		(*new_line)[(*j)++] = value[counter++];
-	i += ft_strlen(ft_envp_key(line)) + 1;
+	i += ft_strlen(key) + 1;
+	free(key);
 	return (i);
 }
 

@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 00:47:48 by david             #+#    #+#             */
-/*   Updated: 2024/08/12 18:52:43 by david            ###   ########.fr       */
+/*   Updated: 2024/08/13 23:26:26 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static void	ft_skip_spaces_and_get_sign(char *s, int *i,
 	{
 		ft_err(2, s, mini);
 		write_file(".err", 255);
+		ft_free_all(mini);
 		exit(255);
 	}
 }
@@ -79,6 +80,7 @@ static int	ft_exittoi(char *s, t_mini *mini)
 		{
 			ft_err(2, s, mini);
 			write_file(".err", 255);
+			ft_free_all(mini);
 			exit(255);
 		}
 		i++;
@@ -97,6 +99,7 @@ void	ft_exit(char **args, t_mini *mini)
 		{
 			ft_err(1, "error", mini);
 			write_file(".err", 1);
+			ft_free_all(mini);
 			exit(1);
 		}
 		else
@@ -104,5 +107,6 @@ void	ft_exit(char **args, t_mini *mini)
 	}
 	ft_free_all(mini);
 	write_file(".err", exit_num);
+	ft_free_all(mini);
 	exit(exit_num);
 }

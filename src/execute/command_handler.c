@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/08/13 16:52:29 by david            ###   ########.fr       */
+/*   Updated: 2024/08/13 23:07:12 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ static char	*path_handler(char *param, char **envp)
 	{
 		exec = ft_strjoin(ft_strjoin(paths[i], "/"), param);
 		if (access(exec, F_OK | X_OK) == 0)
-		{
-			free(param);
 			return (exec);
-		}
 		free(exec);
 	}
 	i = -1;
@@ -61,6 +58,7 @@ static char	*path_handler(char *param, char **envp)
 	perror(argv[0]);
 	exit(127);
 }*/
+
 static void	execve_handler(char **argv, char **envp)
 {
 	char	*cmd_path;
@@ -72,10 +70,16 @@ static void	execve_handler(char **argv, char **envp)
 		ft_putstr_fd(argv[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
 		write_file(".err", 127);
+		if (access(cmd_path, F_OK | X_OK) == 0)
+			free(cmd_path);
+		free_argv(argv);
 		exit(127);
 	}
 	write_file(".err", 0);
 	execve(cmd_path, argv, envp);
+	if (access(cmd_path, F_OK | X_OK) == 0)
+		free(cmd_path);
+	free_argv(argv);
 	perror(argv[0]);
 	exit(127);
 }

@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 00:19:14 by david             #+#    #+#             */
-/*   Updated: 2024/08/02 16:09:08 by david            ###   ########.fr       */
+/*   Updated: 2024/08/13 23:25:22 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	read_file(char *file_name, t_mini *mini)
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 	{
-		mini->error = "00";
+		mini->error = ft_strdup("00");
 		return (-1);
 	}
 	line = get_next_line(fd);

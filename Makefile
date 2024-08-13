@@ -13,14 +13,14 @@ LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
 READLINE = -lreadline
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 NAME = minishell
 
 ######################
 #      SOURCES       #
 ######################
 
-SRCS_MINISHELL		=	main.c free_handler.c
+SRCS_MINISHELL		=	main.c free_handler1.c free_handler2.c
 SRCS_TOKEN			= 	token_main.c token_list.c
 SRCS_PARSER			=	parser_main.c parser_list.c parser_handler_in.c parser_handler_out.c
 SRCS_ENVP			=	envp_list.c envp_utils.c
