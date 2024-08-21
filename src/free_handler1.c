@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 23:15:10 by david             #+#    #+#             */
-/*   Updated: 2024/08/14 00:21:21 by david            ###   ########.fr       */
+/*   Updated: 2024/08/21 17:28:20 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,5 @@ void	ft_free_all(t_mini *mini)
 		free(mini->error);
 		mini->error = NULL;
 	}
+	rl_clear_history();
 }

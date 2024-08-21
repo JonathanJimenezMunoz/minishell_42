@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:24:01 by david             #+#    #+#             */
-/*   Updated: 2024/08/14 00:23:30 by david            ###   ########.fr       */
+/*   Updated: 2024/08/21 17:30:02 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,9 +167,9 @@ void	handle_redirection(t_table *table_aux);
 void	here_doc_case(t_table *table_aux);
 
 //BUILTIN CHECKER
-int	ft_built(t_table *table_aux, t_mini *mini);
-int	is_builtin(t_table *table_aux);
-int is_builtin_tech(t_table *table_aux);
+int		ft_built(t_table *table_aux, t_mini *mini);
+int		is_builtin(t_table *table_aux);
+int		is_builtin_tech(t_table *table_aux);
 
 // FILE_HANDLER.C
 int		read_file(char *file_name, t_mini *mini);

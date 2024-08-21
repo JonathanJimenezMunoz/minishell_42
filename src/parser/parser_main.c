@@ -6,13 +6,13 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 22:32:54 by david             #+#    #+#             */
-/*   Updated: 2024/08/13 17:12:17 by david            ###   ########.fr       */
+/*   Updated: 2024/08/21 17:16:55 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void print_table(t_table *table)
+/*void	print_table(t_table *table)
 {
 	t_table *current;
 	int i, j;
@@ -45,7 +45,7 @@ void print_table(t_table *table)
 		i++;
 		current = current->next;
 	}
-}
+}*/
 
 char	**ft_realloc_args(char **args, int new_size)
 {

@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:24:28 by david             #+#    #+#             */
-/*   Updated: 2024/08/12 20:27:23 by david            ###   ########.fr       */
+/*   Updated: 2024/08/21 17:21:30 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static void	tokenize_quote(char **line, t_mini *mini)
 	else if (size == -1)
 	{
 		printf("Error: Comillas mal cerradas\n");
-		// Faltan los frees
 		mini->status = 1;
 	}
 	else if (size == 0)
@@ -62,7 +61,6 @@ static void	tokenize_redir(char **line, t_mini *mini)
 		if (ft_redir_type(line, mini) == -1)
 		{
 			printf("Error: Caracter no reconocido\n");
-			// Faltan los frees
 			mini->status = 1;
 		}
 	}
@@ -95,7 +93,7 @@ static void	tokenize_word(char **line, t_mini *mini)
 int	tokenize_line(char *line, t_mini *mini)
 {
 	read_file(".err", mini);
-	while (line != NULL && *line != 0)
+	while (line != NULL && *line != 0 && mini->status != 1)
 	{
 		ft_clear_spaces(&line);
 		tokenize_quote(&line, mini);

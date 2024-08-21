@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 23:43:24 by david             #+#    #+#             */
-/*   Updated: 2024/08/14 00:12:37 by david            ###   ########.fr       */
+/*   Updated: 2024/08/21 17:01:13 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static int	update_or_add_env(t_envp **envp, char *key, char *value)
 		{
 			free(current->value);
 			current->value = ft_strdup(value);
-			free(key);
 			return (0);
 		}
 		current = current->next;
@@ -64,8 +63,8 @@ static int	update_or_add_env(t_envp **envp, char *key, char *value)
 	new_node = (t_envp *)malloc(sizeof(t_envp));
 	if (new_node)
 	{
-		new_node->key = key;
-		new_node->value = value;
+		new_node->key = ft_strdup(key);
+		new_node->value = ft_strdup(value);
 		new_node->next = NULL;
 	}
 	add_node_to_envp(envp, new_node);

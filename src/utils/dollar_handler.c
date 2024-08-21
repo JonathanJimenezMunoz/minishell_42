@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 23:52:39 by david             #+#    #+#             */
-/*   Updated: 2024/08/14 00:29:14 by david            ###   ########.fr       */
+/*   Updated: 2024/08/21 17:16:00 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	handle_env_variable(char **new_line, int *j,
 	counter = 0;
 	if (value)
 		len_value = ft_strlen(value);
-	else 
+	else
 		len_value = 0;
 	while (len_value > counter)
 		(*new_line)[(*j)++] = value[counter++];

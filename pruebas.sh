@@ -1,5 +1,11 @@
 #!/bin/bash
-
+# valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --log-file=memoria ./minishell 
+#{
+#    ignore_libreadline_leaks
+#    Memcheck:Leak
+#    ...
+#    obj:*/libreadline.so.*
+#}
 # Ejecutar minishell y pasarle la línea de comandos
 # Comandos varios con pipes
 ./minishell <<EOF
@@ -118,6 +124,19 @@ EOF
 echo $AGUA | exit
 EOF
 
+------------------
+Probar todos los casos del export 
+export agua=1q2321
+export 1agua=1q2321
+export agua=qqqq
+export agua= 1
+export agua =sdasd1
+export agua = asdasd1
+export agua= asdasd1 == qwe3
+export
+export =
+export agua=3 agua2=2
+-------------------
 # Se ejecutan echo y pwd pero no exit yya que no existe como cmd
 ./minishell <<EOF
 echo $AGUA | pwd >> p8 | cat <p8 > p9 | exit
@@ -188,5 +207,16 @@ EOF
 ./minishell <<EOF
 "cat" < "p1"
 EOF
+
+#bash: &: command not found
+./minishell <<EOF
+& @
+EOF
+
+#Error: Comillas mal cerradas
+./minishell <<EOF
+"hola buenas
+EOF
+
 
 rm -f file1 file2 file3 file4 adios p3 verdades

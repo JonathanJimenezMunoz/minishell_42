@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 20:04:34 by david             #+#    #+#             */
-/*   Updated: 2024/08/14 00:24:35 by david            ###   ########.fr       */
+/*   Updated: 2024/08/21 17:31:02 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ static void	init_mini(t_mini *mini)
 	mini->out_fd = STDOUT_FILENO;
 }
 
+//     #include <valgrind/memcheck.h>
+//		VALGRIND_DO_LEAK_CHECK;
+//		METER ESTO ENTRE LA 70 Y 71
 static void	ft_loop(t_mini *mini, char **envp)
 {
 	char	*line;
@@ -58,18 +61,15 @@ static void	ft_loop(t_mini *mini, char **envp)
 		add_history(line);
 		tokenize_line(line, mini);
 		free(line);
-		parser_token(mini);
 		if (mini->status == 0)
-		{
+			parser_token(mini);
+		if (mini->status == 0)
 			execute(mini, envp);
-		}
 		ft_free_iteration(mini);
 		init_mini(mini);
-		VALGRIND_DO_LEAK_CHECK;
 	}
 }
 
-//rl_clear_history(); cuando deberiamos usar esta funcion pendiente de frees
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini;

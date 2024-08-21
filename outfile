@@ -1,2 +1,0 @@
-LIBFT_PATH = ./libft
-LIBFT = $(LIBFT_PATH)/libft.a

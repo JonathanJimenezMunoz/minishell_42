@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 17:29:47 by david             #+#    #+#             */
-/*   Updated: 2024/08/13 17:12:14 by david            ###   ########.fr       */
+/*   Updated: 2024/08/21 17:29:31 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,6 @@ void	ft_error(t_mini *mini, char *error, char *type)
 	if (mini->status == 0)
 	{
 		printf("bash: %s `%s'\n", error, type);
-		/*if (mini->tokens)
-			free_token_list(&(mini->tokens));
-		if (mini->table)
-			free_table(&(mini->table));*/
 		mini->status = 1;
 	}
 }
@@ -67,11 +63,6 @@ void	ft_error_aux(t_mini *mini, t_table_aux *aux, char *error, char *type)
 	{
 		printf("bash: %s `%s'\n", error, type);
 		(void)aux;
-		/*free_table_aux(aux);
-		if (mini->tokens)
-			free_token_list(&(mini->tokens));
-		if (mini->table)
-			free_table(&(mini->table));*/
 		mini->status = 1;
 	}
 }
