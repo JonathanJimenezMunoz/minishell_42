@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 23:24:01 by david             #+#    #+#             */
-/*   Updated: 2024/08/21 17:30:02 by david            ###   ########.fr       */
+/*   Updated: 2024/08/29 00:21:00 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <sys/ioctl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 # include "../libft/libft.h"
 
 typedef enum e_token_type

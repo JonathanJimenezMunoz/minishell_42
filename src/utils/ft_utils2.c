@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 23:43:01 by david             #+#    #+#             */
-/*   Updated: 2024/08/13 23:36:39 by david            ###   ########.fr       */
+/*   Updated: 2024/08/29 00:01:49 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	*join_args(char **args)
 		free(temp);
 		if (!result)
 			return (NULL);
+		i++;
 	}
 	return (result);
 }

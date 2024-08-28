@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/08/13 23:07:12 by david            ###   ########.fr       */
+/*   Updated: 2024/08/29 00:26:52 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,23 @@ static char	*path_handler(char *param, char **envp)
 	int		i;
 	char	*exec;
 	char	**paths;
+	char	*temp;
 
 	i = -1;
 	paths = ft_split(get_path(envp), ':');
 	while (paths[++i])
 	{
-		exec = ft_strjoin(ft_strjoin(paths[i], "/"), param);
+		temp = ft_strjoin(paths[i], "/");
+		exec = ft_strjoin(temp, param);
+		free(temp);
 		if (access(exec, F_OK | X_OK) == 0)
+		{
+			free_argv(paths);
 			return (exec);
+		}
 		free(exec);
 	}
-	i = -1;
-	while (paths[++i])
-		free(paths[i]);
-	free(paths);
+	free_argv(paths);
 	return (param);
 }
 
@@ -81,6 +84,7 @@ static void	execve_handler(char **argv, char **envp)
 		free(cmd_path);
 	free_argv(argv);
 	perror(argv[0]);
+	write_file(".err", 127);
 	exit(127);
 }
 

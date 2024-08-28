@@ -218,5 +218,7 @@ EOF
 "hola buenas
 EOF
 
-
+./minishell <<EOF
+foo
+EOF
 rm -f file1 file2 file3 file4 adios p3 verdades
