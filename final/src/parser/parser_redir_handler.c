@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 17:26:57 by david             #+#    #+#             */
-/*   Updated: 2024/08/31 17:23:07 by david            ###   ########.fr       */
+/*   Updated: 2024/08/31 18:32:48 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	parser_redir_out(t_mini *mini, t_table_aux *aux, t_token **current)
 		if ((*current)->type != TOKEN_WORD)
 		{
 			ft_error(mini,
-				"syntax error near unexpected token", (*current)->content, );
+				"syntax error near unexpected token", (*current)->content, 2);
 			return ;
 		}
 		while (aux->out_redir && aux->out_redir[i])
@@ -131,6 +131,6 @@ void	parse_redir_append(t_mini *mini, t_table_aux *aux, t_token **current)
 			i++;
 		aux->out_append = ft_realloc_double_array(aux->out_append, i + 1);
 		aux->out_append[i] = ft_strdup((*current)->content);
-		aux->out_append[i + 1] = NULL;	
+		aux->out_append[i + 1] = NULL;
 	}
 }

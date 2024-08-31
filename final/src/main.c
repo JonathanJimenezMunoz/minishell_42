@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:40:23 by david             #+#    #+#             */
-/*   Updated: 2024/08/31 16:17:54 by david            ###   ########.fr       */
+/*   Updated: 2024/08/31 18:33:02 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ static void	ft_loop(t_mini *mini)
 		}
 		add_history(mini->line);
 		tokenize_line(mini->line, mini);
-		token_print(mini->tokens);
+		if (mini->error == 0)
+			parser_token(mini);
+
 	}
 }
 int	main(int argc, char **argv, char **envp)
