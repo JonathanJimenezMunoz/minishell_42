@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_basic.c                                       :+:      :+:    :+:   */
+/*   ft_envp.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/31 13:27:49 by david             #+#    #+#             */
-/*   Updated: 2024/08/31 22:13:43 by david            ###   ########.fr       */
+/*   Created: 2024/07/08 23:18:15 by david             #+#    #+#             */
+/*   Updated: 2024/09/01 17:18:35 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void	free_double_array(char **str)
+int	ft_envp(t_envp *envp)
 {
-	int	i;
+	t_envp	*current;
 
-	i = 0;
-	while (str[i])
+	current = envp;
+	while (current)
 	{
-		free(str[i]);
-		i++;
+		printf("\033[91m%s\033[0m=\033[93m%s\033[0m\n",
+			current->key, current->value);
+		current = current->next;
 	}
-	free(str);
+	return (0);
 }

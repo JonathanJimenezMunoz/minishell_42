@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 23:15:10 by david             #+#    #+#             */
-/*   Updated: 2024/08/21 17:28:20 by david            ###   ########.fr       */
+/*   Updated: 2024/09/01 17:57:21 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,12 @@ void	free_table_aux(t_table_aux *aux)
 
 void	ft_free_all(t_mini *mini)
 {
-	free_token_list(&mini->tokens);
-	free_table(&mini->table);
-	free_envp(&mini->envp);
+	if (mini->tokens)
+		free_token_list(&mini->tokens);
+	if (mini->table)
+		free_table(&mini->table);
+	if (mini->envp)
+		free_envp(&mini->envp);
 	if (mini->error)
 	{
 		free(mini->error);

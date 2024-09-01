@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 23:52:39 by david             #+#    #+#             */
-/*   Updated: 2024/08/31 15:36:48 by david            ###   ########.fr       */
+/*   Updated: 2024/09/01 18:58:41 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	ft_counter(char *line, int size, t_mini *mini)
 		}
 		else if (line[i] == '$' && line[i + 1] != ' ')
 		{
-			key = ft_envp_key(&(line[i]));
+			key = ft_envp_key(&(line[i + 1]));
 			counter += ft_strlen(envp_get_value(mini->envp, key)) + 1;
 			i += ft_strlen(key);
 			free(key);
@@ -93,19 +93,19 @@ static void	handle_error_variable(char **new_line, int *j, t_mini *mini)
 
 	counter = 0;
 	exit_status = ft_itoa(mini->exit_status);
-	while (ft_strlen(exit_status) - 1 > counter)
+	while (ft_strlen(exit_status) > counter)
 		(*new_line)[(*j)++] = exit_status[counter++];
 	free(exit_status);
 }
 
-char	*ft_new_line(char *line, int size, t_mini *mini)
+char	*ft_new_line(char *l, int size, t_mini *mini)
 {
 	char	*new_line;
 	int		i;
 	int		j;
 	int		real_size;
 
-	real_size = ft_counter(line, size, mini);
+	real_size = ft_counter(l, size, mini);
 	new_line = malloc(sizeof(char) * (real_size + 1));
 	if (!new_line)
 		return (NULL);
@@ -113,15 +113,15 @@ char	*ft_new_line(char *line, int size, t_mini *mini)
 	j = 0;
 	while (i < size)
 	{
-		if (line[i] == '$' && line[i + 1] == '?')
+		if (l[i] == '$' && l[i + 1] == '?')
 		{
 			handle_error_variable(&new_line, &j, mini);
 			i += 2;
 		}
-		else if (line[i] == '$' && line[i + 1] != ' ')
-			i += handle_env_variable(&new_line, &j, &(line[i + 1]), mini);
+		else if (l[i] == '$' && ft_isspace(l[i+1]) && l[i+1] && l[i+1] != '\"')
+			i += handle_env_variable(&new_line, &j, &(l[i + 1]), mini);
 		else
-			new_line[j++] = line[i++];
+			new_line[j++] = l[i++];
 	}
 	new_line[j] = '\0';
 	return (new_line);

@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_basic.c                                       :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/31 13:27:49 by david             #+#    #+#             */
-/*   Updated: 2024/08/31 22:13:43 by david            ###   ########.fr       */
+/*   Created: 2024/07/08 23:18:25 by david             #+#    #+#             */
+/*   Updated: 2024/09/01 16:25:18 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void	free_double_array(char **str)
+int	ft_pwd(void)
 {
-	int	i;
+	char	*route;
 
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
+	route = NULL;
+	route = getcwd(route, 0);
+	if (!route)
+		return (1);
+	ft_putstr_fd(route, 1);
+	ft_putstr_fd("\n", 1);
+	free(route);
+	return (0);
 }

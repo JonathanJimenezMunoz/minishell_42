@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 20:27:38 by david             #+#    #+#             */
-/*   Updated: 2024/08/31 15:41:35 by david            ###   ########.fr       */
+/*   Updated: 2024/09/01 19:57:43 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	join_token(t_token **tokens)
 			free(next->content);
 			free(next);
 		}
-		curr = curr->next;
+		else
+			curr = curr->next;
 	}
 }

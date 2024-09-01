@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 22:32:54 by david             #+#    #+#             */
-/*   Updated: 2024/08/31 18:31:09 by david            ###   ########.fr       */
+/*   Updated: 2024/09/01 20:33:39 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_aux(t_table_aux *aux)
 	aux->out_redir = NULL;
 	aux->out_append = NULL;
 	aux->in_heredoc = NULL;
+	aux->last_out_redir = NULL;
 }
 
 static void	parse_while(t_mini *mini, t_table_aux *aux, t_token **current)
