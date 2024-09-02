@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 00:47:48 by david             #+#    #+#             */
-/*   Updated: 2024/09/01 19:37:48 by david            ###   ########.fr       */
+/*   Updated: 2024/09/02 15:31:09 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	ft_exit(char **args, t_mini *mini)
 		{
 			ft_err(1, "error", mini);
 			ft_free_all(mini);
-			return (1);
+			exit(1);
 		}
 		else
 			exit_num = ft_exittoi(args[1], mini);

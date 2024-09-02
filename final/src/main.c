@@ -6,13 +6,13 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:40:23 by david             #+#    #+#             */
-/*   Updated: 2024/09/02 15:22:32 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/02 15:29:29 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-int g_error;
+int g_sigint;
 
 static void	init_mini(t_mini *mini, char **envp)
 {

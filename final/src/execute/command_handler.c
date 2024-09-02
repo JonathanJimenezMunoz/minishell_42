@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/09/01 20:07:54 by david            ###   ########.fr       */
+/*   Updated: 2024/09/02 15:29:05 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	execute_command(t_table *table_aux, t_mini *mini)
 	int	i;
 
 	i = 0;
-	handle_redirection(table_aux, mini);
+	handle_redirection(table_aux);
 	i = ft_non_individual_builtins(table_aux, mini);
 	if (i == -1)
 	{
