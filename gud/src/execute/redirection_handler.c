@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:18:23 by david             #+#    #+#             */
-/*   Updated: 2024/09/02 21:05:13 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/02 23:37:48 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,9 @@ void	handle_output_append_redirection(const char *out_append)
 
 void	handle_redirection(t_table *table_aux)
 {
-	int	i;
 	t_redir	*red;
 
 	red  = table_aux->redir;
-	i = 0;
-	printf("redir\n");
 	while (red)
 	{
 		if (red->type == TOKEN_REDIR_IN)
@@ -88,4 +85,3 @@ void	handle_redirection(t_table *table_aux)
 		red = red->next;
 	}
 }
-			

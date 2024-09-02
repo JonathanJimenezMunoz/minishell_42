@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/09/02 21:08:39 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/02 23:22:45 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +156,6 @@ void	add_redir_end(t_table_aux *aux, char *file, int type);
 t_redir	*copy_redir_node(t_redir *node);
 
 //EXECUTE
-void	process_heredoc(t_mini *mini);
-void	do_redir_handler(t_mini *mini);
 int		execute(t_mini *mini);
 void	handle_output_append_redirection(const char *out_append);
 void	handle_output_redirection(const char *out_redir);

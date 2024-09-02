@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:20:43 by david             #+#    #+#             */
-/*   Updated: 2024/09/02 21:06:12 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/02 23:37:37 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ static int	execute_single_command(t_mini *mini, t_table *table_aux)
 	pid_t	pid;
 	int		status;
 
-	printf("execute_single_command\n");
 	error = ft_individual_builtins(table_aux, mini);
 	if (error == -1)
 	{
@@ -136,7 +135,6 @@ int	execute(t_mini *mini)
 {
 	t_table	*table_aux;
 
-	printf("execute\n");
 	table_aux = mini->table;
 	if (mini->pipes > 1)
 		ft_forkin(mini, table_aux, mini->pipes);
