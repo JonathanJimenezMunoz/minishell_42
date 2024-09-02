@@ -90,6 +90,7 @@ typedef struct s_mini
 	int		exit_status;
 	char	*line;
 	int		error;
+	int		pipes;
 }	t_mini;
 
 // BUILTINS
@@ -125,6 +126,7 @@ char	*join_strs(char **args);
 int		count_double_str(char **args);
 char	*get_path(char **envp);
 int		is_valid_identifier(const char *key);
+int		ft_count_pipes(t_mini *mini);
 
 // ERROR
 void	ft_error(t_mini *mini, char *error, char *type, int exit);

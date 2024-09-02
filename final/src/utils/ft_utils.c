@@ -61,4 +61,17 @@ int ft_intlen(int n)
 	return len;
 }
 
+int		ft_count_pipes(t_mini *mini)
+{
+	t_table	*current;
+	int		counter;
 
+	counter = 0;
+	current = mini->table;
+	while (current)
+	{
+		counter++;
+		current = current->next;
+	}
+	return (counter);
+}

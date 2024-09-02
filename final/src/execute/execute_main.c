@@ -134,19 +134,11 @@ static int	execute_single_command(t_mini *mini, t_table *table_aux)
 int	execute(t_mini *mini)
 {
 	t_table	*table_aux;
-	int		pipes;
 
-	pipes = 0;
 	table_aux = mini->table;
-	while (table_aux)
-	{
-		pipes++;
-		table_aux = table_aux->next;
-	}
-	table_aux = mini->table;
-	if (pipes > 1)
-		ft_forkin(mini, table_aux, pipes);
-	else if (pipes == 1)
+	if (mini->pipes > 1)
+		ft_forkin(mini, table_aux, mini->pipes);
+	else if (mini->pipes == 1)
 		execute_single_command(mini, table_aux);
 	return (0);
 }

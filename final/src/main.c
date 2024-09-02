@@ -22,6 +22,7 @@ static void	init_mini(t_mini *mini, char **envp)
 	mini->envp = NULL;
 	mini->exit_status = 0;
 	mini->error = 0;
+	mini->pipes = 0;
 	mini->exec_envp = NULL;
 	envp_init(&mini->envp, envp);
 	mini->exec_envp = copy_double_str(envp);
@@ -98,6 +99,7 @@ static void	iteration_handler(t_mini *mini)
 	mini->tokens = NULL;
 	mini->table = NULL;
 	mini->error = 0;
+	mini->pipes = 0;
 }
 static void	ft_loop(t_mini *mini)
 {
@@ -117,9 +119,10 @@ static void	ft_loop(t_mini *mini)
 		{	
 			parser_token(mini);
 			//process_heredoc(mini);
+			mini->pipes = ft_count_pipes(mini);
 			do_redir_handler(mini);
 		}
-		if (mini->error == 0)
+		if (mini->error == 0 || mini->pipes != 1)
 			execute(mini);
 		iteration_handler(mini);
 	}
