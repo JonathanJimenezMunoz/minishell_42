@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 22:15:22 by david             #+#    #+#             */
-/*   Updated: 2024/08/31 17:32:03 by david            ###   ########.fr       */
+/*   Updated: 2024/09/02 17:33:10 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ static void	create_node_aux(t_table *new_node, t_table_aux *aux)
 		new_node->out_append = copy_double_str(aux->out_append);
 	else
 		new_node->out_append = NULL;
+	if (aux->last_out_redir != NULL)
+		new_node->last_out_redir = ft_strdup(aux->last_out_redir);
+	else
+		new_node->last_out_redir = NULL;
+	new_node->append = aux->append;
 }
 
 static t_table	*create_node(t_table_aux *aux)

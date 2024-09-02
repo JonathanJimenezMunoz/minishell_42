@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redir_handler.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 17:26:57 by david             #+#    #+#             */
-/*   Updated: 2024/09/01 20:25:04 by david            ###   ########.fr       */
+/*   Updated: 2024/09/02 17:38:02 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	parse_redir_in(t_mini *mini, t_table_aux *aux, t_token **current)
 		return (ft_error_syx(mini, (*current)->content, 2));
 	while (aux->in_redir && aux->in_redir[i])
 		i++;
-	aux->in_redir = ft_realloc_double_array(aux->in_redir, i + 1);
+	aux->in_redir = ft_realloc_double_array(aux->in_redir, sizeof(char *) * i,
+			sizeof(char *) * (i + 2));
 	aux->in_redir[i] = ft_strdup((*current)->content);
 	aux->in_redir[i + 1] = NULL;
 }
@@ -49,7 +50,8 @@ void	parse_redir_heredoc(t_mini *mini, t_table_aux *aux, t_token **current)
 		return (ft_error_syx(mini, (*current)->content, 2));
 	while (aux->in_heredoc && aux->in_heredoc[i])
 		i++;
-	aux->in_heredoc = ft_realloc_double_array(aux->in_heredoc, i + 1);
+	aux->in_heredoc = ft_realloc_double_array(aux->in_heredoc, sizeof(char *) * i,
+			sizeof(char *) * (i + 2));
 	aux->in_heredoc[i] = ft_strdup((*current)->content);
 	aux->in_heredoc[i + 1] = NULL;
 }
@@ -63,7 +65,8 @@ void	parse_args(t_table_aux *aux, t_token **current)
 	{
 		while (aux->args && aux->args[i])
 			i++;
-		aux->args = ft_realloc_double_array(aux->args, i + 2);
+		aux->args = ft_realloc_double_array(aux->args, sizeof(char *) * i,
+			sizeof(char *) * (i + 2));
 		aux->args[i] = ft_strdup((*current)->content);
 		aux->args[i + 1] = NULL;
 	}
@@ -85,7 +88,8 @@ void	parser_redir_out(t_mini *mini, t_table_aux *aux, t_token **current)
 		return (ft_error_syx(mini, (*current)->content, 2));
 	while (aux->out_redir && aux->out_redir[i])
 		i++;
-	aux->out_redir = ft_realloc_double_array(aux->out_redir, i + 1);
+	aux->out_redir = ft_realloc_double_array(aux->out_redir, sizeof(char *) * i,
+			sizeof(char *) * (i + 2));
 	aux->out_redir[i] = ft_strdup((*current)->content);
 	aux->out_redir[i + 1] = NULL;
 	if (aux->last_out_redir)
@@ -113,7 +117,8 @@ void	parse_redir_append(t_mini *mini, t_table_aux *aux, t_token **current)
 		return (ft_error_syx(mini,(*current)->content, 2));
 	while (aux->out_append && aux->out_append[i])
 		i++;
-	aux->out_append = ft_realloc_double_array(aux->out_append, i + 1);
+	aux->out_append = ft_realloc_double_array(aux->out_append, sizeof(char *) * i,
+			sizeof(char *) * (i + 2));
 	aux->out_append[i] = ft_strdup((*current)->content);
 	aux->out_append[i + 1] = NULL;
 	if (aux->last_out_redir)

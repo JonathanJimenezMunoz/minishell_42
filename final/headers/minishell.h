@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/09/01 20:14:16 by david            ###   ########.fr       */
+/*   Updated: 2024/09/02 17:35:37 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ char	**copy_double_str(char **str);
 int		ft_isspace(char c);
 int		ft_is_good_quote(char *line);
 int		ft_intlen(int n);
-char	**ft_realloc_double_array(char **str, int new_size);
+void	*ft_realloc_double_array(void *ptr, size_t original_size, size_t new_size);
 void	open_input_file(char *file_name, t_mini *mini);
 void	open_output_file(char *file_name, t_mini *mini, int control);
 char	*join_strs(char **args);

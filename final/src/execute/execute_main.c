@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:20:43 by david             #+#    #+#             */
-/*   Updated: 2024/09/01 20:17:18 by david            ###   ########.fr       */
+/*   Updated: 2024/09/02 17:41:53 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static void child_process(t_mini *mini, t_table *table_aux, int prev_fd, int *pi
 {
 	int		error;
 	
-	//signal(SIGINT, SIG_DFL);
-	//signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (prev_fd != -1)
 	{
 		if (dup2(prev_fd, 0) == -1)
@@ -85,8 +85,8 @@ static void	ft_forkin(t_mini *mini, t_table *table_aux, int pipes)
 	if (!pids)
 		ft_error(mini, "malloc", "error", 1);
 	prev_fd = -1;
-	//signal(SIGINT, SIG_IGN);
-	//signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	while (table_aux)
 	{
 		pipe(pipe_fd);
@@ -114,14 +114,14 @@ static int	execute_single_command(t_mini *mini, t_table *table_aux)
 		pid = fork();
 		if (pid == 0)
 		{
-			//signal(SIGINT, SIG_DFL);
-			//signal(SIGQUIT, SIG_DFL);
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			execute_command(table_aux, mini);
 		}
 		else if (pid > 0)
 		{
-			//signal(SIGINT, SIG_IGN);
-			//signal(SIGQUIT, SIG_IGN);
+			signal(SIGINT, SIG_IGN);
+			signal(SIGQUIT, SIG_IGN);
 			waitpid(pid, &status, 0);
 			exit_capture(mini, status);
 		}
