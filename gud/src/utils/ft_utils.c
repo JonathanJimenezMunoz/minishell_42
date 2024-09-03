@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 13:24:08 by david             #+#    #+#             */
-/*   Updated: 2024/09/03 15:30:06 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:53:13 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,22 @@ int	ft_intlen(int n)
 		len++;
 	}
 	return (len);
+}
+
+void	ft_dputstr_fd(char *s1, char *s2, int fd)
+{
+	char	*tmp;
+	char	*tmp2;
+	char	*tmp3;
+	char	*tmp4;
+
+	tmp = ft_strjoin("bash :", s1);
+	tmp2 = ft_strjoin(tmp, ": ");
+	tmp3 = ft_strjoin(tmp2, s2);
+	tmp4 = ft_strjoin(tmp3, "\n");
+	write(fd, tmp4, ft_strlen(tmp4));
+	free(tmp);
+	free(tmp2);
+	free(tmp3);
+	free(tmp4);
 }

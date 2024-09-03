@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/09/03 15:32:49 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:50:17 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char	*join_strs(char **args);
 int		count_double_str(char **args);
 char	*get_path(char **envp);
 int		is_valid_identifier(const char *key);
-int		ft_count_pipes(t_mini *mini);
+void	ft_dputstr_fd(char *s1, char *s2, int fd);
 
 // ERROR
 void	ft_error(t_mini *mini, char *error, char *type, int exit);
@@ -168,6 +168,7 @@ void	handle_redirection(t_table *table_aux);
 t_redir	*copy_redir_list(t_redir *head);
 void	execute_child_process(t_mini *mini, t_table *table_aux);
 int		execute_single_command(t_mini *mini, t_table *table_aux);
+
 //SIGNALS
 void	sig_heredoc(int sig);
 void	exit_capture(t_mini *mini, int status);

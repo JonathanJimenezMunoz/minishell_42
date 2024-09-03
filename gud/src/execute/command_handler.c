@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/09/03 15:11:44 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:53:45 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,16 @@ static void	execve_handler(char **argv, char **envp)
 		{
 			if (!access(cmd_path, X_OK | F_OK))
 			{
-				ft_putstr_fd("bash: ", 2);
-				perror(cmd_path);
+				ft_dputstr_fd(cmd_path, strerror(errno), 2);
 				exit(126);
 			}
 			else
 			{
-				ft_putstr_fd("bash: ", 2);
-				ft_putstr_fd(cmd_path, 2);
+				ft_dputstr_fd(cmd_path, strerror(errno), 2);
 				exit(127);
 			}
 		}
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(cmd_path, 2);
-		ft_putstr_fd(": command not found\n", 2);
+		ft_dputstr_fd(cmd_path, ": command not found", 2);
 		exit(127);
 	}
 }
