@@ -34,7 +34,7 @@ int	ft_non_individual_builtins(t_table *table_aux, t_mini *mini)
 		return (-1);
 	else if (ft_strncmp(table_aux->args[0], "echo", 6) == 0)
 		return (ft_echo(table_aux->args));
-	else if (ft_strncmp(table_aux->args[0], "envp", 5) == 0)
+	else if (ft_strncmp(table_aux->args[0], "env", 4) == 0)
 		return (ft_envp(mini->envp));
 	else if (ft_strncmp(table_aux->args[0], "pwd", 4) == 0)
 		return (ft_pwd());

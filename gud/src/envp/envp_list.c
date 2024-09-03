@@ -12,6 +12,20 @@
 
 #include "../../headers/minishell.h"
 
+static void ft_shlvl(t_envp *node)
+{
+	int	tmp;
+
+	tmp = 0;
+	if (!ft_strcmp(node->key, "SHLVL"))
+	{
+		tmp = ft_atoi(node->value);
+		tmp++;
+		free(node->value);
+		node->value = ft_itoa(tmp);
+	}
+}
+
 static t_envp	*create_new_node(char *env_str)
 {
 	char	*separator_pos;
@@ -30,6 +44,7 @@ static t_envp	*create_new_node(char *env_str)
 	new_node->key = ft_strndup(env_str, separator_pos - env_str);
 	new_node->value = ft_strdup(separator_pos + 1);
 	new_node->next = NULL;
+	ft_shlvl(new_node);
 	return (new_node);
 }
 
@@ -85,7 +100,7 @@ char	*envp_get_value(t_envp *envp, char *key)
 	return (NULL);
 }
 
-void	envp_print(t_envp *envp)
+/*void	envp_print(t_envp *envp)
 {
 	t_envp	*current;
 
@@ -96,4 +111,4 @@ void	envp_print(t_envp *envp)
 		printf("value: %s\n", current->value);
 		current = current->next;
 	}
-}
+}*/

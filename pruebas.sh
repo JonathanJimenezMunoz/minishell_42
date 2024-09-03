@@ -54,14 +54,14 @@ EOF
 >p3
 EOF
 
-# Crea p3
+# Crea p4
 ./minishell <<EOF
-<p1 | >p3
+<p1 | >p4
 EOF
 
-# Crea p3
+# Crea p5
 ./minishell <<EOF
-<p1 cat | >p3
+<p1 cat | >p5
 EOF
 
 # Imprime p1
@@ -69,9 +69,9 @@ EOF
 <p1 cat
 EOF
 
-# Crea p3
+# Crea p6
 ./minishell <<EOF
-<p1 | cat | >p3
+<p1 | cat | >p6
 EOF
 
 # Error > |

@@ -19,16 +19,32 @@ void	init_aux(t_table_aux *aux)
 	aux->in_heredoc = NULL;
 }
 
+static int	next_type_nospace(t_token *current)
+{
+	while(current && current->type == TOKEN_SPACE)
+		current = current->next;
+	return (current->type);
+}
+
+static char	*next_content_nospace(t_token *current)
+{
+	while(current && current->type == TOKEN_SPACE)
+		current = current->next;
+	return (current->content);
+}
+
 static void	parse_while(t_mini *mini, t_table_aux *aux, t_token **current)
 {
 	if ((*current)->type == TOKEN_PIPE)
 	{
+		while((*current) && (*current)->type == TOKEN_SPACE)
+			(*current) = (*current)->next;
 		if (!(*current)->next)
 			ft_error(mini, "syntax error near unexpected token",
 				(*current)->content, 2);
-		if ((*current)->next && (*current)->next->type == TOKEN_PIPE)
+		if ((*current)->next && next_type_nospace((*current)->next) == TOKEN_PIPE)
 			ft_error(mini, "syntax error near unexpected token",
-				(*current)->next->content, 2);
+				next_content_nospace((*current)->next), 2);
 		add_node(&mini, aux);
 		free_table_aux(aux);
 		init_aux(aux);
