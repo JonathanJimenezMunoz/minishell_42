@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 23:43:24 by david             #+#    #+#             */
-/*   Updated: 2024/09/01 19:27:37 by david            ###   ########.fr       */
+/*   Updated: 2024/09/03 15:29:30 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int	ft_export_aux(char *args, t_envp **envp)
 int	ft_export(char **args, t_envp **envp)
 {
 	t_envp	*envp_copy;
-	int	i;
+	int		i;
 
 	i = 0;
 	if (args && args[1] == NULL)

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:20:43 by david             #+#    #+#             */
-/*   Updated: 2024/09/02 23:37:37 by david            ###   ########.fr       */
+/*   Updated: 2024/09/03 15:12:03 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-static void ft_waiter(pid_t *pids, int pipes, t_mini *mini)
+static void	ft_waiter(pid_t *pids, int pipes, t_mini *mini)
 {
 	int	status;
 	int	j;
@@ -30,10 +30,9 @@ static void ft_waiter(pid_t *pids, int pipes, t_mini *mini)
 	free(pids);
 }
 
-static void child_process(t_mini *mini, t_table *table_aux, int prev_fd, int *pipe_fd)
+static void	child_process(t_mini *mini, t_table *table_aux,
+							int prev_fd, int *pipe_fd)
 {
-	int		error;
-	
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (prev_fd != -1)
@@ -55,15 +54,11 @@ static void child_process(t_mini *mini, t_table *table_aux, int prev_fd, int *pi
 		}
 		close(pipe_fd[1]);
 	}
-	error = ft_individual_builtins(table_aux, mini);
-	if (error == -1)
-		execute_command(table_aux, mini);
-	else if (error != 0)
-		exit(error);
-	exit(127);
+	execute_child_process(mini, table_aux);
 }
 
-static pid_t	do_fork(t_mini *mini, t_table *table_aux, int prev_fd, int *pipe_fd)
+static pid_t	do_fork(t_mini *mini, t_table *table_aux,
+					int prev_fd, int *pipe_fd)
 {
 	pid_t	pid;
 
@@ -75,10 +70,10 @@ static pid_t	do_fork(t_mini *mini, t_table *table_aux, int prev_fd, int *pipe_fd
 
 static void	ft_forkin(t_mini *mini, t_table *table_aux, int pipes)
 {
-	int 	pipe_fd[2];
-	int 	prev_fd;
-	pid_t 	*pids;
-	int	i;
+	int		pipe_fd[2];
+	int		prev_fd;
+	pid_t	*pids;
+	int		i;
 
 	i = -1;
 	pids = (pid_t *)malloc(sizeof(pid_t) * pipes);
@@ -102,43 +97,22 @@ static void	ft_forkin(t_mini *mini, t_table *table_aux, int pipes)
 	ft_waiter(pids, pipes, mini);
 }
 
-static int	execute_single_command(t_mini *mini, t_table *table_aux)
-{
-	int		error;
-	pid_t	pid;
-	int		status;
-
-	error = ft_individual_builtins(table_aux, mini);
-	if (error == -1)
-	{
-		pid = fork();
-		if (pid == 0)
-		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
-			execute_command(table_aux, mini);
-		}
-		else if (pid > 0)
-		{
-			signal(SIGINT, SIG_IGN);
-			signal(SIGQUIT, SIG_IGN);
-			waitpid(pid, &status, 0);
-			exit_capture(mini, status);
-		}
-	}
-	else if (error != 0)
-		mini->exit_status = error;
-	return (0);
-}
-
 int	execute(t_mini *mini)
 {
 	t_table	*table_aux;
+	int		pipes;
 
+	pipes = 0;
 	table_aux = mini->table;
-	if (mini->pipes > 1)
-		ft_forkin(mini, table_aux, mini->pipes);
-	else if (mini->pipes == 1)
+	while (table_aux)
+	{
+		pipes++;
+		table_aux = table_aux->next;
+	}
+	table_aux = mini->table;
+	if (pipes > 1)
+		ft_forkin(mini, table_aux, pipes);
+	else if (pipes == 1)
 		execute_single_command(mini, table_aux);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_redir_handler.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 20:46:52 by dyanez-m          #+#    #+#             */
-/*   Updated: 2024/09/02 23:07:32 by david            ###   ########.fr       */
+/*   Updated: 2024/09/03 15:25:19 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	add_redir_end(t_table_aux *aux, char *file, int type)
 
 	new_redir = (t_redir *)malloc(sizeof(t_redir));
 	if (!new_redir)
-		return ; // Manejar error de malloc aquí
+	{
+		ft_putstr_fd("Error: malloc failed\n", 2);
+		exit(EXIT_FAILURE);
+	}
 	new_redir->file = ft_strdup(file);
 	new_redir->type = type;
 	new_redir->next = NULL;
@@ -51,16 +54,19 @@ t_redir	*copy_redir_node(t_redir *node)
 
 t_redir	*copy_redir_list(t_redir *head)
 {
-	t_redir	*current = head;
-	t_redir	*new_list = NULL;
-	t_redir	**ptr_to_next = &new_list;
+	t_redir	*current;
+	t_redir	*new_list;
+	t_redir	**ptr_to_next;
 
+	current = head;
+	new_list = NULL;
+	ptr_to_next = &new_list;
 	while (current != NULL)
 	{
 		*ptr_to_next = copy_redir_node(current);
 		if (*ptr_to_next == NULL)
 		{
-			// Manejar error de malloc aquí, posiblemente liberando la lista parcialmente copiada
+			free_redir(new_list);
 			return (NULL);
 		}
 		ptr_to_next = &((*ptr_to_next)->next);

@@ -6,13 +6,14 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 16:06:27 by dyanez-m          #+#    #+#             */
-/*   Updated: 2024/09/02 17:35:39 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:29:14 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-void	*ft_realloc_double_array(void *ptr, size_t original_size, size_t new_size)
+void	*ft_realloc_double_array(void *ptr, size_t original_size,
+			size_t new_size)
 {
 	void	*new_ptr;
 

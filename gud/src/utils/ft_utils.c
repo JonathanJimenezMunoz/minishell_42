@@ -6,13 +6,11 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 13:24:08 by david             #+#    #+#             */
-/*   Updated: 2024/09/02 16:14:34 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:30:06 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
-
-
 
 int	ft_isspace(char c)
 {
@@ -44,13 +42,13 @@ int	ft_is_good_quote(char *line)
 	return (-1);
 }
 
-int ft_intlen(int n)
+int	ft_intlen(int n)
 {
 	int	len;
 
 	len = 0;
 	if (n == 0)
-		return 1;
+		return (1);
 	if (n < 0)
 		n = -n;
 	while (n != 0)
@@ -58,20 +56,5 @@ int ft_intlen(int n)
 		n /= 10;
 		len++;
 	}
-	return len;
-}
-
-int		ft_count_pipes(t_mini *mini)
-{
-	t_table	*current;
-	int		counter;
-
-	counter = 0;
-	current = mini->table;
-	while (current)
-	{
-		counter++;
-		current = current->next;
-	}
-	return (counter);
+	return (len);
 }

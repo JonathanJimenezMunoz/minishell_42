@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 20:27:38 by david             #+#    #+#             */
-/*   Updated: 2024/09/01 19:57:43 by david            ###   ########.fr       */
+/*   Updated: 2024/09/03 15:31:18 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ int	ft_add_token(t_token_type type, char **line, t_mini *mini, int size)
 		i++;
 	}
 	content[i] = '\0';
+	if (content[0] == '\0')
+	{
+		free(content);
+		return (0);
+	}
 	token = token_new(content, type);
 	free(content);
 	if (!token)

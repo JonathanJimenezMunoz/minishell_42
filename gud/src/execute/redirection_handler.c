@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_handler.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:18:23 by david             #+#    #+#             */
-/*   Updated: 2024/09/02 23:37:48 by david            ###   ########.fr       */
+/*   Updated: 2024/09/03 15:12:35 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	handle_redirection(t_table *table_aux)
 {
 	t_redir	*red;
 
-	red  = table_aux->redir;
+	red = table_aux->redir;
 	while (red)
 	{
 		if (red->type == TOKEN_REDIR_IN)

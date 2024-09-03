@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/09/02 23:22:45 by david            ###   ########.fr       */
+/*   Updated: 2024/09/03 15:32:49 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,12 @@ typedef struct s_envp
 
 typedef struct s_redir
 {
-	char *file;
-	t_token_type		type;
-	struct s_redir *next;
+	char			*file;
+	t_token_type	type;
+	struct s_redir	*next;
 }	t_redir;
-typedef	struct s_table
+
+typedef struct s_table
 {
 	char			**args;
 	t_redir			*redir;
@@ -111,15 +112,13 @@ t_envp	*copy_envp_list(t_envp *envp);
 void	free_envp_list(t_envp *envp);
 void	print_envp_declare(t_envp *envp);
 
-
 // UTILS
 char	**copy_double_str(char **str);
 int		ft_isspace(char c);
 int		ft_is_good_quote(char *line);
 int		ft_intlen(int n);
-void	*ft_realloc_double_array(void *ptr, size_t original_size, size_t new_size);
-void	open_input_file(char *file_name, t_mini *mini);
-void	open_output_file(char *file_name, t_mini *mini, int control);
+void	*ft_realloc_double_array(void *ptr, size_t original_size,
+			size_t new_size);
 char	*join_strs(char **args);
 int		count_double_str(char **args);
 char	*get_path(char **envp);
@@ -136,6 +135,8 @@ void	ft_free_all(t_mini *mini);
 void	free_table_aux(t_table_aux *aux);
 void	free_table(t_table **table);
 void	free_token_list(t_token **token);
+void	free_envp(t_envp **envp);
+void	free_redir(t_redir *redir);
 
 // TOKENIZE
 int		tokenize_line(char *line, t_mini *mini);
@@ -165,7 +166,8 @@ int		ft_individual_builtins(t_table *table_aux, t_mini *mini);
 int		ft_non_individual_builtins(t_table *table_aux, t_mini *mini);
 void	handle_redirection(t_table *table_aux);
 t_redir	*copy_redir_list(t_redir *head);
-
+void	execute_child_process(t_mini *mini, t_table *table_aux);
+int		execute_single_command(t_mini *mini, t_table *table_aux);
 //SIGNALS
 void	sig_heredoc(int sig);
 void	exit_capture(t_mini *mini, int status);
@@ -175,5 +177,4 @@ void	while_signals(t_mini *mini);
 // TEMPORALES
 void	token_print(t_token *tokens);
 void	print_table(t_table *table);
-
-# endif
+#endif

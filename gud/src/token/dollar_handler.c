@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 23:52:39 by david             #+#    #+#             */
-/*   Updated: 2024/09/01 18:58:41 by david            ###   ########.fr       */
+/*   Updated: 2024/09/03 15:18:07 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int	handle_env_variable(char **new_line, int *j,
 	return (i);
 }
 
-static void	handle_error_variable(char **new_line, int *j, t_mini *mini)
+static int	handle_error_variable(char **new_line, int *j, t_mini *mini)
 {
 	size_t	counter;
 	char	*exit_status;
@@ -96,6 +96,7 @@ static void	handle_error_variable(char **new_line, int *j, t_mini *mini)
 	while (ft_strlen(exit_status) > counter)
 		(*new_line)[(*j)++] = exit_status[counter++];
 	free(exit_status);
+	return (2);
 }
 
 char	*ft_new_line(char *l, int size, t_mini *mini)
@@ -114,11 +115,9 @@ char	*ft_new_line(char *l, int size, t_mini *mini)
 	while (i < size)
 	{
 		if (l[i] == '$' && l[i + 1] == '?')
-		{
-			handle_error_variable(&new_line, &j, mini);
-			i += 2;
-		}
-		else if (l[i] == '$' && ft_isspace(l[i+1]) && l[i+1] && l[i+1] != '\"')
+			i += handle_error_variable(&new_line, &j, mini);
+		else if (l[i] == '$' && ft_isspace(l[i + 1]) && l[i + 1]
+			&& l[i + 1] != '\"')
 			i += handle_env_variable(&new_line, &j, &(l[i + 1]), mini);
 		else
 			new_line[j++] = l[i++];

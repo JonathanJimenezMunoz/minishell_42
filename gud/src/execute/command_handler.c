@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/09/02 20:17:27 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/03 15:11:44 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,45 @@ void	execute_command(t_table *table_aux, t_mini *mini)
 	else if (i != 0)
 		exit(i);
 	exit(0);
+}
+
+void	execute_child_process(t_mini *mini, t_table *table_aux)
+{
+	int	error;
+
+	error = ft_individual_builtins(table_aux, mini);
+	if (error == -1)
+		execute_command(table_aux, mini);
+	else if (error != 0)
+		exit(error);
+	exit(127);
+}
+
+int	execute_single_command(t_mini *mini, t_table *table_aux)
+{
+	int		error;
+	pid_t	pid;
+	int		status;
+
+	error = ft_individual_builtins(table_aux, mini);
+	if (error == -1)
+	{
+		pid = fork();
+		if (pid == 0)
+		{
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
+			execute_command(table_aux, mini);
+		}
+		else if (pid > 0)
+		{
+			signal(SIGINT, SIG_IGN);
+			signal(SIGQUIT, SIG_IGN);
+			waitpid(pid, &status, 0);
+			exit_capture(mini, status);
+		}
+	}
+	else if (error != 0)
+		mini->exit_status = error;
+	return (0);
 }
