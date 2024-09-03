@@ -59,7 +59,7 @@ int	ft_intlen(int n)
 	return (len);
 }
 
-void	ft_dputstr_fd(char *s1, char *s2, int fd)
+void	ft_dputstr_fd(char *s1, char *s2, int fd, int error)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -75,4 +75,5 @@ void	ft_dputstr_fd(char *s1, char *s2, int fd)
 	free(tmp2);
 	free(tmp3);
 	free(tmp4);
+	exit(error);
 }

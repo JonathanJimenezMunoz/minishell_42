@@ -123,7 +123,7 @@ char	*join_strs(char **args);
 int		count_double_str(char **args);
 char	*get_path(char **envp);
 int		is_valid_identifier(const char *key);
-void	ft_dputstr_fd(char *s1, char *s2, int fd);
+void	ft_dputstr_fd(char *s1, char *s2, int fd, int error);
 
 // ERROR
 void	ft_error(t_mini *mini, char *error, char *type, int exit);
@@ -158,9 +158,9 @@ t_redir	*copy_redir_node(t_redir *node);
 
 //EXECUTE
 int		execute(t_mini *mini);
-void	handle_output_append_redirection(const char *out_append);
-void	handle_output_redirection(const char *out_redir);
-void	handle_input_redirection(const char *in_redir);
+void	handle_output_append_redirection(char *out_append);
+void	handle_output_redirection(char *out_redir);
+void	handle_input_redirection(char *in_redir);
 void	execute_command(t_table *table_aux, t_mini *mini);
 int		ft_individual_builtins(t_table *table_aux, t_mini *mini);
 int		ft_non_individual_builtins(t_table *table_aux, t_mini *mini);

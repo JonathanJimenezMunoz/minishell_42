@@ -12,17 +12,13 @@
 
 #include "../../headers/minishell.h"
 
-void	handle_input_redirection(const char *in_redir)
+void	handle_input_redirection(char *in_redir)
 {
 	int	fd;
 
 	fd = open(in_redir, O_RDONLY);
 	if (fd < 0 || access(in_redir, R_OK) < 0)
-	{
-		ft_putstr_fd("bash: ", 2);
-		perror(in_redir);
-		exit(EXIT_FAILURE);
-	}
+		ft_dputstr_fd(in_redir, strerror(errno), 2, EXIT_FAILURE);
 	if (dup2(fd, STDIN_FILENO) < 0)
 	{
 		perror("dup2");
@@ -31,17 +27,13 @@ void	handle_input_redirection(const char *in_redir)
 	close(fd);
 }
 
-void	handle_output_redirection(const char *out_redir)
+void	handle_output_redirection(char *out_redir)
 {
 	int	fd;
 
 	fd = open(out_redir, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-	{
-		ft_putstr_fd("bash: ", 2);
-		perror(out_redir);
-		exit(EXIT_FAILURE);
-	}
+		ft_dputstr_fd(out_redir, strerror(errno), 2, EXIT_FAILURE);
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		perror("dup2");
@@ -50,17 +42,13 @@ void	handle_output_redirection(const char *out_redir)
 	close(fd);
 }
 
-void	handle_output_append_redirection(const char *out_append)
+void	handle_output_append_redirection(char *out_append)
 {
 	int	fd;
 
 	fd = open(out_append, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
-	{
-		ft_putstr_fd("bash: ", 2);
-		perror(out_append);
-		exit(EXIT_FAILURE);
-	}
+		ft_dputstr_fd(out_append, strerror(errno),  2, EXIT_FAILURE);
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		perror("dup2");

@@ -46,19 +46,14 @@ static void	execve_handler(char **argv, char **envp)
 	{
 		if (ft_strchr(cmd_path, '/'))
 		{
-			if (!access(cmd_path, X_OK | F_OK))
-			{
-				ft_dputstr_fd(cmd_path, strerror(errno), 2);
-				exit(126);
-			}
+			if (!access(cmd_path, X_OK))
+				ft_dputstr_fd(cmd_path, strerror(errno), 2, 126);
+			else if (!access(cmd_path, F_OK))
+				ft_dputstr_fd(cmd_path, strerror(errno), 2, 126);
 			else
-			{
-				ft_dputstr_fd(cmd_path, strerror(errno), 2);
-				exit(127);
-			}
+				ft_dputstr_fd(cmd_path, strerror(errno), 2, 127);
 		}
-		ft_dputstr_fd(cmd_path, ": command not found", 2);
-		exit(127);
+		ft_dputstr_fd(cmd_path, ": command not found", 2, 127);
 	}
 }
 
