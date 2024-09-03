@@ -39,9 +39,13 @@ static char	*path_handler(char *param, char **envp)
 
 static void	execve_handler(char **argv, char **envp)
 {
-	char	*cmd_path;
+	char		*cmd_path;
+	struct stat path_stat;
 
 	cmd_path = path_handler(argv[0], envp);
+	if (ft_strchr(cmd_path, '/') && stat(cmd_path, &path_stat) == 0
+			&& S_ISDIR(path_stat.st_mode))
+        ft_dputstr_fd(cmd_path, "Is a directory", 2, 126);
 	if (execve(cmd_path, argv, envp) == -1)
 	{
 		if (ft_strchr(cmd_path, '/'))
