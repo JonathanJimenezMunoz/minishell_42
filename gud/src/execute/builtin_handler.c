@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 22:51:40 by david             #+#    #+#             */
-/*   Updated: 2024/09/01 17:24:18 by david            ###   ########.fr       */
+/*   Updated: 2024/09/03 19:41:33 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_non_individual_builtins(t_table *table_aux, t_mini *mini)
 	else if (ft_strncmp(table_aux->args[0], "echo", 6) == 0)
 		return (ft_echo(table_aux->args));
 	else if (ft_strncmp(table_aux->args[0], "env", 4) == 0)
-		return (ft_envp(mini->envp));
+		return (ft_envp(mini->envp, table_aux->args));
 	else if (ft_strncmp(table_aux->args[0], "pwd", 4) == 0)
 		return (ft_pwd());
 	else

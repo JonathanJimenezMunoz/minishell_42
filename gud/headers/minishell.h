@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/09/03 15:50:17 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/03 19:35:32 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int		ft_export(char **args, t_envp **envp);
 int		ft_unset(char **args, t_mini *mini);
 int		ft_exit(char **args, t_mini *mini);
 int		ft_echo(char **args);
-int		ft_envp(t_envp *envp);
+int		ft_envp(t_envp *envp, char **args);
 int		ft_pwd(void);
 
 // ENVP

@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/09/03 15:53:45 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/03 17:41:28 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static void	execve_handler(char **argv, char **envp)
 
 	cmd_path = path_handler(argv[0], envp);
 	if (ft_strchr(cmd_path, '/') && stat(cmd_path, &path_stat) == 0
-			&& S_ISDIR(path_stat.st_mode))
-        ft_dputstr_fd(cmd_path, "Is a directory", 2, 126);
+		&& S_ISDIR(path_stat.st_mode))
+		ft_dputstr_fd(cmd_path, "Is a directory", 2, 126);
 	if (execve(cmd_path, argv, envp) == -1)
 	{
 		if (ft_strchr(cmd_path, '/'))
