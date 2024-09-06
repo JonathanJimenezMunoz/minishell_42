@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/09/03 17:41:28 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/06 17:07:29 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	execve_handler(char **argv, char **envp)
 			else
 				ft_dputstr_fd(cmd_path, strerror(errno), 2, 127);
 		}
-		ft_dputstr_fd(cmd_path, ": command not found", 2, 127);
+		ft_dputstr_fd(cmd_path, "command not found", 2, 127);
 	}
 }
 

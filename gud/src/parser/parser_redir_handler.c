@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redir_handler.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 17:26:57 by david             #+#    #+#             */
-/*   Updated: 2024/09/03 15:27:25 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/06 17:46:31 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	parse_redir_in(t_mini *mini, t_table_aux *aux, t_token **current)
 	if (!(*current)->next)
 		return (ft_error_syx(mini, "newline", 2));
 	*current = (*current)->next;
-	while ((*current)->type == TOKEN_SPACE)
+	while ((*current) && (*current)->next && (*current)->type == TOKEN_SPACE)
 		*current = (*current)->next;
 	if ((*current)->type != TOKEN_WORD)
 		return (ft_error_syx(mini, (*current)->content, 2));
@@ -36,7 +36,7 @@ void	parse_redir_heredoc(t_mini *mini, t_table_aux *aux, t_token **current)
 	if (!(*current)->next)
 		return (ft_error_syx(mini, "newline", 2));
 	*current = (*current)->next;
-	while ((*current)->type == TOKEN_SPACE)
+	while ((*current) && (*current)->next && (*current)->type == TOKEN_SPACE)
 		*current = (*current)->next;
 	if ((*current)->type != TOKEN_WORD)
 		return (ft_error_syx(mini, (*current)->content, 2));
@@ -71,7 +71,7 @@ void	parser_redir_out(t_mini *mini, t_table_aux *aux, t_token **current)
 	if (!(*current)->next)
 		return (ft_error_syx(mini, "newline", 2));
 	*current = (*current)->next;
-	while ((*current)->type == TOKEN_SPACE)
+	while ((*current) && (*current)->next && (*current)->type == TOKEN_SPACE)
 		*current = (*current)->next;
 	if ((*current)->type != TOKEN_WORD)
 		return (ft_error_syx(mini, (*current)->content, 2));
@@ -85,7 +85,7 @@ void	parse_redir_append(t_mini *mini, t_table_aux *aux, t_token **current)
 	if (!(*current)->next)
 		return (ft_error_syx(mini, "newline", 2));
 	*current = (*current)->next;
-	while ((*current)->type == TOKEN_SPACE)
+	while ((*current) && (*current)->next && (*current)->type == TOKEN_SPACE)
 		*current = (*current)->next;
 	if ((*current)->type != TOKEN_WORD)
 		return (ft_error_syx(mini, (*current)->content, 2));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 22:32:54 by david             #+#    #+#             */
-/*   Updated: 2024/09/02 21:04:46 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/06 17:59:22 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,17 @@ void	init_aux(t_table_aux *aux)
 
 static int	next_type_nospace(t_token *current)
 {
-	while(current && current->type == TOKEN_SPACE)
+	while (current && current->next && current->type == TOKEN_SPACE)
 		current = current->next;
 	return (current->type);
 }
 
 static char	*next_content_nospace(t_token *current)
 {
-	while(current && current->type == TOKEN_SPACE)
+	while (current && current->type == TOKEN_SPACE)
 		current = current->next;
+	if (!current)
+		return (NULL);
 	return (current->content);
 }
 
@@ -37,12 +39,11 @@ static void	parse_while(t_mini *mini, t_table_aux *aux, t_token **current)
 {
 	if ((*current)->type == TOKEN_PIPE)
 	{
-		while((*current) && (*current)->type == TOKEN_SPACE)
-			(*current) = (*current)->next;
-		if (!(*current)->next)
+		if (!(*current)->next || !next_content_nospace(((*current)->next)))
 			ft_error(mini, "syntax error near unexpected token",
 				(*current)->content, 2);
-		if ((*current)->next && next_type_nospace((*current)->next) == TOKEN_PIPE)
+		if ((*current)->next &&
+			next_type_nospace((*current)->next) == TOKEN_PIPE)
 			ft_error(mini, "syntax error near unexpected token",
 				next_content_nospace((*current)->next), 2);
 		add_node(&mini, aux);

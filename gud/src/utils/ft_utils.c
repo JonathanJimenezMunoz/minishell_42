@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 13:24:08 by david             #+#    #+#             */
-/*   Updated: 2024/09/03 15:53:13 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/06 17:08:17 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_dputstr_fd(char *s1, char *s2, int fd, int error)
 	char	*tmp3;
 	char	*tmp4;
 
-	tmp = ft_strjoin("bash :", s1);
+	tmp = ft_strjoin("bash: ", s1);
 	tmp2 = ft_strjoin(tmp, ": ");
 	tmp3 = ft_strjoin(tmp2, s2);
 	tmp4 = ft_strjoin(tmp3, "\n");

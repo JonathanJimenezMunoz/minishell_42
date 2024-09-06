@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 14:19:50 by david             #+#    #+#             */
-/*   Updated: 2024/09/03 15:18:19 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/06 17:40:36 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ static void	tokenize_word(char **line, t_mini *mini)
 	}
 	if (i > 0)
 	{
+		if ((*line)[0] == '$' && ((*line)[1] == '\"' || ((*line)[1] == '\'')))
+		{
+			*line += i;
+			return ;
+		}
 		tmp = ft_new_line(*line, i, mini);
 		recover = ft_strlen(tmp);
 		ft_add_token(TOKEN_WORD, &tmp, mini, ft_strlen(tmp));
