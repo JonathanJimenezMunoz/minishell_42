@@ -18,10 +18,14 @@ static void	ft_err(int op, char *arg, t_mini *mini)
 	char	*err_aux;
 
 	if (op == 1)
-		ft_putstr_fd("bash: too many arguments\n", 2);
+	{
+		ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("bash: exit: too many arguments\n", 2);
+	}
 	else if (op == 2)
 	{
-		err_aux = ft_strjoin("bash:", arg);
+		ft_putstr_fd("exit\n", 2);
+		err_aux = ft_strjoin("bash: exit: ", arg);
 		err = ft_strjoin2(err_aux, ": numeric argument required\n");
 		ft_putstr_fd(err, 2);
 	}
@@ -96,12 +100,13 @@ int	ft_exit(char **args, t_mini *mini)
 		{
 			ft_err(1, "error", mini);
 			ft_free_all(mini);
-			exit(1);
+			return (0);
 		}
 		else
 			exit_num = ft_exittoi(args[1], mini);
 	}
 	ft_free_all(mini);
+	ft_putstr_fd("exit\n", 2);
 	exit(exit_num);
 	return (0);
 }
