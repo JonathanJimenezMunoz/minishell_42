@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/09/03 19:35:32 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:15:29 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_mini
 	char	*line;
 	int		error;
 	int		pipes;
+	int		flag_redir;
 }	t_mini;
 
 // BUILTINS
@@ -124,6 +125,8 @@ int		count_double_str(char **args);
 char	*get_path(char **envp);
 int		is_valid_identifier(const char *key);
 void	ft_dputstr_fd(char *s1, char *s2, int fd, int error);
+void	open_input_file(char *file_name, t_mini *mini);
+void	open_output_file(char *file_name, t_mini *mini, int control);
 
 // ERROR
 void	ft_error(t_mini *mini, char *error, char *type, int exit);
