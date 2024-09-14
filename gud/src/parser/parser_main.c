@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_main.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 22:32:54 by david             #+#    #+#             */
-/*   Updated: 2024/09/06 17:59:22 by david            ###   ########.fr       */
+/*   Updated: 2024/09/14 15:36:37 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ static void	parse_while(t_mini *mini, t_table_aux *aux, t_token **current)
 		if (!(*current)->next || !next_content_nospace(((*current)->next)))
 			ft_error(mini, "syntax error near unexpected token",
 				(*current)->content, 2);
-		if ((*current)->next &&
-			next_type_nospace((*current)->next) == TOKEN_PIPE)
+		if ((*current)->next
+			&& next_type_nospace((*current)->next) == TOKEN_PIPE)
 			ft_error(mini, "syntax error near unexpected token",
 				next_content_nospace((*current)->next), 2);
 		add_node(&mini, aux);

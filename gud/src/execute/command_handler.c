@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/09/06 17:07:29 by david            ###   ########.fr       */
+/*   Updated: 2024/09/14 17:56:36 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*path_handler(char *param, char **envp)
 static void	execve_handler(char **argv, char **envp)
 {
 	char		*cmd_path;
-	struct stat path_stat;
+	struct stat	path_stat;
 
 	cmd_path = path_handler(argv[0], envp);
 	if (ft_strchr(cmd_path, '/') && stat(cmd_path, &path_stat) == 0

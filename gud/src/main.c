@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:40:23 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 15:17:48 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/14 17:13:33 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,11 @@ static void do_redir_handler(t_mini *mini)
 		{
 			if (redir_aux->type == TOKEN_REDIR_IN && mini->flag_redir == 0)
 				open_input_file(redir_aux->file, mini);
-			else if (redir_aux->type == TOKEN_REDIR_OUT && mini->flag_redir == 0)
+			else if (redir_aux->type == TOKEN_REDIR_OUT
+				&& mini->flag_redir == 0)
 				open_output_file(redir_aux->file, mini, 0);
-			else if (redir_aux->type == TOKEN_REDIR_APPEND && mini->flag_redir == 0)
+			else if (redir_aux->type == TOKEN_REDIR_APPEND
+				&& mini->flag_redir == 0)
 				open_output_file(redir_aux->file, mini, 1);
 			redir_aux = redir_aux->next;
 		}
@@ -124,8 +126,9 @@ static void	ft_loop(t_mini *mini)
 		if (mini->error == 0)
 		{
 			parser_token(mini);
-			do_redir_handler(mini);
 			//process_heredoc(mini);
+			do_redir_handler(mini);
+			
 		}
 		if (mini->error == 0)
 			execute(mini);

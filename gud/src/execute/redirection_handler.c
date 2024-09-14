@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:18:23 by david             #+#    #+#             */
-/*   Updated: 2024/09/03 15:12:35 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:35:04 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	handle_output_append_redirection(char *out_append)
 
 	fd = open(out_append, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
-		ft_dputstr_fd(out_append, strerror(errno),  2, EXIT_FAILURE);
+		ft_dputstr_fd(out_append, strerror(errno), 2, EXIT_FAILURE);
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		perror("dup2");

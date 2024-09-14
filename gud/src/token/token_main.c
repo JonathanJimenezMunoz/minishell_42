@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 14:19:50 by david             #+#    #+#             */
-/*   Updated: 2024/09/06 17:40:36 by david            ###   ########.fr       */
+/*   Updated: 2024/09/14 17:29:12 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ static void	tokenize_quote(char **line, t_mini *mini)
 	else if (size == -1)
 		ft_error(mini, "syntax error: unmatched", "quotes", 2);
 	else if (size == 0)
+	{
+		ft_add_token(TOKEN_WORD, line, mini, 0);
 		*line += 2;
+	}
 }
 
 static void	tokenize_redir(char **line, t_mini *mini)

@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 14:45:43 by dyanez-m          #+#    #+#             */
-/*   Updated: 2024/09/14 15:18:41 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/14 15:36:18 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,11 @@ void	open_input_file(char *file_name, t_mini *mini)
 {
 	int	fd;
 
-
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0 || access(file_name, R_OK) < 0)
 	{
 		mini->exit_status = 1;
-        mini->flag_redir = 1;
+		mini->flag_redir = 1;
 	}
 	close(fd);
 }
@@ -37,7 +36,7 @@ void	open_output_file(char *file_name, t_mini *mini, int control)
 	if (fd < 0)
 	{
 		mini->exit_status = 1;
-        mini->flag_redir = 1;
+		mini->flag_redir = 1;
 	}
 	close(fd);
 }
