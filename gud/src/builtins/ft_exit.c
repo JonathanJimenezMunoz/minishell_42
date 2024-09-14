@@ -100,7 +100,7 @@ int	ft_exit(char **args, t_mini *mini)
 		{
 			ft_err(1, "error", mini);
 			ft_free_all(mini);
-			return (0);
+			return (1);
 		}
 		else
 			exit_num = ft_exittoi(args[1], mini);
