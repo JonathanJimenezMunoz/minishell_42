@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 22:32:54 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 15:36:37 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:19:02 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	init_aux(t_table_aux *aux)
 {
 	aux->args = NULL;
 	aux->redir = NULL;
-	aux->in_heredoc = NULL;
 }
 
 static int	next_type_nospace(t_token *current)

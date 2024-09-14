@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 14:09:30 by david             #+#    #+#             */
-/*   Updated: 2024/09/03 15:32:14 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/14 18:55:52 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ void	free_table_aux(t_table_aux *aux)
 		free_double_array(aux->args);
 	if (aux->redir)
 		free_redir(aux->redir);
-	if (aux->in_heredoc)
-		free_double_array(aux->in_heredoc);
 }
 
 void	free_table(t_table **table)
@@ -66,8 +64,6 @@ void	free_table(t_table **table)
 			free_double_array(current->args);
 		if (current->redir)
 			free_redir(current->redir);
-		if (current->in_heredoc)
-			free_double_array(current->in_heredoc);
 		free(current);
 		current = next;
 	}

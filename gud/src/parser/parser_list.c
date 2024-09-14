@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 22:15:22 by david             #+#    #+#             */
-/*   Updated: 2024/09/02 20:53:04 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:19:20 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,6 @@ static t_table	*create_node(t_table_aux *aux)
 		new_node->args = copy_double_str(aux->args);
 	else
 		new_node->args = NULL;
-	if (aux->in_heredoc != NULL)
-		new_node->in_heredoc = copy_double_str(aux->in_heredoc);
-	else
-		new_node->in_heredoc = NULL;
 	if (aux->redir != NULL)
 		new_node->redir = copy_redir_list(aux->redir);
 	else

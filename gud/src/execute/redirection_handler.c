@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:18:23 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 15:35:04 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/14 19:34:21 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	handle_redirection(t_table *table_aux)
 	red = table_aux->redir;
 	while (red)
 	{
-		if (red->type == TOKEN_REDIR_IN)
+		if (red->type == TOKEN_REDIR_IN || red->type == TOKEN_UNLINK)
 			handle_input_redirection(red->file);
 		else if (red->type == TOKEN_REDIR_OUT)
 			handle_output_redirection(red->file);

@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 17:56:36 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/14 20:28:47 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	execute_command(t_table *table_aux, t_mini *mini)
 	i = ft_non_individual_builtins(table_aux, mini);
 	if (i == -1)
 	{
-		if (!table_aux->args && table_aux->in_heredoc)
+		if (!table_aux->args)
 			exit(mini->exit_status);
 		else if (!table_aux->args)
 			exit(0);

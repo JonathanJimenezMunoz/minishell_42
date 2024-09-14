@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 17:26:57 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 17:56:12 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/14 18:56:31 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ void	parse_redir_in(t_mini *mini, t_table_aux *aux, t_token **current)
 
 void	parse_redir_heredoc(t_mini *mini, t_table_aux *aux, t_token **current)
 {
-	int	i;
-
-	i = 0;
 	if ((*current)->type != TOKEN_REDIR_DELIMITER)
 		return ;
 	if (!(*current)->next)
@@ -40,12 +37,7 @@ void	parse_redir_heredoc(t_mini *mini, t_table_aux *aux, t_token **current)
 		*current = (*current)->next;
 	if ((*current)->type != TOKEN_WORD && (*current)->type != TOKEN_EMPTY)
 		return (ft_error_syx(mini, (*current)->content, 2));
-	while (aux->in_heredoc && aux->in_heredoc[i])
-		i++;
-	aux->in_heredoc = ft_realloc_double_array(aux->in_heredoc,
-			sizeof(char *) * i, sizeof(char *) * (i + 2));
-	aux->in_heredoc[i] = ft_strdup((*current)->content);
-	aux->in_heredoc[i + 1] = NULL;
+	add_redir_end(aux, (*current)->content, TOKEN_REDIR_DELIMITER);
 }
 
 void	parse_args(t_table_aux *aux, t_token **current)

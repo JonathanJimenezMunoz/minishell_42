@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 17:14:09 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/14 20:27:22 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef enum e_token_type
 	TOKEN_REDIR_DELIMITER,
 	TOKEN_SPACE,
 	TOKEN_EMPTY,
+	TOKEN_UNLINK,
 }	t_token_type;
 
 typedef struct s_token
@@ -70,7 +71,6 @@ typedef struct s_table
 {
 	char			**args;
 	t_redir			*redir;
-	char			**in_heredoc;
 	struct s_table	*next;
 }	t_table;
 
@@ -78,7 +78,6 @@ typedef struct s_table_aux
 {
 	char	**args;
 	t_redir	*redir;
-	char	**in_heredoc;
 }	t_table_aux;
 
 typedef struct s_mini
@@ -159,6 +158,7 @@ void	parse_redir_append(t_mini *mini, t_table_aux *aux, t_token **current);
 int		add_node(t_mini **head, t_table_aux *aux);
 void	add_redir_end(t_table_aux *aux, char *file, int type);
 t_redir	*copy_redir_node(t_redir *node);
+void	change_redir_node(t_mini *mini, t_redir *node, char *file, int type);
 
 //EXECUTE
 int		execute(t_mini *mini);
@@ -172,10 +172,11 @@ void	handle_redirection(t_table *table_aux);
 t_redir	*copy_redir_list(t_redir *head);
 void	execute_child_process(t_mini *mini, t_table *table_aux);
 int		execute_single_command(t_mini *mini, t_table *table_aux);
-
+void ft_check_if_heredoc(t_mini *mini);
 
 //SIGNALS
 void	sig_heredoc(int sig);
+void	sig_handler(int sig);
 void	exit_capture(t_mini *mini, int status);
 void	redir_exit_capture(t_mini *mini, int status, int *first);
 void	while_signals(t_mini *mini);

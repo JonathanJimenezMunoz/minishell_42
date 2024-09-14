@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:40:23 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 17:13:33 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/14 20:29:03 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,6 @@ void	print_table(t_table *table)
 		{
 			print_redirections(table->redir);
 		}
-		printf("In Heredoc:\n");
-		if (table->in_heredoc != NULL)
-		{
-			for (i = 0; table->in_heredoc[i] != NULL; i++)
-			{
-				printf("\t%s\n", table->in_heredoc[i]);
-			}
-		}
-
 		table = table->next;
 		printf("\n");
 	}
@@ -95,7 +86,7 @@ static void do_redir_handler(t_mini *mini)
 		redir_aux = table_aux->redir;
 		while (redir_aux)
 		{
-			if (redir_aux->type == TOKEN_REDIR_IN && mini->flag_redir == 0)
+			if ((redir_aux->type == TOKEN_REDIR_IN || redir_aux->type == TOKEN_UNLINK) && mini->flag_redir == 0)
 				open_input_file(redir_aux->file, mini);
 			else if (redir_aux->type == TOKEN_REDIR_OUT
 				&& mini->flag_redir == 0)
@@ -126,9 +117,8 @@ static void	ft_loop(t_mini *mini)
 		if (mini->error == 0)
 		{
 			parser_token(mini);
-			//process_heredoc(mini);
+			ft_check_if_heredoc(mini);
 			do_redir_handler(mini);
-			
 		}
 		if (mini->error == 0)
 			execute(mini);
