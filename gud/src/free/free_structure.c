@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_structure.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 14:09:30 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 18:55:52 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/15 13:17:28 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	free_redir(t_redir *redir)
 	while (current != NULL)
 	{
 		next = current->next;
+		if (current->type == TOKEN_UNLINK)
+			unlink(current->file);
 		free(current->file);
 		free(current);
 		current = next;

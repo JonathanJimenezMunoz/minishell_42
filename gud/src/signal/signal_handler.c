@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 14:05:04 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 20:37:19 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/15 12:52:00 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	sig_heredoc(int sig)
 	{
 		rl_replace_line("", 0);
 		ft_putendl_fd("", 1);
-		//exit(130);
+		exit(130);
 	}
 }
 

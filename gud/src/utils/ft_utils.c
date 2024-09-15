@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 13:24:08 by david             #+#    #+#             */
-/*   Updated: 2024/09/06 17:08:17 by david            ###   ########.fr       */
+/*   Updated: 2024/09/15 12:45:01 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,16 @@ void	ft_dputstr_fd(char *s1, char *s2, int fd, int error)
 	free(tmp3);
 	free(tmp4);
 	exit(error);
+}
+
+char	*heredoc_filename(void)
+{
+	static int	i;
+	char		*num;
+	char		*file;
+
+	num = ft_itoa(i++);
+	file = ft_strjoin(".heredoc_", num);
+	free(num);
+	return (file);
 }

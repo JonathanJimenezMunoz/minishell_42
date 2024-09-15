@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 16:20:46 by dyanez-m          #+#    #+#             */
-/*   Updated: 2024/09/14 20:37:39 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/15 13:13:16 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ static void ft_do_heredoc(t_mini *mini, char *in_heredoc, int fd)
 		line = get_next_line(0);
 		if (!line)
 		{
-			ft_putstr_fd("warning: here-document delimited by end-of-file\
-			 (wanted ", 2);
-			ft_putstr_fd(in_heredoc, 2);
-			mini->exit_status = 1;
-			return ;
+			free(in_heredoc);
+			ft_dputstr_fd("warning: here-document delimited by end-of-file\
+				(wanted ", in_heredoc, 2, 1);
 		}
 		if (ft_strncmp(line, in_heredoc, ft_strlen(in_heredoc)) == 0)
 		{
@@ -42,42 +40,39 @@ static void ft_do_heredoc(t_mini *mini, char *in_heredoc, int fd)
 	}
 }
 
-static char *heredoc_filename(void)
+static void	ft_heredoc_child(t_mini *mini, t_redir *red)
 {
-	static int i;
-	char *num;
-	char *file;
+	char	*heredoc;
+	int		fd;
 
-	num = ft_itoa(i++);
-	file = ft_strjoin(".heredoc_", num);
-	free(num);
-	return (file);
-}
-
-static void ft_heredoc_child(t_mini *mini, t_redir *red)
-{
-	char	*file;
-	char    *heredoc;
-	int    fd;
-
-	file = heredoc_filename();
+	signal(SIGINT, sig_heredoc);
 	heredoc = ft_strdup(red->file);
 	free(red->file);
-	red->file = file;
-	red->type = TOKEN_UNLINK;
-	fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	fd = open(red->next->file, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd < 0)
 		ft_dputstr_fd("open", strerror(errno), 2, 1);
-	signal(SIGINT, sig_heredoc);
 	ft_do_heredoc(mini, heredoc, fd);
 	free(heredoc);
 	close(fd);
-	signal(SIGINT, sig_handler);
+	exit(0);
 }
 
+static void	ft_fork_heredoc(t_mini *mini, t_redir *red)
+{
+	pid_t	pid;
+	int		status;
 
+	pid = fork();
+	if (pid < 0)
+		ft_dputstr_fd("fork", strerror(errno), 2, 1);
+	if (pid == 0)
+		ft_heredoc_child(mini, red);
+	signal(SIGINT, SIG_IGN);
+	waitpid(pid, &status, 0);
+	exit_capture(mini, status);
+}
 
-void ft_check_if_heredoc(t_mini *mini)
+void	ft_check_if_heredoc(t_mini *mini)
 {
 	t_table	*table;
 	t_redir	*red;
@@ -89,7 +84,7 @@ void ft_check_if_heredoc(t_mini *mini)
 		while (red)
 		{
 			if (red->type == TOKEN_REDIR_DELIMITER)
-				ft_heredoc_child(mini, red);
+				ft_fork_heredoc(mini, red);
 			if (mini->exit_status == 130)
 			{
 				mini->error = 1;

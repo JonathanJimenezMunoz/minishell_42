@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 20:27:22 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/15 12:44:16 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ int		is_valid_identifier(const char *key);
 void	ft_dputstr_fd(char *s1, char *s2, int fd, int error);
 void	open_input_file(char *file_name, t_mini *mini);
 void	open_output_file(char *file_name, t_mini *mini, int control);
+char	*heredoc_filename(void);
 
 // ERROR
 void	ft_error(t_mini *mini, char *error, char *type, int exit);
