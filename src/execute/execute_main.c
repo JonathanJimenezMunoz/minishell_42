@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:20:43 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 14:06:49 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:26:53 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	execute(t_mini *mini)
 		pipes++;
 		table_aux = table_aux->next;
 	}
+	mini->pipes = pipes;
 	table_aux = mini->table;
 	if (pipes > 1)
 		ft_forkin(mini, table_aux, pipes);

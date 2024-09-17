@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 14:05:04 by david             #+#    #+#             */
-/*   Updated: 2024/09/15 12:52:00 by david            ###   ########.fr       */
+/*   Updated: 2024/09/17 16:17:52 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exit_capture(t_mini *mini, int status)
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 		{
-			ft_putstr_fd("Quit: 3\n", 2);
+			ft_putstr_fd("Quit\n", 2);
 			mini->exit_status = 131;
 		}
 		else if (WTERMSIG(status) == SIGINT)
@@ -58,7 +58,7 @@ void	redir_exit_capture(t_mini *mini, int status, int *first)
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 		{
-			ft_putstr_fd("Quit: 3\n", 2);
+			ft_putstr_fd("Quit\n", 2);
 			mini->exit_status = 131;
 		}
 		else if (WTERMSIG(status) == SIGINT)

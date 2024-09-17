@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 00:47:48 by david             #+#    #+#             */
-/*   Updated: 2024/09/02 15:31:09 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:29:17 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ static void	ft_err(int op, char *arg, t_mini *mini)
 
 	if (op == 1)
 	{
-		ft_putstr_fd("exit\n", 2);
+		if (mini->pipes == 1)
+			ft_putstr_fd("exit\n", 2);
 		ft_putstr_fd("bash: exit: too many arguments\n", 2);
 	}
 	else if (op == 2)
 	{
-		ft_putstr_fd("exit\n", 2);
+		if (mini->pipes == 1)
+			ft_putstr_fd("exit\n", 2);
 		err_aux = ft_strjoin("bash: exit: ", arg);
 		err = ft_strjoin2(err_aux, ": numeric argument required\n");
 		ft_putstr_fd(err, 2);
@@ -106,7 +108,8 @@ int	ft_exit(char **args, t_mini *mini)
 			exit_num = ft_exittoi(args[1], mini);
 	}
 	ft_free_all(mini);
-	ft_putstr_fd("exit\n", 2);
+	if (mini->pipes == 1)
+		ft_putstr_fd("exit\n", 2);
 	exit(exit_num);
 	return (0);
 }

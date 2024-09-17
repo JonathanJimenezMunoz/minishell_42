@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 23:43:24 by david             #+#    #+#             */
-/*   Updated: 2024/09/03 15:29:30 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:24:09 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,17 +102,20 @@ int	ft_export(char **args, t_envp **envp)
 	int		i;
 
 	i = 0;
-	if (args && args[1] == NULL)
+	if (args && (args[1] == NULL || args[1][0] == '\0'))
 	{
 		envp_copy = copy_envp_list(*envp);
 		sort_envp(envp_copy);
 		print_envp_declare(envp_copy);
 		free_envp_list(envp_copy);
 	}
-	while (args && args[++i])
+	else
 	{
-		if (ft_export_aux(args[i], envp) != 0)
-			return (1);
+		while (args && args[++i])
+		{
+			if (ft_export_aux(args[i], envp) != 0)
+				return (1);
+		}
 	}
 	return (0);
 }

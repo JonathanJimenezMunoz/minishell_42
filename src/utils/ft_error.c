@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 14:56:21 by david             #+#    #+#             */
-/*   Updated: 2024/09/03 15:29:52 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:17:08 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ void	ft_dputstr_fd(char *s1, char *s2, int fd, int error)
 	exit(error);
 }
 
-void ft_ctrld_error(char *s1)
+void	ft_ctrld_error(char *s1)
 {
 	ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(
+	ft_putstr_fd(
 		"warning: here-document delimited by end-of-file (wanted ", 2);
 	ft_putstr_fd(s1, 2);
 	ft_putendl_fd(")", 2);
 	free(s1);
-	exit(1);
+	exit(0);
 }
