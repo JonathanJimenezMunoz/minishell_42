@@ -124,7 +124,6 @@ char	*join_strs(char **args);
 int		count_double_str(char **args);
 char	*get_path(char **envp);
 int		is_valid_identifier(const char *key);
-void	ft_dputstr_fd(char *s1, char *s2, int fd, int error);
 void	open_input_file(char *file_name, t_mini *mini);
 void	open_output_file(char *file_name, t_mini *mini, int control);
 char	*heredoc_filename(void);
@@ -133,6 +132,8 @@ int		ft_heredoc_cmp(char *s1, char *s2);
 // ERROR
 void	ft_error(t_mini *mini, char *error, char *type, int exit);
 void	ft_error_syx(t_mini *mini, char *type, int exit);
+void	ft_ctrld_error(char *s1);
+void	ft_dputstr_fd(char *s1, char *s2, int fd, int error);
 
 // FREE
 void	free_double_array(char **str);

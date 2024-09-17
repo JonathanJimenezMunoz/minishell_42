@@ -31,3 +31,33 @@ void	ft_error_syx(t_mini *mini, char *type, int exit)
 	}
 	mini->exit_status = exit;
 }
+
+void	ft_dputstr_fd(char *s1, char *s2, int fd, int error)
+{
+	char	*tmp;
+	char	*tmp2;
+	char	*tmp3;
+	char	*tmp4;
+
+	tmp = ft_strjoin("bash: ", s1);
+	tmp2 = ft_strjoin(tmp, ": ");
+	tmp3 = ft_strjoin(tmp2, s2);
+	tmp4 = ft_strjoin(tmp3, "\n");
+	write(fd, tmp4, ft_strlen(tmp4));
+	free(tmp);
+	free(tmp2);
+	free(tmp3);
+	free(tmp4);
+	exit(error);
+}
+
+void ft_ctrld_error(char *s1)
+{
+	ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(
+		"warning: here-document delimited by end-of-file (wanted ", 2);
+	ft_putstr_fd(s1, 2);
+	ft_putendl_fd(")", 2);
+	free(s1);
+	exit(1);
+}
