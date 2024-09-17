@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 23:43:24 by david             #+#    #+#             */
-/*   Updated: 2024/08/21 17:01:13 by david            ###   ########.fr       */
+/*   Updated: 2024/09/03 15:29:30 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,24 @@ static int	len_until_space(const char *str)
 	return (len);
 }
 
-static void	parse_args(char *args, char **key, char **value)
+static void	parse_args_export(char *args, char **key, char **value)
 {
 	char	*separator;
 
-	if (args[0] == '=')
+	separator = ft_strchr(args, '=');
+	if (separator)
 	{
-		separator = ft_strchr(args, '=');
-		*key = ft_strdup("=");
-		*value = ft_strndup(separator + 1, len_until_space(separator + 1));
-	}
-	else
-	{
-		separator = ft_strchr(args, '=');
-		if (separator)
+		if (args[0] == '=')
+			*key = ft_strdup("=");
+		else
 		{
 			*separator = '\0';
 			*key = ft_strdup(args);
-			*value = ft_strndup(separator + 1, len_until_space(separator + 1));
 		}
+		*value = ft_strndup(separator + 1, len_until_space(separator + 1));
 	}
+	else
+		*key = ft_strdup(args);
 }
 
 static int	update_or_add_env(t_envp **envp, char *key, char *value)
@@ -79,35 +77,42 @@ static int	ft_export_aux(char *args, t_envp **envp)
 
 	key = NULL;
 	value = NULL;
-	parse_args(args, &key, &value);
-	if (!key || !value)
-		return (-1);
-	if (key[0] < 'A' || key[0] > 'z')
+	parse_args_export(args, &key, &value);
+	if (!is_valid_identifier(key))
 	{
-		printf("bash: export: `%s': not a valid identifier\n", args);
+		ft_putstr_fd("bash: export: ", 2);
+		ft_putstr_fd(args, 2);
+		ft_putstr_fd(": not a valid identifier\n", 2);
 		free(key);
-		free(value);
-		return (-1);
+		if (value)
+			free(value);
+		return (1);
 	}
+	if (!value)
+		return (0);
 	result = update_or_add_env(envp, key, value);
 	free(key);
 	free(value);
 	return (result);
 }
 
-int	ft_export(char *args, t_envp **envp)
+int	ft_export(char **args, t_envp **envp)
 {
 	t_envp	*envp_copy;
+	int		i;
 
-	if (args)
-		return (ft_export_aux(args, envp));
-	else
+	i = 0;
+	if (args && args[1] == NULL)
 	{
 		envp_copy = copy_envp_list(*envp);
 		sort_envp(envp_copy);
 		print_envp_declare(envp_copy);
 		free_envp_list(envp_copy);
 	}
-	free(args);
+	while (args && args[++i])
+	{
+		if (ft_export_aux(args[i], envp) != 0)
+			return (1);
+	}
 	return (0);
 }

@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   envp_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 22:41:34 by david             #+#    #+#             */
-/*   Updated: 2024/08/12 18:56:49 by david            ###   ########.fr       */
+/*   Updated: 2024/09/14 15:34:45 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+
+static void	ft_shlvl(t_envp *node)
+{
+	int	tmp;
+
+	tmp = 0;
+	if (!ft_strcmp(node->key, "SHLVL"))
+	{
+		tmp = ft_atoi(node->value);
+		tmp++;
+		free(node->value);
+		node->value = ft_itoa(tmp);
+	}
+}
 
 static t_envp	*create_new_node(char *env_str)
 {
@@ -30,6 +44,7 @@ static t_envp	*create_new_node(char *env_str)
 	new_node->key = ft_strndup(env_str, separator_pos - env_str);
 	new_node->value = ft_strdup(separator_pos + 1);
 	new_node->next = NULL;
+	ft_shlvl(new_node);
 	return (new_node);
 }
 
@@ -85,7 +100,7 @@ char	*envp_get_value(t_envp *envp, char *key)
 	return (NULL);
 }
 
-void	envp_print(t_envp *envp)
+/*void	envp_print(t_envp *envp)
 {
 	t_envp	*current;
 
@@ -96,4 +111,4 @@ void	envp_print(t_envp *envp)
 		printf("value: %s\n", current->value);
 		current = current->next;
 	}
-}
+}*/

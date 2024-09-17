@@ -5,55 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/02 23:43:01 by david             #+#    #+#             */
-/*   Updated: 2024/08/31 12:31:56 by david            ###   ########.fr       */
+/*   Created: 2024/09/01 19:09:46 by david             #+#    #+#             */
+/*   Updated: 2024/09/01 19:10:48 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-int	ft_redir_type(char **line, t_mini *mini)
-{
-	if (!ft_strncmp(*line, "<<", 2))
-		return (ft_add_token(TOKEN_REDIR_DELIMITER, line, mini, 2));
-	else if (!ft_strncmp(*line, ">>", 2))
-		return (ft_add_token(TOKEN_REDIR_APPEND, line, mini, 2));
-	else if (!ft_strncmp(*line, "<", 1))
-		return (ft_add_token(TOKEN_REDIR_IN, line, mini, 1));
-	else if (!ft_strncmp(*line, ">", 1))
-		return (ft_add_token(TOKEN_REDIR_OUT, line, mini, 1));
-	else if (!ft_strncmp(*line, "|", 1))
-		return (ft_add_token(TOKEN_PIPE, line, mini, 1));
-	else
-		return (-1);
-}
-
-void	open_file(char *file, int flags, int mode, t_mini *mini)
-{
-	int	fd;
-
-	fd = open(file, flags, mode);
-	if (fd < 0)
-	{
-		ft_putstr_fd("bash: ", 2);
-		perror(file);
-		write_file(".err", 1);
-		mini->status = 1;
-	}
-	close(fd);
-}
-
-char	*get_path(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (ft_strncmp("PATH", envp[i], 4) != 0)
-		i++;
-	return (envp[i] + 5);
-}
-
-char	*join_args(char **args)
+char	*join_strs(char **args)
 {
 	char	*result;
 	char	*temp;
@@ -78,4 +37,40 @@ char	*join_args(char **args)
 		i++;
 	}
 	return (result);
+}
+
+int	count_double_str(char **args)
+{
+	int	count;
+
+	count = 0;
+	while (args && args[count] != NULL)
+		count++;
+	return (count);
+}
+
+char	*get_path(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (ft_strncmp("PATH", envp[i], 4) != 0)
+		i++;
+	return (envp[i] + 5);
+}
+
+int	is_valid_identifier(const char *key)
+{
+	int	i;
+
+	if (!key || (!ft_isalpha(key[0]) && key[0] != '_'))
+		return (0);
+	i = 1;
+	while (key[i])
+	{
+		if (!ft_isalnum(key[i]) && key[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
 }

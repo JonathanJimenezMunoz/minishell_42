@@ -6,7 +6,7 @@
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 23:18:15 by david             #+#    #+#             */
-/*   Updated: 2024/08/31 12:30:40 by david            ###   ########.fr       */
+/*   Updated: 2024/09/01 18:08:50 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ int	ft_echo(char **args)
 	char	*joined_args;
 
 	opt = 0;
-	if (!args || !args[0])
+	if (!args || !args[1])
 	{
 		ft_putstr_fd("\n", 1);
 		return (0);
 	}
-	if (ft_strlen(args[0]) >= 2 && args[0][0] == '-' && args[0][1] == 'n')
+	if (ft_strlen(args[1]) >= 2 && args[1][0] == '-' && args[1][1] == 'n')
 	{
 		opt = 1;
 		args++;
 	}
-	joined_args = join_args(args);
+	joined_args = join_strs(&(args[1]));
 	if (joined_args)
 	{
 		ft_putstr_fd(joined_args, 1);

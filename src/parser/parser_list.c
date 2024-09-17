@@ -3,79 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   parser_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 22:15:22 by david             #+#    #+#             */
-/*   Updated: 2024/08/12 20:14:22 by david            ###   ########.fr       */
+/*   Updated: 2024/09/14 19:19:20 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-static void	create_node_aux(t_table *new_node, t_table_aux *aux)
-{
-	if (aux->out_redir != NULL)
-		new_node->out_redir = ft_strdup(aux->out_redir);
-	else
-		new_node->out_redir = NULL;
-	if (aux->in_heredoc != NULL)
-		new_node->in_heredoc = ft_strdup(aux->in_heredoc);
-	else
-		new_node->in_heredoc = NULL;
-	if (aux->out_append != NULL)
-		new_node->out_append = ft_strdup(aux->out_append);
-	else
-		new_node->out_append = NULL;
-}
-
-char	**duplicate_args(char **args)
-{
-	int		count;
-	char	**new_args;
-
-	count = 0;
-	while (args[count] != NULL)
-		count++;
-	new_args = (char **)malloc((count + 1) * sizeof(char *));
-	if (!new_args)
-		return (NULL);
-	count = 0;
-	while (args[count] != NULL)
-	{
-		new_args[count] = ft_strdup(args[count]);
-		if (!new_args[count])
-		{
-			while (count > 0)
-				free(new_args[--count]);
-			free(new_args);
-			return (NULL);
-		}
-		count++;
-	}
-	new_args[count] = NULL;
-	return (new_args);
-}
-
-t_table	*create_node(t_table_aux *aux)
+static t_table	*create_node(t_table_aux *aux)
 {
 	t_table	*new_node;
 
 	new_node = (t_table *)malloc(sizeof(t_table));
 	if (!new_node)
 		return (NULL);
-	if (aux->cmd != NULL)
-		new_node->cmd = ft_strdup(aux->cmd);
-	else
-		new_node->cmd = NULL;
 	if (aux->args != NULL)
-		new_node->args = duplicate_args(aux->args);
+		new_node->args = copy_double_str(aux->args);
 	else
 		new_node->args = NULL;
-	if (aux->in_redir != NULL)
-		new_node->in_redir = ft_strdup(aux->in_redir);
+	if (aux->redir != NULL)
+		new_node->redir = copy_redir_list(aux->redir);
 	else
-		new_node->in_redir = NULL;
-	create_node_aux(new_node, aux);
+		new_node->redir = NULL;
 	new_node->next = NULL;
 	return (new_node);
 }

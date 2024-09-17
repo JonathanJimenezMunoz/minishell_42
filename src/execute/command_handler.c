@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/08/29 00:26:52 by david            ###   ########.fr       */
+/*   Updated: 2024/09/14 20:28:47 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,110 +28,97 @@ static char	*path_handler(char *param, char **envp)
 		free(temp);
 		if (access(exec, F_OK | X_OK) == 0)
 		{
-			free_argv(paths);
+			free_double_array(paths);
 			return (exec);
 		}
 		free(exec);
 	}
-	free_argv(paths);
+	free_double_array(paths);
 	return (param);
 }
 
-/*void execute_command(t_table *table_aux, char **envp)
-{
-	char	**argv;
-	char	*cmd_path;
-	char	*total_arg;
-	char 	*cmd;
-
-	cmd = ft_strjoin(table_aux->cmd, " ");
-	if (table_aux->args)
-		total_arg = ft_strjoin2(cmd, table_aux->args);
-	else
-		total_arg = cmd;
-	argv = ft_split(total_arg, ' ');
-	free(total_arg);
-	if (argv[0] == NULL)
-		exit(0);
-	cmd_path = path_handler(argv[0], envp);
-	error_handler(cmd_path, argv);
-	write_file(".err", 0);
-	printf("argv[0]: %s\n", argv[0]);
-	execve(cmd_path, argv, envp);
-	perror(argv[0]);
-	exit(127);
-}*/
-
 static void	execve_handler(char **argv, char **envp)
 {
-	char	*cmd_path;
+	char		*cmd_path;
+	struct stat	path_stat;
 
 	cmd_path = path_handler(argv[0], envp);
-	if (ft_strchr(cmd_path, '/') == NULL)
+	if (ft_strchr(cmd_path, '/') && stat(cmd_path, &path_stat) == 0
+		&& S_ISDIR(path_stat.st_mode))
+		ft_dputstr_fd(cmd_path, "Is a directory", 2, 126);
+	if (execve(cmd_path, argv, envp) == -1)
 	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(argv[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		write_file(".err", 127);
-		if (access(cmd_path, F_OK | X_OK) == 0)
-			free(cmd_path);
-		free_argv(argv);
-		exit(127);
+		if (ft_strchr(cmd_path, '/'))
+		{
+			if (!access(cmd_path, X_OK))
+				ft_dputstr_fd(cmd_path, strerror(errno), 2, 126);
+			else if (!access(cmd_path, F_OK))
+				ft_dputstr_fd(cmd_path, strerror(errno), 2, 126);
+			else
+				ft_dputstr_fd(cmd_path, strerror(errno), 2, 127);
+		}
+		ft_dputstr_fd(cmd_path, "command not found", 2, 127);
 	}
-	write_file(".err", 0);
-	execve(cmd_path, argv, envp);
-	if (access(cmd_path, F_OK | X_OK) == 0)
-		free(cmd_path);
-	free_argv(argv);
-	perror(argv[0]);
-	write_file(".err", 127);
+}
+
+void	execute_command(t_table *table_aux, t_mini *mini)
+{
+	int	i;
+
+	i = 0;
+	handle_redirection(table_aux);
+	i = ft_non_individual_builtins(table_aux, mini);
+	if (i == -1)
+	{
+		if (!table_aux->args)
+			exit(mini->exit_status);
+		else if (!table_aux->args)
+			exit(0);
+		else
+			execve_handler(table_aux->args, mini->exec_envp);
+	}
+	else if (i != 0)
+		exit(i);
+	exit(0);
+}
+
+void	execute_child_process(t_mini *mini, t_table *table_aux)
+{
+	int	error;
+
+	error = ft_individual_builtins(table_aux, mini);
+	if (error == -1)
+		execute_command(table_aux, mini);
+	else if (error != 0)
+		exit(error);
 	exit(127);
 }
 
-static int	count_args(char **args)
+int	execute_single_command(t_mini *mini, t_table *table_aux)
 {
-	int	count;
+	int		error;
+	pid_t	pid;
+	int		status;
 
-	count = 0;
-	while (args && args[count] != NULL)
-		count++;
-	return (count);
-}
-
-static char	**duplicate_args(char *cmd, char **args, int args_count)
-{
-	char	**argv;
-	int		i;
-
-	i = 0;
-	argv = (char **)malloc((args_count + 2) * sizeof(char *));
-	if (!argv)
-		return (NULL);
-	argv[0] = ft_strdup(cmd);
-	while (i < args_count)
+	error = ft_individual_builtins(table_aux, mini);
+	if (error == -1)
 	{
-		argv[i + 1] = ft_strdup(args[i]);
-		if (!argv[i + 1])
+		pid = fork();
+		if (pid == 0)
 		{
-			while (i >= 0)
-				free(argv[i--]);
-			free(argv);
-			return (NULL);
+			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
+			execute_command(table_aux, mini);
 		}
-		i++;
+		else if (pid > 0)
+		{
+			signal(SIGINT, SIG_IGN);
+			signal(SIGQUIT, SIG_IGN);
+			waitpid(pid, &status, 0);
+			exit_capture(mini, status);
+		}
 	}
-	argv[args_count + 1] = NULL;
-	return (argv);
-}
-
-void	execute_command(t_table *table_aux, char **envp)
-{
-	int		args_count;
-	char	**argv;
-
-	args_count = count_args(table_aux->args);
-	argv = duplicate_args(table_aux->cmd, table_aux->args, args_count);
-	if (!argv || argv[0] == NULL)
-		exit(1);
-	execve_handler(argv, envp);
+	else if (error != 0)
+		mini->exit_status = error;
+	return (0);
 }

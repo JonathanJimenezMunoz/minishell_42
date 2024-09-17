@@ -3,100 +3,116 @@
 /*                                                        :::      ::::::::   */
 /*   execute_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 16:48:47 by david             #+#    #+#             */
-/*   Updated: 2024/08/29 00:28:32 by david            ###   ########.fr       */
+/*   Created: 2024/08/31 18:20:43 by david             #+#    #+#             */
+/*   Updated: 2024/09/14 14:06:49 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-static void	handle_child_process(char **envp_lst,
-	t_table *table_aux, t_mini *mini)
+static void	ft_waiter(pid_t *pids, int pipes, t_mini *mini)
 {
-	if (mini->i != 0)
+	int	status;
+	int	j;
+	int	first;
+
+	first = 1;
+	j = -1;
+	while (++j < pipes)
 	{
-		if (dup2(mini->p10, 0) == -1)
+		waitpid(pids[j], &status, 0);
+		if (WIFEXITED(status))
+			mini->exit_status = WEXITSTATUS(status);
+		redir_exit_capture(mini, status, &first);
+	}
+	free(pids);
+}
+
+static void	child_process(t_mini *mini, t_table *table_aux,
+							int prev_fd, int *pipe_fd)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	if (prev_fd != -1)
+	{
+		if (dup2(prev_fd, 0) == -1)
 		{
 			perror("dup2");
 			exit(EXIT_FAILURE);
 		}
-		close(mini->p10);
+		close(prev_fd);
 	}
 	if (table_aux->next)
 	{
-		if (dup2(mini->pipe_fd[1], STDOUT_FILENO) == -1)
+		close(pipe_fd[0]);
+		if (dup2(pipe_fd[1], 1) == -1)
 		{
 			perror("dup2");
 			exit(EXIT_FAILURE);
 		}
-		close(mini->pipe_fd[1]);
+		close(pipe_fd[1]);
 	}
-	handle_redirection(table_aux);
-	if (table_aux->in_heredoc)
-		here_doc_case(table_aux);
-	if (is_builtin_tech(table_aux) == 0)
-		execute_command(table_aux, envp_lst);
+	execute_child_process(mini, table_aux);
 }
 
-static void	handle_parent_process(t_mini *mini, t_table *table_aux)
+static pid_t	do_fork(t_mini *mini, t_table *table_aux,
+					int prev_fd, int *pipe_fd)
 {
-	if (table_aux->next)
-	{
-		close(mini->pipe_fd[1]);
-		mini->p10 = mini->pipe_fd[0];
-	}
-	else
-	{
-		if (mini->pipe_fd[0] != -1)
-			close(mini->pipe_fd[0]);
-	}
-	waitpid(mini->pid, NULL, 0);
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+		child_process(mini, table_aux, prev_fd, pipe_fd);
+	return (pid);
 }
 
-static void	create_pipe(int pipe_fd[2], t_table *table_aux)
+static void	ft_forkin(t_mini *mini, t_table *table_aux, int pipes)
 {
-	if (table_aux->next)
+	int		pipe_fd[2];
+	int		prev_fd;
+	pid_t	*pids;
+	int		i;
+
+	i = -1;
+	pids = (pid_t *)malloc(sizeof(pid_t) * pipes);
+	if (!pids)
+		ft_error(mini, "malloc", "error", 1);
+	prev_fd = -1;
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	while (table_aux)
 	{
-		if (pipe(pipe_fd) == -1)
-		{
-			perror("pipe");
-			exit(EXIT_FAILURE);
-		}
+		pipe(pipe_fd);
+		pids[++i] = do_fork(mini, table_aux, prev_fd, pipe_fd);
+		if (prev_fd != -1)
+			close(prev_fd);
+		close(pipe_fd[1]);
+		prev_fd = pipe_fd[0];
+		if (!table_aux->next)
+			close(pipe_fd[0]);
+		table_aux = table_aux->next;
 	}
+	ft_waiter(pids, pipes, mini);
 }
 
-static void	execute_aux(t_mini *mini, char **envp, t_table *table_aux)
-{
-	create_pipe(mini->pipe_fd, table_aux);
-	mini->pid = fork();
-	if (mini->pid == 0)
-		handle_child_process(envp, table_aux, mini);
-	else if (mini->pid > 0)
-		handle_parent_process(mini, table_aux);
-	else
-		ft_error(mini, "fork", "error");
-}
-
-int	execute(t_mini *mini, char **envp)
+int	execute(t_mini *mini)
 {
 	t_table	*table_aux;
-	int		it_was;
+	int		pipes;
 
-	it_was = 1;
+	pipes = 0;
 	table_aux = mini->table;
-	mini->i = 0;
-	if (table_aux && table_aux->next == NULL && is_builtin(table_aux) == 0)
-		it_was = ft_built(table_aux, mini);
-	while (table_aux && it_was)
+	while (table_aux)
 	{
-		while (table_aux && is_builtin_tech(table_aux) == 1 && table_aux->next)
-			table_aux = table_aux->next;
-		if (is_builtin_tech(table_aux) == 0)
-			execute_aux(mini, envp, table_aux);
+		pipes++;
 		table_aux = table_aux->next;
-		mini->i++;
 	}
+	table_aux = mini->table;
+	if (pipes > 1)
+		ft_forkin(mini, table_aux, pipes);
+	else if (pipes == 1)
+		execute_single_command(mini, table_aux);
 	return (0);
 }

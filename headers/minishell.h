@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/24 23:24:01 by david             #+#    #+#             */
-/*   Updated: 2024/08/29 00:21:00 by david            ###   ########.fr       */
+/*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
+/*   Updated: 2024/09/15 12:44:16 by david            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include <errno.h>
 # include "../libft/libft.h"
 
+extern int	g_sigint;
+
 typedef enum e_token_type
 {
 	TOKEN_WORD,
@@ -39,6 +41,9 @@ typedef enum e_token_type
 	TOKEN_REDIR_OUT,
 	TOKEN_REDIR_APPEND,
 	TOKEN_REDIR_DELIMITER,
+	TOKEN_SPACE,
+	TOKEN_EMPTY,
+	TOKEN_UNLINK,
 }	t_token_type;
 
 typedef struct s_token
@@ -55,133 +60,129 @@ typedef struct s_envp
 	struct s_envp	*next;
 }	t_envp;
 
+typedef struct s_redir
+{
+	char			*file;
+	t_token_type	type;
+	struct s_redir	*next;
+}	t_redir;
+
 typedef struct s_table
 {
-	char			*cmd;
 	char			**args;
-	char			*in_redir;
-	char			*out_redir;
-	char			*in_heredoc;
-	char			*out_append;	
+	t_redir			*redir;
 	struct s_table	*next;
 }	t_table;
 
 typedef struct s_table_aux
 {
-	char	*cmd;
 	char	**args;
-	char	*in_redir;
-	char	*out_redir;
-	char	*in_heredoc;
-	char	*out_append;
+	t_redir	*redir;
 }	t_table_aux;
 
 typedef struct s_mini
 {
 	t_token	*tokens;
 	t_table	*table;
-	char	*error;
 	t_envp	*envp;
-	pid_t	pid;
-	int		pipe_fd[2];
-	int		in_fd;
-	int		out_fd;
-	int		i;
-	int		p10;
-	int		status;
+	char	**exec_envp;
+	int		exit_status;
+	char	*line;
+	int		error;
+	int		pipes;
+	int		flag_redir;
 }	t_mini;
 
-// TOKEN_MAIN.C
-int		tokenize_line(char *line, t_mini *mini);
+// BUILTINS
+int		ft_cd(char **paths, t_envp *envp);
+int		ft_export(char **args, t_envp **envp);
+int		ft_unset(char **args, t_mini *mini);
+int		ft_exit(char **args, t_mini *mini);
+int		ft_echo(char **args);
+int		ft_envp(t_envp *envp, char **args);
+int		ft_pwd(void);
 
-// TOKEN_LIST.C
-t_token	*token_new(char *content, t_token_type type);
-void	token_print(t_token *tokens);
-int		ft_add_token(t_token_type type, char **line, t_mini *mini, int size);
-
-// FT_UTILS1.C
-void	ft_clear_spaces(char **line);
-int		ft_isspace(char c);
-int		ft_is_good_quote(char *line);
-void	ft_error(t_mini *mini, char *error, char *type);
-void	ft_error_aux(t_mini *mini, t_table_aux *aux, char *error, char *type);
-
-// FREE_HANDLER.C
-void	free_token_list(t_token **token);
-void	free_table(t_table **head);
-void	free_table_aux(t_table_aux *aux);
-void	free_envp(t_envp **envp);
-void	ft_free_all(t_mini *mini);
-void	free_argv(char **argv);
-void	ft_free_iteration(t_mini *mini);
-
-// PARSER_MAIN.C
-int		parser_token(t_mini *mini);
-void	print_table(t_table *table);
-char	**ft_realloc_args(char **args, int new_size);
-
-// PARSER_LIST.C
-t_table	*create_node(t_table_aux *aux);
-int		add_node(t_mini **head, t_table_aux *aux);
-
-// PARSER_HANDLER_IN.C
-void	parse_redir_in(t_mini *mini, t_table_aux *aux, t_token **current);
-void	parse_redir_heredoc(t_mini *mini, t_table_aux *aux, t_token **current);
-
-// PARSER_HANDLER_OUT.C
-void	parse_cmd_args(t_table_aux *aux, int *first_word, t_token **current);
-void	parser_redir_out(t_mini *mini, t_table_aux *aux, t_token **current);
-void	parse_redir_append(t_mini *mini, t_table_aux *aux, t_token **current);
-
-// ENVP_LIST.C
+// ENVP
 void	envp_init(t_envp **envp, char **envp_list);
-void	add_node_to_envp(t_envp **envp, t_envp *new_node);
 char	*envp_get_value(t_envp *envp, char *key);
 void	envp_print(t_envp *envp);
-
-// ENVP_UTILS.C
-void	print_envp_declare(t_envp *envp);
-void	free_envp_list(t_envp *envp);
-t_envp	*copy_envp_list(t_envp *envp);
-void	sort_envp(t_envp *envp);
+void	add_node_to_envp(t_envp **envp, t_envp *new_node);
 void	swap(t_envp *a, t_envp *b);
+void	sort_envp(t_envp *envp);
+t_envp	*copy_envp_list(t_envp *envp);
+void	free_envp_list(t_envp *envp);
+void	print_envp_declare(t_envp *envp);
 
-// BUILTINS
-int		ft_pwd(void);
-int		ft_echo(char **args);
-void	ft_envp(t_envp *envp);
-int		ft_export(char *args, t_envp **envp);
-void	ft_exit(char **args, t_mini *mini);
-int		ft_cd(char **args, t_envp *envp);
-void	ft_unset(char *key, t_mini *mini);
-
-// COMMAND_HANDLER.C
-void	execute_command(t_table *table_aux, char **envp);
-
-// EXECUTE_MAIN.C
-int		execute(t_mini *mini, char **envp);
-
-// REDIRECTION_HANDLER.C
-void	handle_redirection(t_table *table_aux);
-
-// HERE_DOC
-void	here_doc_case(t_table *table_aux);
-
-//BUILTIN CHECKER
-int		ft_built(t_table *table_aux, t_mini *mini);
-int		is_builtin(t_table *table_aux);
-int		is_builtin_tech(t_table *table_aux);
-
-// FILE_HANDLER.C
-int		read_file(char *file_name, t_mini *mini);
-void	write_file(char *file_name, int content);
-
-// DOLLAR_HANDLER.C
-char	*ft_new_line(char *line, int size, t_mini *mini);
-
-// FT_UTILS2.C
+// UTILS
+char	**copy_double_str(char **str);
+int		ft_isspace(char c);
+int		ft_is_good_quote(char *line);
+int		ft_intlen(int n);
+void	*ft_realloc_double_array(void *ptr, size_t original_size,
+			size_t new_size);
+char	*join_strs(char **args);
+int		count_double_str(char **args);
 char	*get_path(char **envp);
-char	*join_args(char **args);
-void	open_file(char *file, int flags, int mode, t_mini *mini);
-int		ft_redir_type(char **line, t_mini *mini);
+int		is_valid_identifier(const char *key);
+void	ft_dputstr_fd(char *s1, char *s2, int fd, int error);
+void	open_input_file(char *file_name, t_mini *mini);
+void	open_output_file(char *file_name, t_mini *mini, int control);
+char	*heredoc_filename(void);
+
+// ERROR
+void	ft_error(t_mini *mini, char *error, char *type, int exit);
+void	ft_error_syx(t_mini *mini, char *type, int exit);
+
+// FREE
+void	free_double_array(char **str);
+void	ft_free_all(t_mini *mini);
+void	free_table_aux(t_table_aux *aux);
+void	free_table(t_table **table);
+void	free_token_list(t_token **token);
+void	free_envp(t_envp **envp);
+void	free_redir(t_redir *redir);
+
+// TOKENIZE
+int		tokenize_line(char *line, t_mini *mini);
+char	*ft_new_line(char *line, int size, t_mini *mini);
+void	tokenize_space(char **line, t_mini *mini);
+int		ft_add_token(t_token_type type, char **line, t_mini *mini, int size);
+void	join_token(t_token **tokens);
+
+// PARSER
+int		parser_token(t_mini *mini);
+void	parse_args(t_table_aux *aux, t_token **current);
+void	parse_redir_heredoc(t_mini *mini, t_table_aux *aux, t_token **current);
+void	parse_redir_in(t_mini *mini, t_table_aux *aux, t_token **current);
+void	parser_redir_out(t_mini *mini, t_table_aux *aux, t_token **current);
+void	parse_redir_append(t_mini *mini, t_table_aux *aux, t_token **current);
+int		add_node(t_mini **head, t_table_aux *aux);
+void	add_redir_end(t_table_aux *aux, char *file, int type);
+t_redir	*copy_redir_node(t_redir *node);
+void	change_redir_node(t_mini *mini, t_redir *node, char *file, int type);
+
+//EXECUTE
+int		execute(t_mini *mini);
+void	handle_output_append_redirection(char *out_append);
+void	handle_output_redirection(char *out_redir);
+void	handle_input_redirection(char *in_redir);
+void	execute_command(t_table *table_aux, t_mini *mini);
+int		ft_individual_builtins(t_table *table_aux, t_mini *mini);
+int		ft_non_individual_builtins(t_table *table_aux, t_mini *mini);
+void	handle_redirection(t_table *table_aux);
+t_redir	*copy_redir_list(t_redir *head);
+void	execute_child_process(t_mini *mini, t_table *table_aux);
+int		execute_single_command(t_mini *mini, t_table *table_aux);
+void ft_check_if_heredoc(t_mini *mini);
+
+//SIGNALS
+void	sig_heredoc(int sig);
+void	sig_handler(int sig);
+void	exit_capture(t_mini *mini, int status);
+void	redir_exit_capture(t_mini *mini, int status, int *first);
+void	while_signals(t_mini *mini);
+
+// TEMPORALES
+void	token_print(t_token *tokens);
+void	print_table(t_table *table);
 #endif

@@ -20,22 +20,26 @@ NAME = minishell
 #      SOURCES       #
 ######################
 
-SRCS_MINISHELL		=	main.c free_handler1.c free_handler2.c
-SRCS_TOKEN			= 	token_main.c token_list.c
-SRCS_PARSER			=	parser_main.c parser_list.c parser_handler_in.c parser_handler_out.c
+SRCS_MINISHELL		=	main.c 
+SRCS_TOKEN			= 	token_main.c token_list.c dollar_handler.c tokenize_spaces.c
+SRCS_PARSER			=	parser_main.c parser_list.c parser_redir_handler.c struct_redir_handler.c
 SRCS_ENVP			=	envp_list.c envp_utils.c
+SRCS_SIGNAL			=	signal_handler.c
+SRCS_FREE			=	free_basic.c free_structure.c
 SRCS_BUILTIN		=	ft_echo.c ft_pwd.c ft_envp.c ft_export.c ft_exit.c  ft_cd.c ft_unset.c
-SRCS_UTILS			=	ft_utils1.c file_handler.c dollar_handler.c ft_utils2.c
-SRCS_EXECUTE		=	execute_main.c command_handler.c redirection_handler.c heredoc.c builtin_checker.c
+SRCS_UTILS			=	ft_utils.c ft_error.c ft_utils2.c ft_malloc_handler.c ft_file_handler.c
+SRCS_EXECUTE		=	execute_main.c redirection_handler.c heredoc.c builtin_handler.c command_handler.c
 DIR_MINISHELL		=	$(addprefix ./src/, $(SRCS_MINISHELL)) 
 DIR_TOKEN			=	$(addprefix ./src/token/, $(SRCS_TOKEN))
 DIR_UTILS			=	$(addprefix ./src/utils/, $(SRCS_UTILS))
 DIR_PARSER			=	$(addprefix ./src/parser/, $(SRCS_PARSER))
 DIR_ENVP			=	$(addprefix ./src/envp/, $(SRCS_ENVP))
+DIR_SIGNAL			=	$(addprefix ./src/signal/, $(SRCS_SIGNAL))
+DIR_FREE			=	$(addprefix ./src/free/, $(SRCS_FREE))
 DIR_BUILTIN			=	$(addprefix ./src/builtins/, $(SRCS_BUILTIN))
 DIR_EXECUTE			=	$(addprefix ./src/execute/, $(SRCS_EXECUTE))
-OBJS				= 	$(DIR_MINISHELL:.c=.o) $(DIR_TOKEN:.c=.o) $(DIR_UTILS:.c=.o) $(DIR_PARSER:.c=.o) $(DIR_ENVP:.c=.o) $(DIR_BUILTIN:.c=.o) $(DIR_EXECUTE:.c=.o)
-
+OBJS				= 	$(DIR_MINISHELL:.c=.o) $(DIR_TOKEN:.c=.o) $(DIR_UTILS:.c=.o) $(DIR_ENVP:.c=.o) $(DIR_SIGNAL:.c=.o) $(DIR_FREE:.c=.o) \
+						$(DIR_PARSER:.c=.o) $(DIR_EXECUTE:.c=.o) $(DIR_BUILTIN:.c=.o)
 ######################
 #       COLORS       #
 ######################

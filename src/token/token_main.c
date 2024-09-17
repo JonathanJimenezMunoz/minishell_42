@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/25 22:24:28 by david             #+#    #+#             */
-/*   Updated: 2024/08/21 17:21:30 by david            ###   ########.fr       */
+/*   Created: 2024/08/31 14:19:50 by david             #+#    #+#             */
+/*   Updated: 2024/09/14 17:29:12 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,26 @@ static void	tokenize_quote(char **line, t_mini *mini)
 		*line += 1;
 	}
 	else if (size == -1)
-	{
-		printf("Error: Comillas mal cerradas\n");
-		mini->status = 1;
-	}
+		ft_error(mini, "syntax error: unmatched", "quotes", 2);
 	else if (size == 0)
+	{
+		ft_add_token(TOKEN_WORD, line, mini, 0);
 		*line += 2;
+	}
 }
 
 static void	tokenize_redir(char **line, t_mini *mini)
 {
-	if (!ft_strncmp(*line, "<", 1) || !ft_strncmp(*line, ">", 1)
-		|| !ft_strncmp(*line, "|", 1))
-	{
-		if (ft_redir_type(line, mini) == -1)
-		{
-			printf("Error: Caracter no reconocido\n");
-			mini->status = 1;
-		}
-	}
+	if (!ft_strncmp(*line, "<<", 2))
+		ft_add_token(TOKEN_REDIR_DELIMITER, line, mini, 2);
+	else if (!ft_strncmp(*line, ">>", 2))
+		ft_add_token(TOKEN_REDIR_APPEND, line, mini, 2);
+	else if (!ft_strncmp(*line, "<", 1))
+		ft_add_token(TOKEN_REDIR_IN, line, mini, 1);
+	else if (!ft_strncmp(*line, ">", 1))
+		ft_add_token(TOKEN_REDIR_OUT, line, mini, 1);
+	else if (!ft_strncmp(*line, "|", 1))
+		ft_add_token(TOKEN_PIPE, line, mini, 1);
 }
 
 static void	tokenize_word(char **line, t_mini *mini)
@@ -81,6 +82,11 @@ static void	tokenize_word(char **line, t_mini *mini)
 	}
 	if (i > 0)
 	{
+		if ((*line)[0] == '$' && ((*line)[1] == '\"' || ((*line)[1] == '\'')))
+		{
+			*line += i;
+			return ;
+		}
 		tmp = ft_new_line(*line, i, mini);
 		recover = ft_strlen(tmp);
 		ft_add_token(TOKEN_WORD, &tmp, mini, ft_strlen(tmp));
@@ -92,13 +98,13 @@ static void	tokenize_word(char **line, t_mini *mini)
 
 int	tokenize_line(char *line, t_mini *mini)
 {
-	read_file(".err", mini);
-	while (line != NULL && *line != 0 && mini->status != 1)
+	while (line && *line != 0 && mini->error != 1)
 	{
-		ft_clear_spaces(&line);
+		tokenize_space(&line, mini);
 		tokenize_quote(&line, mini);
 		tokenize_redir(&line, mini);
 		tokenize_word(&line, mini);
 	}
+	join_token(&mini->tokens);
 	return (0);
 }

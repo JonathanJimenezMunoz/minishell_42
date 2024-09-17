@@ -3,83 +3,134 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/05 20:04:34 by david             #+#    #+#             */
-/*   Updated: 2024/08/21 17:31:02 by david            ###   ########.fr       */
+/*   Created: 2024/08/31 12:40:23 by david             #+#    #+#             */
+/*   Updated: 2024/09/14 20:29:03 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
-#include <valgrind/memcheck.h>
 
-static void	signal_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
+int g_sigint;
 
-static void	setup_signal_handlers(void)
+static void	init_mini(t_mini *mini, char **envp)
 {
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-static void	init_mini(t_mini *mini)
-{
+	mini->line = NULL;
 	mini->tokens = NULL;
 	mini->table = NULL;
-	mini->error = NULL;
-	mini->status = 0;
-	mini->pipe_fd[0] = -1;
-	mini->pipe_fd[1] = -1;
-	mini->in_fd = STDIN_FILENO;
-	mini->out_fd = STDOUT_FILENO;
+	mini->envp = NULL;
+	mini->exit_status = 0;
+	mini->error = 0;
+	mini->flag_redir = 0;
+	mini->exec_envp = NULL;
+	envp_init(&mini->envp, envp);
+	mini->exec_envp = copy_double_str(envp);
 }
 
-//     #include <valgrind/memcheck.h>
-//		VALGRIND_DO_LEAK_CHECK;
-//		METER ESTO ENTRE LA 70 Y 71
-static void	ft_loop(t_mini *mini, char **envp)
+static void	iteration_handler(t_mini *mini)
 {
-	char	*line;
+	free_token_list(&mini->tokens);
+	free_table(&mini->table);
+	free(mini->line);
+	mini->line = NULL;
+	mini->tokens = NULL;
+	mini->table = NULL;
+	mini->error = 0;
+	mini->pipes = 0;
+	mini->flag_redir = 0;
+}
 
-	while (1)
+void	print_redirections(t_redir *redir)
+{
+	while (redir != NULL)
 	{
-		line = readline("\033[92mmsh>>\033[0m");
-		if (line == NULL)
-		{
-			printf("\033[92mmsh>>\033[0mexit\n");
-			ft_free_all(mini);
-			exit(1);
-		}
-		add_history(line);
-		tokenize_line(line, mini);
-		free(line);
-		if (mini->status == 0)
-			parser_token(mini);
-		if (mini->status == 0)
-			execute(mini, envp);
-		ft_free_iteration(mini);
-		init_mini(mini);
+		printf("\tRedirection: File = %s, Type = %d\n",
+			redir->file, redir->type);
+		redir = redir->next;
 	}
 }
 
+void	print_table(t_table *table)
+{
+	int i;
+
+	while (table != NULL)
+	{
+		printf("Args:\n");
+		if (table->args != NULL)
+		{
+			for (i = 0; table->args[i] != NULL; i++)
+			{
+				printf("\t%s\n", table->args[i]);
+			}
+		}
+		if (table->redir != NULL)
+		{
+			print_redirections(table->redir);
+		}
+		table = table->next;
+		printf("\n");
+	}
+}
+
+static void do_redir_handler(t_mini *mini)
+{
+	t_table	*table_aux;
+	t_redir	*redir_aux;
+
+	table_aux = mini->table;
+	while (table_aux)
+	{
+		mini->flag_redir = 0;
+		redir_aux = table_aux->redir;
+		while (redir_aux)
+		{
+			if ((redir_aux->type == TOKEN_REDIR_IN || redir_aux->type == TOKEN_UNLINK) && mini->flag_redir == 0)
+				open_input_file(redir_aux->file, mini);
+			else if (redir_aux->type == TOKEN_REDIR_OUT
+				&& mini->flag_redir == 0)
+				open_output_file(redir_aux->file, mini, 0);
+			else if (redir_aux->type == TOKEN_REDIR_APPEND
+				&& mini->flag_redir == 0)
+				open_output_file(redir_aux->file, mini, 1);
+			redir_aux = redir_aux->next;
+		}
+		table_aux = table_aux->next;
+	}
+}
+
+static void	ft_loop(t_mini *mini)
+{
+	while (1)
+	{
+		while_signals(mini);
+		mini->line = readline("msh>>");
+		if (!mini->line)
+		{
+			printf("msh>>exit\n");
+			ft_free_all(mini);
+			exit(mini->exit_status);
+		}
+		add_history(mini->line);
+		tokenize_line(mini->line, mini);
+		if (mini->error == 0)
+		{
+			parser_token(mini);
+			ft_check_if_heredoc(mini);
+			do_redir_handler(mini);
+		}
+		if (mini->error == 0)
+			execute(mini);
+		iteration_handler(mini);
+	}
+}
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini;
 
 	(void)argc;
 	(void)argv;
-	init_mini(&mini);
-	mini.envp = NULL;
-	envp_init(&mini.envp, envp);
-	setup_signal_handlers();
-	ft_loop(&mini, envp);
-	return (0);
+	init_mini(&mini, envp);
+	ft_loop(&mini);
 }
