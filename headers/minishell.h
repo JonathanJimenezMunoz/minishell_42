@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/09/15 12:44:16 by david            ###   ########.fr       */
+/*   Updated: 2024/09/17 14:26:41 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void	ft_dputstr_fd(char *s1, char *s2, int fd, int error);
 void	open_input_file(char *file_name, t_mini *mini);
 void	open_output_file(char *file_name, t_mini *mini, int control);
 char	*heredoc_filename(void);
+int		ft_heredoc_cmp(char *s1, char *s2);
 
 // ERROR
 void	ft_error(t_mini *mini, char *error, char *type, int exit);

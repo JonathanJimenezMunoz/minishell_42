@@ -13,7 +13,7 @@ LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
 READLINE = -lreadline
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror 
 NAME = minishell
 
 ######################

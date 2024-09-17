@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 16:20:46 by dyanez-m          #+#    #+#             */
-/*   Updated: 2024/09/15 13:13:16 by david            ###   ########.fr       */
+/*   Updated: 2024/09/17 14:27:56 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void ft_do_heredoc(t_mini *mini, char *in_heredoc, int fd)
 			ft_dputstr_fd("warning: here-document delimited by end-of-file\
 				(wanted ", in_heredoc, 2, 1);
 		}
-		if (ft_strncmp(line, in_heredoc, ft_strlen(in_heredoc)) == 0)
+		if (ft_heredoc_cmp(line, in_heredoc) == 0)
 		{
 			free(line);
 			break ;

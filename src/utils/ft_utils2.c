@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 19:09:46 by david             #+#    #+#             */
-/*   Updated: 2024/09/01 19:10:48 by david            ###   ########.fr       */
+/*   Updated: 2024/09/17 14:26:14 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,19 @@ int	is_valid_identifier(const char *key)
 		i++;
 	}
 	return (1);
+}
+
+
+int	ft_heredoc_cmp(char *s1, char *s2)
+{
+	int	size_s1;
+	int	size_s2;
+
+	size_s1 = ft_strlen(s1) - 1;
+	size_s2 = ft_strlen(s2);
+	if (size_s1 != size_s2)
+		return (1);
+	if (ft_strncmp(s1, s2, size_s2) != 0)
+		return (1);
+	return (0);
 }
