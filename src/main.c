@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:40:23 by david             #+#    #+#             */
-/*   Updated: 2024/09/17 17:14:25 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 18:46:12 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ static void	ft_loop(t_mini *mini)
 	{
 		while_signals(mini);
 		mini->line = readline("msh>>");
+		while_signals(mini);
 		if (!mini->line)
 		{
 			printf("msh>>exit\n");
@@ -126,6 +127,7 @@ static void	ft_loop(t_mini *mini)
 		iteration_handler(mini);
 	}
 }
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_mini	mini;

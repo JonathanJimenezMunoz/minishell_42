@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 17:26:57 by david             #+#    #+#             */
-/*   Updated: 2024/09/17 17:36:15 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 19:18:12 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@ void	parse_redir_in(t_mini *mini, t_table_aux *aux, t_token **current)
 	*current = (*current)->next;
 	while ((*current) && (*current)->next && (*current)->type == TOKEN_SPACE)
 		*current = (*current)->next;
-	if ((*current)->type != TOKEN_WORD && (*current)->type != TOKEN_EMPTY)
+	if ((*current)->type != TOKEN_WORD && (*current)->type != TOKEN_EMPTY
+		&& (*current)->type != TOKEN_QUOTES_EMPTY)
 		return (ft_error_syx(mini, (*current)->content, 2));
+	if ((*current)->type == TOKEN_EMPTY)
+		return (ft_error(mini, "ambiguous redirect", "", 1));
 	add_redir_end(aux, (*current)->content, TOKEN_REDIR_IN);
 }
 
@@ -73,8 +76,11 @@ void	parser_redir_out(t_mini *mini, t_table_aux *aux, t_token **current)
 	*current = (*current)->next;
 	while ((*current) && (*current)->next && (*current)->type == TOKEN_SPACE)
 		*current = (*current)->next;
-	if ((*current)->type != TOKEN_WORD && (*current)->type != TOKEN_EMPTY)
+	if ((*current)->type != TOKEN_WORD && (*current)->type != TOKEN_EMPTY
+		&& (*current)->type != TOKEN_QUOTES_EMPTY)
 		return (ft_error_syx(mini, (*current)->content, 2));
+	if ((*current)->type == TOKEN_EMPTY)
+		return (ft_error(mini, "ambiguous redirect", "", 1));
 	add_redir_end(aux, (*current)->content, TOKEN_REDIR_OUT);
 }
 
@@ -87,7 +93,10 @@ void	parse_redir_append(t_mini *mini, t_table_aux *aux, t_token **current)
 	*current = (*current)->next;
 	while ((*current) && (*current)->next && (*current)->type == TOKEN_SPACE)
 		*current = (*current)->next;
-	if ((*current)->type != TOKEN_WORD && (*current)->type != TOKEN_EMPTY)
+	if ((*current)->type != TOKEN_WORD && (*current)->type != TOKEN_EMPTY
+		&& (*current)->type != TOKEN_QUOTES_EMPTY)
 		return (ft_error_syx(mini, (*current)->content, 2));
+	if ((*current)->type == TOKEN_EMPTY)
+		return (ft_error(mini, "ambiguous redirect", "", 1));
 	add_redir_end(aux, (*current)->content, TOKEN_REDIR_APPEND);
 }

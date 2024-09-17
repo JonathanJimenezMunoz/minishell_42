@@ -1,3 +1,12 @@
 CTRL+\ en el heredoc al XAVI le pasa lo mismo
+
+cat <<""
+
 mirar los free
+
 hacer otra vez todas las ppruebs
+
+dyanez-m@c1r17s2:~/casaSHELL$ cat <<$PWD
+> PWD
+> $PWD
+PWD
