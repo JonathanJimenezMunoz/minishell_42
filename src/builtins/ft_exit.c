@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 00:47:48 by david             #+#    #+#             */
-/*   Updated: 2024/09/17 16:29:17 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 16:39:44 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ int	ft_exit(char **args, t_mini *mini)
 	ft_free_all(mini);
 	if (mini->pipes == 1)
 		ft_putstr_fd("exit\n", 2);
+	if (exit_num == 0)
+		exit(mini->exit_status);
 	exit(exit_num);
 	return (0);
 }
