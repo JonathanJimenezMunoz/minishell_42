@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 14:56:21 by david             #+#    #+#             */
-/*   Updated: 2024/09/17 16:17:08 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:58:55 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	ft_dputstr_fd(char *s1, char *s2, int fd, int error)
 	char	*tmp3;
 	char	*tmp4;
 
+	if (s1[0] == '\0')
+		s1 = "''";
 	tmp = ft_strjoin("bash: ", s1);
 	tmp2 = ft_strjoin(tmp, ": ");
 	tmp3 = ft_strjoin(tmp2, s2);

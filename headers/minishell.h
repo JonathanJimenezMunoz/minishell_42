@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/09/17 14:26:41 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 18:02:23 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef enum e_token_type
 	TOKEN_SPACE,
 	TOKEN_EMPTY,
 	TOKEN_UNLINK,
+	TOKEN_QUOTES_EMPTY,
 }	t_token_type;
 
 typedef struct s_token
@@ -175,7 +176,7 @@ void	handle_redirection(t_table *table_aux);
 t_redir	*copy_redir_list(t_redir *head);
 void	execute_child_process(t_mini *mini, t_table *table_aux);
 int		execute_single_command(t_mini *mini, t_table *table_aux);
-void ft_check_if_heredoc(t_mini *mini);
+void	ft_check_if_heredoc(t_mini *mini);
 
 //SIGNALS
 void	sig_heredoc(int sig);

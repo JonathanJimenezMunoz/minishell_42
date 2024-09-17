@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 20:27:38 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 18:06:58 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:57:43 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ int	ft_add_token(t_token_type type, char **line, t_mini *mini, int size)
 		i++;
 	}
 	content[i] = '\0';
-	if (content[0] == '\0')
-		token = token_new("", TOKEN_EMPTY);
+	if (type == TOKEN_QUOTES_EMPTY)
+		token = token_new("", TOKEN_QUOTES_EMPTY);
+	else if (content[0] == '\0')
+		token = token_new(NULL, TOKEN_EMPTY);
 	else
 		token = token_new(content, type);
 	free(content);
@@ -90,9 +92,10 @@ void	join_token(t_token **tokens)
 	while (curr && curr->next)
 	{
 		next = curr->next;
-		if ((curr->type == TOKEN_WORD || curr->type == TOKEN_EMPTY)
-			&& (next->type == TOKEN_WORD || next->type == TOKEN_EMPTY)
-			&& (curr->type != TOKEN_EMPTY || next->type != TOKEN_EMPTY))
+		if ((curr->type == TOKEN_WORD || curr->type == TOKEN_QUOTES_EMPTY)
+			&& (next->type == TOKEN_WORD || next->type == TOKEN_QUOTES_EMPTY)
+			&& (curr->type != TOKEN_QUOTES_EMPTY
+				|| next->type != TOKEN_QUOTES_EMPTY))
 		{
 			joined = ft_strjoin(curr->content, next->content);
 			free(curr->content);

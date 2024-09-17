@@ -6,13 +6,13 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 16:20:46 by dyanez-m          #+#    #+#             */
-/*   Updated: 2024/09/17 16:17:41 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:58:36 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-static void ft_do_heredoc(t_mini *mini, char *in_heredoc, int fd)
+static void	ft_do_heredoc(t_mini *mini, char *in_heredoc, int fd)
 {
 	char	*line;
 	char	*new_line;

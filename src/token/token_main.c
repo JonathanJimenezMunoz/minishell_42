@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 14:19:50 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 17:29:12 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:32:56 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	tokenize_quote(char **line, t_mini *mini)
 		ft_error(mini, "syntax error: unmatched", "quotes", 2);
 	else if (size == 0)
 	{
-		ft_add_token(TOKEN_WORD, line, mini, 0);
+		ft_add_token(TOKEN_QUOTES_EMPTY, line, mini, 0);
 		*line += 2;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 20:46:52 by dyanez-m          #+#    #+#             */
-/*   Updated: 2024/09/14 20:16:06 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:58:09 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ t_redir	*copy_redir_list(t_redir *head)
 
 void	change_redir_node(t_mini *mini, t_redir *node, char *file, int type)
 {
-	t_table *table;
-	t_redir *current;
+	t_table	*table;
+	t_redir	*current;
 
 	table = mini->table;
 	while (table)

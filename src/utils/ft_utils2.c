@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 19:09:46 by david             #+#    #+#             */
-/*   Updated: 2024/09/17 14:26:14 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:58:20 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	is_valid_identifier(const char *key)
 	}
 	return (1);
 }
-
 
 int	ft_heredoc_cmp(char *s1, char *s2)
 {

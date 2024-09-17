@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:40:23 by david             #+#    #+#             */
-/*   Updated: 2024/09/17 16:27:08 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:14:25 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void	print_table(t_table *table)
 
 	while (table != NULL)
 	{
-		printf("Args:\n");
 		if (table->args != NULL)
 		{
+			printf("Arguments:\n");
 			for (i = 0; table->args[i] != NULL; i++)
 			{
 				printf("\t%s\n", table->args[i]);

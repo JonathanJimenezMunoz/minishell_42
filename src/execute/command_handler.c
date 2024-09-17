@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 20:28:47 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:13:58 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static char	*path_handler(char *param, char **envp)
 	char	*temp;
 
 	i = -1;
+	if (param[0] == '\0')
+		return (param);
 	paths = ft_split(get_path(envp), ':');
 	while (paths[++i])
 	{

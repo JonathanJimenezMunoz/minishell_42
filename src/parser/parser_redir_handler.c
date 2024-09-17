@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_redir_handler.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 17:26:57 by david             #+#    #+#             */
-/*   Updated: 2024/09/15 12:45:51 by david            ###   ########.fr       */
+/*   Updated: 2024/09/17 17:36:15 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	parse_args(t_table_aux *aux, t_token **current)
 	int	i;
 
 	i = 0;
-	if ((*current)->type == TOKEN_WORD || (*current)->type == TOKEN_EMPTY)
+	if ((*current)->type == TOKEN_WORD || (*current)->type == TOKEN_EMPTY || \
+		(*current)->type == TOKEN_QUOTES_EMPTY)
 	{
 		if ((*current)->type == TOKEN_EMPTY && !aux->args)
 			return ;
