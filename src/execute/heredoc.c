@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 16:20:46 by dyanez-m          #+#    #+#             */
-/*   Updated: 2024/09/21 18:35:51 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/21 19:41:32 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	ft_do_heredoc(t_mini *mini, char *in_heredoc, int fd)
 		if (!line)
 			ft_ctrld_error(in_heredoc);
 		new_line = ft_new_line(line, ft_strlen(line), mini);
-		ft_putstr_fd(new_line, fd);
+		free(line);
 		if (ft_heredoc_cmp(new_line, in_heredoc) == 0)
 		{
 			free(new_line);

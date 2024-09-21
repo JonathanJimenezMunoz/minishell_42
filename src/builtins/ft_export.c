@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 23:43:24 by david             #+#    #+#             */
-/*   Updated: 2024/09/17 16:24:09 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/21 20:02:53 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,17 @@ static int	ft_export_aux(char *args, t_envp **envp)
 	parse_args_export(args, &key, &value);
 	if (!is_valid_identifier(key))
 	{
-		ft_putstr_fd("bash: export: ", 2);
-		ft_putstr_fd(args, 2);
-		ft_putstr_fd(": not a valid identifier\n", 2);
+		ft_error_export(args);
 		free(key);
 		if (value)
 			free(value);
 		return (1);
 	}
 	if (!value)
+	{
+		free(key);
 		return (0);
+	}
 	result = update_or_add_env(envp, key, value);
 	free(key);
 	free(value);

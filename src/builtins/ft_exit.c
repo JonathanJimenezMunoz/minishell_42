@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 00:47:48 by david             #+#    #+#             */
-/*   Updated: 2024/09/17 16:39:44 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/21 19:31:12 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	ft_err(int op, char *arg, t_mini *mini)
 		err_aux = ft_strjoin("bash: exit: ", arg);
 		err = ft_strjoin2(err_aux, ": numeric argument required\n");
 		ft_putstr_fd(err, 2);
+		free(err);
 	}
 	ft_free_all(mini);
 }

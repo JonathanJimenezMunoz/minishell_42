@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 23:07:43 by david             #+#    #+#             */
-/*   Updated: 2024/09/01 19:31:31 by david            ###   ########.fr       */
+/*   Updated: 2024/09/21 19:45:44 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,16 @@ static int	remove_envp_node(char *key, t_mini *mini)
 int	ft_unset(char **args, t_mini *mini)
 {
 	char	*key;
+	int		i;
 
+	i = 1;
 	if (!args || !args[1])
 		return (0);
-	key = args[1];
-	return (remove_envp_node(key, mini));
+	while (args[i])
+	{
+		key = args[i];
+		remove_envp_node(key, mini);
+		i++;
+	}
+	return (0);
 }

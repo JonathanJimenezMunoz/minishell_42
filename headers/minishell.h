@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/09/21 18:32:09 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/21 20:02:34 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	ft_error(t_mini *mini, char *error, char *type, int exit);
 void	ft_error_syx(t_mini *mini, char *type, int exit);
 void	ft_ctrld_error(char *s1);
 void	ft_dputstr_fd(char *s1, char *s2, int fd, int error);
+void	ft_error_export(char *args);
 
 // FREE
 void	free_double_array(char **str);

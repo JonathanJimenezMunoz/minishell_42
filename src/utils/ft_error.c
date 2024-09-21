@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 14:56:21 by david             #+#    #+#             */
-/*   Updated: 2024/09/17 19:16:52 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/21 20:02:59 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,11 @@ void	ft_ctrld_error(char *s1)
 	ft_putendl_fd(")", 2);
 	free(s1);
 	exit(0);
+}
+
+void	ft_error_export(char *args)
+{
+	ft_putstr_fd("bash: export: `", 2);
+	ft_putstr_fd(args, 2);
+	ft_putendl_fd("': not a valid identifier", 2);
 }
