@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/09/21 20:34:37 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/21 21:04:03 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int		ft_pwd(void);
 // ENVP
 void	envp_init(t_envp **envp, char **envp_list);
 char	*envp_get_value(t_envp *envp, char *key);
-void	envp_print(t_envp *envp);
 void	add_node_to_envp(t_envp **envp, t_envp *new_node);
 void	swap(t_envp *a, t_envp *b);
 void	sort_envp(t_envp *envp);
@@ -186,7 +185,4 @@ void	exit_capture(t_mini *mini, int status);
 void	redir_exit_capture(t_mini *mini, int status, int *first);
 void	while_signals(t_mini *mini);
 
-// TEMPORALES
-void	token_print(t_token *tokens);
-void	print_table(t_table *table);
 #endif

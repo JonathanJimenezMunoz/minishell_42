@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/01 19:09:46 by david             #+#    #+#             */
-/*   Updated: 2024/09/21 20:47:24 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/21 21:06:25 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ char	*get_path(char **envp)
 	int	i;
 
 	i = 0;
-
 	while (envp[i] && ft_strncmp("PATH", envp[i], 4) != 0)
 		i++;
 	if (envp[i] == NULL)

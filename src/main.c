@@ -6,13 +6,13 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:40:23 by david             #+#    #+#             */
-/*   Updated: 2024/09/17 18:46:12 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/21 21:05:43 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-int g_sigint;
+int	g_sigint;
 
 static void	init_mini(t_mini *mini, char **envp)
 {
@@ -42,40 +42,7 @@ static void	iteration_handler(t_mini *mini)
 	mini->flag_redir = 0;
 }
 
-void	print_redirections(t_redir *redir)
-{
-	while (redir != NULL)
-	{
-		printf("\tRedirection: File = %s, Type = %d\n",
-			redir->file, redir->type);
-		redir = redir->next;
-	}
-}
-
-void	print_table(t_table *table)
-{
-	int i;
-
-	while (table != NULL)
-	{
-		if (table->args != NULL)
-		{
-			printf("Arguments:\n");
-			for (i = 0; table->args[i] != NULL; i++)
-			{
-				printf("\t%s\n", table->args[i]);
-			}
-		}
-		if (table->redir != NULL)
-		{
-			print_redirections(table->redir);
-		}
-		table = table->next;
-		printf("\n");
-	}
-}
-
-static void do_redir_handler(t_mini *mini)
+static void	do_redir_handler(t_mini *mini)
 {
 	t_table	*table_aux;
 	t_redir	*redir_aux;
@@ -87,7 +54,9 @@ static void do_redir_handler(t_mini *mini)
 		redir_aux = table_aux->redir;
 		while (redir_aux)
 		{
-			if ((redir_aux->type == TOKEN_REDIR_IN || redir_aux->type == TOKEN_UNLINK) && mini->flag_redir == 0)
+			if ((redir_aux->type == TOKEN_REDIR_IN
+					|| redir_aux->type == TOKEN_UNLINK)
+				&& mini->flag_redir == 0)
 				open_input_file(redir_aux->file, mini);
 			else if (redir_aux->type == TOKEN_REDIR_OUT
 				&& mini->flag_redir == 0)
