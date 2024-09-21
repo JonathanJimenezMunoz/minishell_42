@@ -1,0 +1,27 @@
+CTRL+\ en el heredoc al XAVI le pasa lo mismo
+
+----------------------------------------------------------------
+El nuestro acaba con cuallquier cosa que interprete que sea "nada" (NULL/"")
+msh>>cat <<$AGU
+> 
+msh>>
+
+msh>>cat <<$AGU
+> $AGU
+msh>>
+
+msh>>cat << $AGU
+> $TONTO
+msh>>
+
+Y el bash solo acaba si es la palabra exacta
+dyanez-m@c1r17s3:~/casaSHELL$ cat <<$AGU
+> 
+> 
+> 
+> $AGU
+
+dyanez-m@c1r17s3:~/casaSHELL$ cat <<$AGU
+> $TONTO
+> ^C
+----------------------------------------------------------------
