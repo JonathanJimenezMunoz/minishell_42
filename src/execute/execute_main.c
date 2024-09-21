@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 18:20:43 by david             #+#    #+#             */
-/*   Updated: 2024/09/17 16:26:53 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/21 20:30:40 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int	execute(t_mini *mini)
 
 	pipes = 0;
 	table_aux = mini->table;
+	update_exec_envp_to_envp(mini);
 	while (table_aux)
 	{
 		pipes++;
