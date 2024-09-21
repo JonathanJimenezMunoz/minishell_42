@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 23:52:39 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 15:35:38 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/09/21 18:37:08 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static char	*ft_envp_key(char *line)
 
 	i = 0;
 	while (line[i] != '\"' && line[i] != '\'' && line[i] != ' '
-		&& line[i] != '$' && line[i] != '\0')
+		&& line[i] != '$' && line[i] != '\0' && line[i] != '\n')
 		i++;
 	key = malloc(sizeof(char) * (i + 1));
 	i = 0;
 	while (line[i] != '\"' && line[i] != '\'' && line[i] != ' '
-		&& line[i] != '$' && line[i] != '\0')
+		&& line[i] != '$' && line[i] != '\0' && line[i] != '\n')
 	{
 		key[i] = line[i];
 		i++;
