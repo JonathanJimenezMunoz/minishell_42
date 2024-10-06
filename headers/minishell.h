@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/09/21 21:04:03 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/06 13:31:39 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ t_envp	*copy_envp_list(t_envp *envp);
 void	free_envp_list(t_envp *envp);
 void	print_envp_declare(t_envp *envp);
 void	update_exec_envp_to_envp(t_mini *mini);
+void	check_if_shlvl(t_envp **mini);
+
 // UTILS
 char	**copy_double_str(char **str);
 int		ft_isspace(char c);

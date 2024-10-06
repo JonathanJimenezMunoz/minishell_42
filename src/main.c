@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:40:23 by david             #+#    #+#             */
-/*   Updated: 2024/09/21 21:05:43 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/06 13:32:37 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	init_mini(t_mini *mini, char **envp)
 	mini->pipes = 0;
 	mini->exec_envp = NULL;
 	envp_init(&mini->envp, envp);
+	check_if_shlvl(&mini->envp);
 	mini->exec_envp = copy_double_str(envp);
 }
 

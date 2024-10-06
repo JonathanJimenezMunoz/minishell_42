@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 22:41:34 by david             #+#    #+#             */
-/*   Updated: 2024/09/14 15:34:45 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/06 13:30:19 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,3 @@ char	*envp_get_value(t_envp *envp, char *key)
 	}
 	return (NULL);
 }
-
-/*void	envp_print(t_envp *envp)
-{
-	t_envp	*current;
-
-	current = envp;
-	while (current)
-	{
-		printf("key: %s\n", current->key);
-		printf("value: %s\n", current->value);
-		current = current->next;
-	}
-}*/
