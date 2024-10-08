@@ -1,3 +1,31 @@
+FACILES:
+
+echo -n -n asadsa
+
+export > out
+
+variable global = SIGINT
+
+mkdir a
+cd a
+mkdir a
+cd a
+rm -rf ../../a
+cd ..
+cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+jonjimen@c1r5s1:~/a/a/..$ cd ..
+jonjimen@c1r5s1:~$ pwd
+/home/jonjimen
+
+SE PODRA?
+
+sleep 30 | sleep 30 | sleep 1 | sleep 30
+^C
+echo $?
+130
+
+IMPOSIBLE:
+
 CTRL+\ en el heredoc al XAVI le pasa lo mismo
 
 ----------------------------------------------------------------
@@ -25,3 +53,9 @@ dyanez-m@c1r17s3:~/casaSHELL$ cat <<$AGU
 > $TONTO
 > ^C
 ----------------------------------------------------------------
+
+
+
+
+
+
