@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/10/06 13:31:39 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:40:29 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ typedef struct s_mini
 
 // BUILTINS
 int		ft_cd(char **paths, t_envp *envp);
-int		ft_export(char **args, t_envp **envp);
+int		ft_export(char **args, t_envp **envp, t_table *table, t_mini *mini);
 int		ft_unset(char **args, t_mini *mini);
 int		ft_exit(char **args, t_mini *mini);
 int		ft_echo(char **args);
@@ -111,9 +111,11 @@ void	swap(t_envp *a, t_envp *b);
 void	sort_envp(t_envp *envp);
 t_envp	*copy_envp_list(t_envp *envp);
 void	free_envp_list(t_envp *envp);
-void	print_envp_declare(t_envp *envp);
 void	update_exec_envp_to_envp(t_mini *mini);
 void	check_if_shlvl(t_envp **mini);
+void	print_envp_declare(t_envp *envp);
+void	handle_redirection_export(t_envp *envp, t_table *table_aux,
+			t_mini *mini);
 
 // UTILS
 char	**copy_double_str(char **str);
