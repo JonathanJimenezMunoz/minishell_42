@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: david <david@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jonjimen <jonjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 23:18:25 by david             #+#    #+#             */
-/*   Updated: 2024/09/01 16:25:18 by david            ###   ########.fr       */
+/*   Updated: 2024/10/15 16:45:49 by jonjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int	ft_pwd(void)
 	route = NULL;
 	route = getcwd(route, 0);
 	if (!route)
+	{
+		perror("pwd");
 		return (1);
+	}
 	ft_putstr_fd(route, 1);
 	ft_putstr_fd("\n", 1);
 	free(route);

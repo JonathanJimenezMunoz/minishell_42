@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonjimen <jonjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 14:05:04 by david             #+#    #+#             */
-/*   Updated: 2024/10/15 16:45:01 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:46:17 by jonjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	sig_handler(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		g_sigint = 1;
+		g_sigint = SIGINT;
 	}
 }
 
@@ -88,7 +88,7 @@ void	while_signals(t_mini *mini)
 {
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, SIG_IGN);
-	if (g_sigint == 1)
+	if (g_sigint == SIGINT)
 	{
 		mini->exit_status = 130;
 		g_sigint = 0;
