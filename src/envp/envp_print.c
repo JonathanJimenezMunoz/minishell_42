@@ -6,29 +6,29 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:14:23 by dyanez-m          #+#    #+#             */
-/*   Updated: 2024/10/15 16:41:07 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:58:55 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-static void	restore_fds(int og_in, int og_out)
+static void	restore_fds(int og_in, int og_out, t_mini *mini)
 {
 	if (dup2(og_in, STDIN_FILENO) < 0)
 	{
 		perror("Error restoring stdin");
-		exit(EXIT_FAILURE);
+		mini->exit_status = 1;
 	}
 	close(og_in);
 	if (dup2(og_out, STDOUT_FILENO) < 0)
 	{
 		perror("Error restoring stdout");
-		exit(EXIT_FAILURE);
+		mini->exit_status = 1;
 	}
 	close(og_out);
 }
 
-static void	handle_input_redirection_export(char *in_redir, t_mini *mini,
+static int	handle_input_redirection_export(char *in_redir, t_mini *mini,
 	int og_in, int og_out)
 {
 	int	fd;
@@ -42,18 +42,21 @@ static void	handle_input_redirection_export(char *in_redir, t_mini *mini,
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 2);
 		mini->exit_status = 1;
-		restore_fds(og_in, og_out);
+		restore_fds(og_in, og_out, mini);
+		return (1);
 	}
 	if (dup2(fd, STDIN_FILENO) < 0)
 	{
 		perror("dup2");
 		mini->exit_status = 1;
-		restore_fds(og_in, og_out);
+		restore_fds(og_in, og_out, mini);
+		return (1);
 	}
 	close(fd);
+	return (0);
 }
 
-static void	handle_output_redirection_export(char *out_redir, t_mini *mini,
+static int	handle_output_redirection_export(char *out_redir, t_mini *mini,
 	int og_in, int og_out)
 {
 	int	fd;
@@ -67,18 +70,21 @@ static void	handle_output_redirection_export(char *out_redir, t_mini *mini,
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 2);
 		mini->exit_status = 1;
-		restore_fds(og_in, og_out);
+		restore_fds(og_in, og_out, mini);
+		return (1);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		perror("dup2");
 		mini->exit_status = 1;
-		restore_fds(og_in, og_out);
+		restore_fds(og_in, og_out, mini);
+		return (1);
 	}
 	close(fd);
+	return (0);
 }
 
-static void	handle_output_append_redirection_export(char *out_append,
+static int	handle_output_append_redirection_export(char *out_append,
 	t_mini *mini, int og_in, int og_out)
 {
 	int	fd;
@@ -92,15 +98,18 @@ static void	handle_output_append_redirection_export(char *out_append,
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 2);
 		mini->exit_status = 1;
-		restore_fds(og_in, og_out);
+		restore_fds(og_in, og_out, mini);
+		return (1);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		perror("dup2");
 		mini->exit_status = 1;
-		restore_fds(og_in, og_out);
+		restore_fds(og_in, og_out, mini);
+		return (1);
 	}
 	close(fd);
+	return (0);
 }
 
 void	handle_redirection_export(t_envp *envp, t_table *table_aux,
@@ -116,14 +125,19 @@ void	handle_redirection_export(t_envp *envp, t_table *table_aux,
 	while (red)
 	{
 		if (red->type == TOKEN_REDIR_IN || red->type == TOKEN_UNLINK)
-			handle_input_redirection_export(red->file, mini, og_in, og_out);
+			if (handle_input_redirection_export(red->file, mini, og_in,
+					og_out) == 1)
+				return ;
 		else if (red->type == TOKEN_REDIR_OUT)
-			handle_output_redirection_export(red->file, mini, og_in, og_out);
+			if (handle_output_redirection_export(red->file, mini, og_in,
+					og_out) == 1)
+				return ;
 		else if (red->type == TOKEN_REDIR_APPEND)
-			handle_output_append_redirection_export(red->file, mini,
-				og_in, og_out);
+			if (handle_output_append_redirection_export(red->file, mini,
+					og_in, og_out) == 1)
+				return ;
 		red = red->next;
 	}
 	print_envp_declare(envp);
-	restore_fds(og_in, og_out);
+	restore_fds(og_in, og_out, mini);
 }
