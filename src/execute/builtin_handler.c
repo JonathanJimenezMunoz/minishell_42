@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 22:51:40 by david             #+#    #+#             */
-/*   Updated: 2024/10/15 16:22:09 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:19:09 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_non_individual_builtins(t_table *table_aux, t_mini *mini)
 	else if (ft_strncmp(table_aux->args[0], "env", 4) == 0)
 		return (ft_envp(mini->envp, table_aux->args));
 	else if (ft_strncmp(table_aux->args[0], "pwd", 4) == 0)
-		return (ft_pwd());
+		return (ft_pwd(mini));
 	else
 		return (-1);
 }

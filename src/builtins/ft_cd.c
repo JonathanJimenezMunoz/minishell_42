@@ -6,93 +6,69 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 22:46:27 by david             #+#    #+#             */
-/*   Updated: 2024/10/06 13:33:54 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:27:21 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 
-static void	ft_explicit_error(char *path)
+static void	change_env_oldpwd(t_envp *envp, char *key)
 {
-	ft_putstr_fd("bash: cd: ", 2);
-	ft_putstr_fd(path, 2);
-	ft_putstr_fd(": No such file or directory\n", 2);
+	char	*oldpwd;
+
+	if (ft_strcmp(key, "OLDPWD") == 0)
+	{
+		oldpwd = envp_get_value(envp, "PWD");
+		if (oldpwd)
+			update_or_add_env(&envp, key, oldpwd);
+	}
 }
 
-static int	ft_home_virgulilla(t_envp *envp, char *path)
+static void	change_env_pwd(t_envp *envp, char *path, char *key)
 {
-	char	*home;
-	char	*new_path;
+	char	*pwd;
+	char	*new_pwd;
+	char	*temp_pwd;
 
-	home = envp_get_value(envp, "HOME");
-	if (!home)
+	new_pwd = NULL;
+	temp_pwd = NULL;
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
 	{
-		ft_putstr_fd("bash: cd: HOME not set\n", 2);
-		return (1);
+		ft_putstr_fd("bash: cd: error retrieving current directory: ", 2);
+		ft_putstr_fd("getcwd: cannot access ", 2);
+		ft_putstr_fd("parent directories: No such file or directory\n", 2);
+		if (path[0] != '/')
+			temp_pwd = ft_strjoin("/", path);
+		new_pwd = ft_strjoin(envp_get_value(envp, key), temp_pwd);
+		if (new_pwd)
+			update_or_add_env(&envp, key, new_pwd);
+		free(temp_pwd);
+		return ;
 	}
-	new_path = ft_strjoin(home, path + 1);
-	if (!new_path)
-	{
-		ft_explicit_error(path);
-		return (1);
-	}
-	if (chdir(new_path) == -1)
-	{
-		ft_explicit_error(path);
-		free(new_path);
-		return (1);
-	}
-	free(new_path);
-	return (0);
-}
-
-static int	if_virgulilla(char *path)
-{
-	if (path[0] == '~')
-		return (1);
-	return (0);
-}
-
-static int	ft_home_path(t_envp *envp)
-{
-	char	*path;
-
-	path = envp_get_value(envp, "HOME");
-	if (!path)
-	{
-		ft_putstr_fd("bash: cd: HOME not set\n", 2);
-		return (1);
-	}
-	if (chdir(path) == -1)
-	{
-		ft_putstr_fd("bash: cd: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		return (1);
-	}
-	return (0);
+	if (ft_strcmp(key, "PWD") == 0)
+		update_or_add_env(&envp, key, pwd);
+	free(pwd);
 }
 
 int	ft_cd(char **paths, t_envp *envp)
 {
-	if (!paths[0] || !paths[1])
-		return (ft_home_path(envp));
-	else if (if_virgulilla(paths[1]))
-		return (ft_home_virgulilla(envp, paths[1]));
-	else
+	if (base_cases(paths, envp))
+		return (1);
+	if (paths[2])
 	{
-		if (paths[2])
-		{
-			ft_putstr_fd("bash: cd: too many arguments\n", 2);
-			return (1);
-		}
-		else if (chdir(paths[1]) == -1)
-		{
-			ft_putstr_fd("bash: cd: ", 2);
-			ft_putstr_fd(paths[1], 2);
-			ft_putstr_fd(": No such file or directory\n", 2);
-			return (1);
-		}
-		return (0);
+		ft_putstr_fd("bash: cd: too many arguments\n", 2);
+		return (1);
 	}
+	if (access(paths[1], F_OK) != -1)
+		change_env_oldpwd(envp, "OLDPWD");
+	if (chdir(paths[1]) == -1)
+	{
+		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd(paths[1], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		return (1);
+	}
+	change_env_pwd(envp, paths[1], "PWD");
+	return (0);
 }

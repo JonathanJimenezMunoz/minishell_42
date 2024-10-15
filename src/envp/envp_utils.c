@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 17:47:13 by david             #+#    #+#             */
-/*   Updated: 2024/10/15 16:39:26 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:30:24 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	sort_envp(t_envp *envp)
 		ptr1 = envp;
 		while (ptr1->next != lptr)
 		{
-			if (strcmp(ptr1->key, ptr1->next->key) > 0)
+			if (ft_strcmp(ptr1->key, ptr1->next->key) > 0)
 			{
 				swap(ptr1, ptr1->next);
 				swapped = 1;
@@ -61,8 +61,8 @@ t_envp	*copy_envp_list(t_envp *envp)
 	new_node = malloc(sizeof(t_envp));
 	if (!new_node)
 		return (NULL);
-	new_node->key = strdup(envp->key);
-	new_node->value = strdup(envp->value);
+	new_node->key = ft_strdup(envp->key);
+	new_node->value = ft_strdup(envp->value);
 	new_node->next = copy_envp_list(envp->next);
 	return (new_node);
 }

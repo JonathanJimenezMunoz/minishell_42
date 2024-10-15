@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/10/15 16:40:29 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:19:20 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,14 @@ typedef struct s_mini
 
 // BUILTINS
 int		ft_cd(char **paths, t_envp *envp);
+int		base_cases(char **paths, t_envp *envp);
 int		ft_export(char **args, t_envp **envp, t_table *table, t_mini *mini);
+int		update_or_add_env(t_envp **envp, char *key, char *value);
 int		ft_unset(char **args, t_mini *mini);
 int		ft_exit(char **args, t_mini *mini);
 int		ft_echo(char **args);
 int		ft_envp(t_envp *envp, char **args);
-int		ft_pwd(void);
+int		ft_pwd(t_mini *mini);
 
 // ENVP
 void	envp_init(t_envp **envp, char **envp_list);

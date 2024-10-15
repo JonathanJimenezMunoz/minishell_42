@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 23:43:24 by david             #+#    #+#             */
-/*   Updated: 2024/10/15 16:22:23 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:32:43 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	parse_args_export(char *args, char **key, char **value)
 		*key = ft_strdup(args);
 }
 
-static int	update_or_add_env(t_envp **envp, char *key, char *value)
+int	update_or_add_env(t_envp **envp, char *key, char *value)
 {
 	t_envp	*current;
 	t_envp	*new_node;

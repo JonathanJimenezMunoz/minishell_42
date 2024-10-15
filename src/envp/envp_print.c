@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:14:23 by dyanez-m          #+#    #+#             */
-/*   Updated: 2024/10/15 16:58:55 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:12:30 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	restore_fds(int og_in, int og_out, t_mini *mini)
 	close(og_out);
 }
 
-static int	handle_input_redirection_export(char *in_redir, t_mini *mini,
+static int	input_export(char *in_redir, t_mini *mini,
 	int og_in, int og_out)
 {
 	int	fd;
@@ -56,7 +56,7 @@ static int	handle_input_redirection_export(char *in_redir, t_mini *mini,
 	return (0);
 }
 
-static int	handle_output_redirection_export(char *out_redir, t_mini *mini,
+static int	output_export(char *out_redir, t_mini *mini,
 	int og_in, int og_out)
 {
 	int	fd;
@@ -84,7 +84,7 @@ static int	handle_output_redirection_export(char *out_redir, t_mini *mini,
 	return (0);
 }
 
-static int	handle_output_append_redirection_export(char *out_append,
+static int	output_append_export(char *out_append,
 	t_mini *mini, int og_in, int og_out)
 {
 	int	fd;
@@ -124,18 +124,16 @@ void	handle_redirection_export(t_envp *envp, t_table *table_aux,
 	red = table_aux->redir;
 	while (red)
 	{
-		if (red->type == TOKEN_REDIR_IN || red->type == TOKEN_UNLINK)
-			if (handle_input_redirection_export(red->file, mini, og_in,
-					og_out) == 1)
-				return ;
-		else if (red->type == TOKEN_REDIR_OUT)
-			if (handle_output_redirection_export(red->file, mini, og_in,
-					og_out) == 1)
-				return ;
-		else if (red->type == TOKEN_REDIR_APPEND)
-			if (handle_output_append_redirection_export(red->file, mini,
-					og_in, og_out) == 1)
-				return ;
+		if ((red->type == TOKEN_REDIR_IN || red->type == TOKEN_UNLINK)
+			&& input_export(red->file, mini, og_in,
+				og_out) == 1)
+			return ;
+		else if (red->type == TOKEN_REDIR_OUT && output_export(red->file,
+				mini, og_in, og_out) == 1)
+			return ;
+		else if (red->type == TOKEN_REDIR_APPEND
+			&& output_append_export(red->file, mini, og_in, og_out) == 1)
+			return ;
 		red = red->next;
 	}
 	print_envp_declare(envp);
