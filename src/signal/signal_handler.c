@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jonjimen <jonjimen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jonjimen <jonjimen@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 14:05:04 by david             #+#    #+#             */
-/*   Updated: 2024/10/13 12:41:30 by jonjimen         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:39:09 by jonjimen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ void	redir_exit_capture(t_mini *mini, int status, int *first)
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 		{
-            if (*first == 1)
-			    ft_putstr_fd("Quit\n", 2);
+			if (*first == 1)
+				ft_putstr_fd("Quit\n", 2);
 			mini->exit_status = 131;
 		}
 		else if (WTERMSIG(status) == SIGINT)
 		{
-            if (*first == 1)
-			    ft_putstr_fd("\n", 2);
+			if (*first == 1)
+				ft_putstr_fd("\n", 2);
 			mini->exit_status = 130;
 		}
 		*first = 0;
