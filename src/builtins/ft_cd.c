@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 22:46:27 by david             #+#    #+#             */
-/*   Updated: 2024/10/15 18:27:21 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:49:27 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ static void	change_env_pwd(t_envp *envp, char *path, char *key)
 
 int	ft_cd(char **paths, t_envp *envp)
 {
-	if (base_cases(paths, envp))
-		return (1);
+	if (!paths[0] || !paths[1])
+		return (ft_home_path(envp));
+	else if (paths[1][0] == '~')
+		return (ft_home_virgulilla(envp, paths[1]));
 	if (paths[2])
 	{
 		ft_putstr_fd("bash: cd: too many arguments\n", 2);

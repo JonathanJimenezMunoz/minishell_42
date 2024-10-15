@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 00:47:48 by david             #+#    #+#             */
-/*   Updated: 2024/09/21 19:31:12 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:38:52 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static void	ft_err(int op, char *arg, t_mini *mini)
 		ft_putstr_fd(err, 2);
 		free(err);
 	}
-	ft_free_all(mini);
 }
 
 static int	ft_isnumber(char *s)
@@ -102,7 +101,6 @@ int	ft_exit(char **args, t_mini *mini)
 		if (args[2] && ft_isnumber(args[1]))
 		{
 			ft_err(1, "error", mini);
-			ft_free_all(mini);
 			return (1);
 		}
 		else

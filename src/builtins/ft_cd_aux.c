@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 17:48:42 by dyanez-m          #+#    #+#             */
-/*   Updated: 2024/10/15 18:27:15 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 18:49:14 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	ft_explicit_error(char *path)
 	ft_putstr_fd(": No such file or directory\n", 2);
 }
 
-static int	ft_home_virgulilla(t_envp *envp, char *path)
+int	ft_home_virgulilla(t_envp *envp, char *path)
 {
 	char	*home;
 	char	*new_path;
@@ -46,7 +46,7 @@ static int	ft_home_virgulilla(t_envp *envp, char *path)
 	return (0);
 }
 
-static int	ft_home_path(t_envp *envp)
+int	ft_home_path(t_envp *envp)
 {
 	char	*path;
 
@@ -64,14 +64,4 @@ static int	ft_home_path(t_envp *envp)
 		return (1);
 	}
 	return (0);
-}
-
-int	base_cases(char **paths, t_envp *envp)
-{
-	if (!paths[0] || !paths[1])
-		return (ft_home_path(envp));
-	else if (paths[1][0] == '~')
-		return (ft_home_virgulilla(envp, paths[1]));
-	else
-		return (0);
 }
