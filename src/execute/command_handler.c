@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/10/15 16:04:28 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:05:30 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	execute_single_command(t_mini *mini, t_table *table_aux)
 	pid_t	pid;
 	int		status;
 
-	error = ft_individual_builtins(table_aux, mini);
+	error = ind_built_with_redir(table_aux, mini);
 	if (error == -1)
 	{
 		pid = fork();

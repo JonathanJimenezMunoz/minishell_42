@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 12:50:07 by david             #+#    #+#             */
-/*   Updated: 2024/10/15 18:49:23 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:06:20 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ typedef struct s_mini
 int		ft_cd(char **paths, t_envp *envp);
 int		ft_home_path(t_envp *envp);
 int		ft_home_virgulilla(t_envp *envp, char *path);
-int		ft_export(char **args, t_envp **envp, t_table *table, t_mini *mini);
+int		ft_export(char **args, t_envp **envp);
 int		update_or_add_env(t_envp **envp, char *key, char *value);
 int		ft_unset(char **args, t_mini *mini);
 int		ft_exit(char **args, t_mini *mini);
@@ -184,6 +184,7 @@ t_redir	*copy_redir_list(t_redir *head);
 void	execute_child_process(t_mini *mini, t_table *table_aux);
 int		execute_single_command(t_mini *mini, t_table *table_aux);
 void	ft_check_if_heredoc(t_mini *mini);
+int		ind_built_with_redir(t_table *table_aux, t_mini *mini);
 
 //SIGNALS
 void	sig_heredoc(int sig);

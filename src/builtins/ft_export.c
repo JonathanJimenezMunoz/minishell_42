@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 23:43:24 by david             #+#    #+#             */
-/*   Updated: 2024/10/15 17:32:43 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:06:35 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static int	ft_export_aux(char *args, t_envp **envp)
 	return (result);
 }
 
-int	ft_export(char **args, t_envp **envp, t_table *table, t_mini *mini)
+int	ft_export(char **args, t_envp **envp)
 {
 	t_envp	*envp_copy;
 	int		i;
@@ -109,7 +109,7 @@ int	ft_export(char **args, t_envp **envp, t_table *table, t_mini *mini)
 	{
 		envp_copy = copy_envp_list(*envp);
 		sort_envp(envp_copy);
-		handle_redirection_export(envp_copy, table, mini);
+		print_envp_declare(envp_copy);
 		free_envp_list(envp_copy);
 	}
 	else

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   envp_print.c                                       :+:      :+:    :+:   */
+/*   redir_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:14:23 by dyanez-m          #+#    #+#             */
-/*   Updated: 2024/10/15 18:12:30 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 19:05:53 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,12 @@ static int	output_append_export(char *out_append,
 	return (0);
 }
 
-void	handle_redirection_export(t_envp *envp, t_table *table_aux,
-	t_mini *mini)
+int	ind_built_with_redir(t_table *table_aux, t_mini *mini)
 {
 	int		og_in;
 	int		og_out;
 	t_redir	*red;
+	int		error;
 
 	og_in = dup(STDIN_FILENO);
 	og_out = dup(STDOUT_FILENO);
@@ -127,15 +127,16 @@ void	handle_redirection_export(t_envp *envp, t_table *table_aux,
 		if ((red->type == TOKEN_REDIR_IN || red->type == TOKEN_UNLINK)
 			&& input_export(red->file, mini, og_in,
 				og_out) == 1)
-			return ;
+			return (1);
 		else if (red->type == TOKEN_REDIR_OUT && output_export(red->file,
 				mini, og_in, og_out) == 1)
-			return ;
+			return (1);
 		else if (red->type == TOKEN_REDIR_APPEND
 			&& output_append_export(red->file, mini, og_in, og_out) == 1)
-			return ;
+			return (1);
 		red = red->next;
 	}
-	print_envp_declare(envp);
+	error = ft_individual_builtins(table_aux, mini);
 	restore_fds(og_in, og_out, mini);
+	return (error);
 }
