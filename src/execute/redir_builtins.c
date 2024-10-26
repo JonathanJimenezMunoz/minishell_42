@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:14:23 by dyanez-m          #+#    #+#             */
-/*   Updated: 2024/10/15 19:05:53 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/20 19:12:31 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,7 @@ static int	input_export(char *in_redir, t_mini *mini,
 	fd = open(in_redir, O_RDONLY);
 	if (fd < 0 || access(in_redir, R_OK) < 0)
 	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(in_redir, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
+		perror(in_redir);
 		mini->exit_status = 1;
 		restore_fds(og_in, og_out, mini);
 		return (1);
@@ -64,11 +60,7 @@ static int	output_export(char *out_redir, t_mini *mini,
 	fd = open(out_redir, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(out_redir, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
+		perror(out_redir);
 		mini->exit_status = 1;
 		restore_fds(og_in, og_out, mini);
 		return (1);
@@ -92,11 +84,7 @@ static int	output_append_export(char *out_append,
 	fd = open(out_append, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
 	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(out_append, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(strerror(errno), 2);
-		ft_putstr_fd("\n", 2);
+		perror(out_append);
 		mini->exit_status = 1;
 		restore_fds(og_in, og_out, mini);
 		return (1);

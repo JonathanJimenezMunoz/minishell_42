@@ -6,7 +6,7 @@
 /*   By: dyanez-m <dyanez-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:06:32 by david             #+#    #+#             */
-/*   Updated: 2024/10/15 19:05:30 by dyanez-m         ###   ########.fr       */
+/*   Updated: 2024/10/20 18:16:10 by dyanez-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	execute_child_process(t_mini *mini, t_table *table_aux)
 {
 	int	error;
 
-	error = ft_individual_builtins(table_aux, mini);
+	error = ind_built_with_redir(table_aux, mini);
 	if (error == -1)
 		execute_command(table_aux, mini);
 	else if (error != 0)
